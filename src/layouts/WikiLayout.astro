@@ -1,0 +1,205 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import WikiSidebar from "../components/wiki/WikiSidebar.astro";
+import WikiBreadcrumbs from "../components/wiki/WikiBreadcrumbs.astro";
+
+const {
+  title,
+  description,
+  currentPath = "/wiki/",
+  project = "agentic-portfolio",
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="wiki-shell">
+    <div class="container-wide wiki-shell-grid">
+      <aside class="wiki-sidebar-column">
+        <WikiSidebar currentPath={currentPath} project={project} />
+      </aside>
+
+      <div class="wiki-content-column">
+        <WikiBreadcrumbs currentPath={currentPath} />
+
+        <article class="wiki-article">
+          <slot />
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .wiki-shell {
+    position: relative;
+
+    min-height: calc(100vh - 4.8rem);
+
+    padding-block:
+      clamp(2.2rem, 4vw, 3.5rem)
+      clamp(4rem, 7vw, 7rem);
+
+    border-top: 1px solid rgba(90, 180, 220, 0.07);
+  }
+
+  .wiki-shell::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+      radial-gradient(
+        circle at 18% 12%,
+        rgba(85, 214, 158, 0.035),
+        transparent 24rem
+      ),
+      radial-gradient(
+        circle at 88% 20%,
+        rgba(49, 92, 255, 0.045),
+        transparent 28rem
+      );
+  }
+
+  .wiki-shell-grid {
+    position: relative;
+    z-index: 1;
+
+    display: grid;
+    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+
+    gap: clamp(2rem, 4vw, 4rem);
+
+    align-items: start;
+  }
+
+  .wiki-sidebar-column {
+    position: sticky;
+    top: 6.2rem;
+  }
+
+  .wiki-content-column {
+    min-width: 0;
+  }
+
+  .wiki-article {
+    max-width: var(--content-reading);
+  }
+
+  .wiki-article :global(h1) {
+    margin: 0;
+
+    font-size: clamp(2.7rem, 4.8vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .wiki-article :global(h2) {
+    margin-top: 3.2rem;
+    margin-bottom: 1rem;
+
+    font-size: clamp(1.8rem, 2.8vw, 2.7rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .wiki-article :global(h3) {
+    margin-top: 2.4rem;
+    margin-bottom: 0.8rem;
+
+    font-size: clamp(1.25rem, 2vw, 1.65rem);
+  }
+
+  .wiki-article :global(p) {
+    margin-top: 1rem;
+
+    color: var(--aleph-text-secondary);
+
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .wiki-article :global(ul),
+  .wiki-article :global(ol) {
+    margin-top: 1rem;
+
+    color: var(--aleph-text-secondary);
+
+    line-height: 1.75;
+  }
+
+  .wiki-article :global(li + li) {
+    margin-top: 0.55rem;
+  }
+
+  .wiki-article :global(strong) {
+    color: var(--aleph-text-primary);
+  }
+
+  .wiki-article :global(code) {
+    padding: 0.13rem 0.34rem;
+
+    border: 1px solid rgba(90, 180, 220, 0.16);
+    border-radius: 0.35rem;
+
+    background: rgba(3, 18, 34, 0.78);
+
+    color: var(--aleph-cyan);
+  }
+
+  .wiki-article :global(pre) {
+    margin-top: 1.4rem;
+    padding: 1.2rem 1.35rem;
+
+    border: 1px solid rgba(90, 180, 220, 0.18);
+    border-radius: var(--radius-lg);
+
+    background: rgba(2, 11, 24, 0.86);
+
+    overflow-x: auto;
+  }
+
+  .wiki-article :global(pre code) {
+    padding: 0;
+    border: 0;
+
+    background: transparent;
+
+    color: var(--aleph-text-primary);
+  }
+
+  .wiki-article :global(blockquote) {
+    margin: 1.7rem 0 0;
+    padding: 1rem 1.2rem;
+
+    border-left: 2px solid var(--aleph-cyan);
+
+    background: rgba(22, 201, 216, 0.035);
+
+    color: var(--aleph-text-secondary);
+  }
+
+  .wiki-article :global(a) {
+    color: var(--aleph-cyan);
+  }
+
+  .wiki-article :global(a:hover) {
+    color: var(--aleph-green);
+  }
+
+  @media (max-width: 900px) {
+    .wiki-shell-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .wiki-sidebar-column {
+      position: static;
+    }
+
+    .wiki-article {
+      max-width: none;
+    }
+  }
+</style>

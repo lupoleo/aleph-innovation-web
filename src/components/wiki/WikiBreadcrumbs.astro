@@ -1,0 +1,112 @@
+---
+const { currentPath = "/wiki/" } = Astro.props;
+
+const labels = {
+  "agentic-portfolio": "Agentic Portfolio",
+  "system-overview": "System Overview",
+  "architecture": "Architecture",
+  "contracts": "Contracts & Data Types",
+  "implementation": "Implementation",
+  "testing": "Testing & Validation",
+  "development-history": "Development History",
+};
+
+const segments = currentPath
+  .split("/")
+  .filter(Boolean);
+
+const crumbs = [
+  {
+    label: "Wiki",
+    href: "/wiki/",
+  },
+];
+
+let runningPath = "/wiki";
+
+for (const segment of segments.slice(1)) {
+  runningPath += `/${segment}`;
+
+  crumbs.push({
+    label: labels[segment] ?? segment,
+    href: `${runningPath}/`,
+  });
+}
+---
+
+<nav class="wiki-breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    {
+      crumbs.map((crumb, index) => {
+        const isLast = index === crumbs.length - 1;
+
+        return (
+          <li>
+            {
+              isLast ? (
+                <span aria-current="page">{crumb.label}</span>
+              ) : (
+                <a href={crumb.href}>{crumb.label}</a>
+              )
+            }
+
+            {!isLast && <i aria-hidden="true">/</i>}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>
+
+<style>
+  .wiki-breadcrumbs {
+    margin-bottom: 2rem;
+  }
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 0.45rem;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
+  li {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 0.45rem;
+
+    margin: 0;
+
+    color: var(--aleph-text-muted);
+
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+
+    letter-spacing: 0.08em;
+  }
+
+  a {
+    color: var(--aleph-cyan);
+  }
+
+  a:hover {
+    color: var(--aleph-green);
+  }
+
+  span[aria-current="page"] {
+    color: var(--aleph-text-secondary);
+  }
+
+  i {
+    color: rgba(90, 180, 220, 0.35);
+
+    font-style: normal;
+  }
+</style>

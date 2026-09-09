@@ -1,0 +1,75 @@
+---
+const {
+  project = "agentic-portfolio",
+  section,
+  status = "published",
+  updated,
+} = Astro.props;
+
+const projectLabel =
+  project === "agentic-portfolio"
+    ? "AGENTIC PORTFOLIO"
+    : project.toUpperCase();
+
+const statusLabel = status.toUpperCase();
+
+const updatedLabel =
+  updated instanceof Date
+    ? updated.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      })
+    : String(updated ?? "");
+---
+
+<div class="article-meta">
+  <span>{projectLabel}</span>
+
+  {section && (
+    <>
+      <i aria-hidden="true">·</i>
+      <span>{String(section).toUpperCase()}</span>
+    </>
+  )}
+
+  <i aria-hidden="true">·</i>
+
+  <span class="article-status">{statusLabel}</span>
+
+  {updatedLabel && (
+    <>
+      <i aria-hidden="true">·</i>
+      <span>UPDATED {updatedLabel.toUpperCase()}</span>
+    </>
+  )}
+</div>
+
+<style>
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 0.5rem;
+
+    margin-bottom: 1.35rem;
+
+    color: var(--aleph-text-muted);
+
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+
+    letter-spacing: 0.12em;
+  }
+
+  i {
+    color: rgba(90, 180, 220, 0.35);
+
+    font-style: normal;
+  }
+
+  .article-status {
+    color: var(--aleph-green);
+  }
+</style>

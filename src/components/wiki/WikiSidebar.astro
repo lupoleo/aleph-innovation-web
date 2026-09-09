@@ -1,0 +1,283 @@
+---
+const {
+  currentPath = "/wiki/",
+  project = "agentic-portfolio",
+} = Astro.props;
+
+const items = [
+  {
+    label: "Wiki Home",
+    href: "/wiki/",
+    scope: "global",
+  },
+  {
+    label: "Agentic Portfolio",
+    href: "/wiki/agentic-portfolio/",
+    scope: "project",
+  },
+  {
+    label: "System Overview",
+    href: "/wiki/agentic-portfolio/system-overview/",
+    scope: "project",
+  },
+  {
+    label: "Architecture",
+    href: "/wiki/agentic-portfolio/architecture/",
+    scope: "project",
+  },
+  {
+    label: "Contracts & Data Types",
+    href: "/wiki/agentic-portfolio/contracts/",
+    scope: "project",
+  },
+  {
+    label: "Implementation",
+    href: "/wiki/agentic-portfolio/implementation/",
+    scope: "project",
+  },
+  {
+    label: "Testing & Validation",
+    href: "/wiki/agentic-portfolio/testing/",
+    scope: "project",
+  },
+  {
+    label: "Development History",
+    href: "/wiki/agentic-portfolio/development-history/",
+    scope: "project",
+  },
+];
+
+const normalize = (value) => {
+  if (!value) return "/";
+  return value.endsWith("/") ? value : `${value}/`;
+};
+
+const normalizedCurrentPath = normalize(currentPath);
+---
+
+<nav class="wiki-sidebar" aria-label="Engineering Wiki">
+  <div class="wiki-sidebar-heading">
+    <span class="wiki-sidebar-kicker">ENGINEERING WIKI</span>
+    <strong>Agentic Portfolio</strong>
+    <small>Public technical documentation</small>
+  </div>
+
+  <div class="wiki-sidebar-rule" aria-hidden="true"></div>
+
+  <ul>
+    {
+      items.map((item) => {
+        const active =
+          normalize(item.href) === normalizedCurrentPath;
+
+        return (
+          <li class:list={{ "project-start": item.label === "Agentic Portfolio" }}>
+            <a
+              href={item.href}
+              class:list={{ active }}
+              aria-current={active ? "page" : undefined}
+            >
+              <span class="sidebar-node" aria-hidden="true"></span>
+              <span>{item.label}</span>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+
+  <div class="wiki-sidebar-source">
+    <span>SOURCE OF TRUTH</span>
+
+    <a
+      href="https://github.com/lupoleo/agentic_portfolio_stage2_5"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Python repository ↗
+    </a>
+  </div>
+</nav>
+
+<style>
+  .wiki-sidebar {
+    padding: 1.25rem;
+
+    border: 1px solid rgba(90, 180, 220, 0.16);
+    border-radius: var(--radius-lg);
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(8, 31, 52, 0.72),
+        rgba(3, 18, 34, 0.78)
+      );
+  }
+
+  .wiki-sidebar-heading {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .wiki-sidebar-kicker {
+    color: var(--aleph-green);
+
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+
+    letter-spacing: 0.16em;
+  }
+
+  .wiki-sidebar-heading strong {
+    color: var(--aleph-text-primary);
+
+    font-size: 1rem;
+  }
+
+  .wiki-sidebar-heading small {
+    color: var(--aleph-text-muted);
+
+    font-size: 0.7rem;
+  }
+
+  .wiki-sidebar-rule {
+    height: 1px;
+
+    margin-block: 1rem;
+
+    background:
+      linear-gradient(
+        90deg,
+        var(--aleph-green),
+        var(--aleph-cyan),
+        transparent
+      );
+
+    opacity: 0.45;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  li.project-start {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+
+    border-top: 1px solid rgba(90, 180, 220, 0.08);
+  }
+
+  a {
+    display: grid;
+    grid-template-columns: 0.6rem minmax(0, 1fr);
+
+    gap: 0.6rem;
+    align-items: center;
+
+    min-height: 2.4rem;
+
+    padding-inline: 0.55rem;
+
+    border-radius: 0.45rem;
+
+    color: var(--aleph-text-muted);
+
+    font-size: 0.74rem;
+    line-height: 1.35;
+
+    transition:
+      color var(--duration-fast) var(--ease-standard),
+      background-color var(--duration-fast) var(--ease-standard);
+  }
+
+  a:hover {
+    color: var(--aleph-text-primary);
+
+    background: rgba(22, 201, 216, 0.035);
+  }
+
+  a.active {
+    color: var(--aleph-text-primary);
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(85, 214, 158, 0.07),
+        rgba(22, 201, 216, 0.035)
+      );
+  }
+
+  .sidebar-node {
+    width: 0.32rem;
+    height: 0.32rem;
+
+    border-radius: 50%;
+
+    background: rgba(114, 134, 155, 0.6);
+  }
+
+  a.active .sidebar-node {
+    background: var(--aleph-green);
+
+    box-shadow:
+      0 0 8px rgba(85, 214, 158, 0.45);
+  }
+
+  .wiki-sidebar-source {
+    display: grid;
+    gap: 0.45rem;
+
+    margin-top: 1rem;
+    padding-top: 1rem;
+
+    border-top: 1px solid rgba(90, 180, 220, 0.08);
+  }
+
+  .wiki-sidebar-source span {
+    color: var(--aleph-text-muted);
+
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+
+    letter-spacing: 0.13em;
+  }
+
+  .wiki-sidebar-source a {
+    display: inline;
+    min-height: 0;
+    padding: 0;
+
+    color: var(--aleph-cyan);
+
+    font-size: 0.7rem;
+  }
+
+  @media (max-width: 900px) {
+    .wiki-sidebar ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 0.15rem 0.5rem;
+    }
+
+    li.project-start {
+      margin-top: 0;
+      padding-top: 0;
+
+      border-top: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .wiki-sidebar ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

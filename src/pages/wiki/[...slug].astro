@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from "astro:content";
+
+import WikiLayout from "../../layouts/WikiLayout.astro";
+import WikiArticleMeta from "../../components/wiki/WikiArticleMeta.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    "wiki",
+    ({ data }) => data.status === "published"
+  );
+
+  return entries.map((entry) => {
+    const routeSlug = entry.id.endsWith("/index")
+      ? entry.id.slice(0, -"/index".length)
+      : entry.id;
+
+    return {
+      params: {
+        slug: routeSlug,
+      },
+      props: {
+        entry,
+      },
+    };
+  });
+}
+
+const { entry } = Astro.props;
+
+const { Content } = await render(entry);
+
+const currentPath = `/wiki/${
+  entry.id.endsWith("/index")
+    ? entry.id.slice(0, -"/index".length)
+    : entry.id
+}/`;
+
+const pageTitle = `${entry.data.title} — Aleph Innovation Engineering Wiki`;
+---
+
+<WikiLayout
+  title={pageTitle}
+  description={entry.data.description}
+  currentPath={currentPath}
+  project={entry.data.project}
+>
+  <WikiArticleMeta
+    project={entry.data.project}
+    section={entry.data.section}
+    status={entry.data.status}
+    updated={entry.data.updated}
+  />
+
+  <Content />
+</WikiLayout>
