@@ -1,0 +1,220 @@
+<section id="mission" class="mission section section-atmosphere" aria-labelledby="mission-title">
+  <div class="container mission-grid">
+    <div class="mission-copy">
+      <p class="eyebrow">MISSION</p>
+
+      <h2 id="mission-title">
+        Engineering AI as a system,
+        <span class="text-gradient">not as a black box.</span>
+      </h2>
+
+      <div class="mission-text">
+        <p>
+          Aleph Innovation is an AI venture in formation based in
+          <strong>Gozo, Malta</strong>, focused on the engineering of
+          Agentic AI systems that combine
+          <strong>deterministic software</strong> with
+          <strong>probabilistic AI</strong>.
+        </p>
+
+        <p>
+          Its first R&amp;D project, <strong>Agentic Portfolio</strong>,
+          explores this architecture in investment research, quantitative
+          analysis, portfolio risk and AI-assisted decision support.
+        </p>
+
+        <p>
+          Aleph follows an <strong>engineering-first</strong> and
+          <strong>building-in-public</strong> approach, documenting
+          architecture, implementation, testing, failures and lessons learned
+          as its projects evolve.
+        </p>
+      </div>
+
+      <div class="mission-status">
+        <span class="mission-status-dot" aria-hidden="true"></span>
+        <span>Current status: pre-incorporation R&amp;D venture</span>
+      </div>
+    </div>
+
+    <div class="mission-principles" aria-label="Aleph Innovation engineering principles">
+      <article class="principle-card aleph-surface">
+        <span class="principle-index">01</span>
+
+        <h3>Deterministic Core</h3>
+
+        <p>
+          Contracts, constraints, numerical computation, validation and system
+          state remain explicit and testable.
+        </p>
+      </article>
+
+      <article class="principle-card aleph-surface">
+        <span class="principle-index">02</span>
+
+        <h3>Probabilistic Reasoning</h3>
+
+        <p>
+          LLMs contribute interpretation, research and contextual reasoning
+          where deterministic software alone is insufficient.
+        </p>
+      </article>
+
+      <article class="principle-card aleph-surface">
+        <span class="principle-index">03</span>
+
+        <h3>Engineered Governance</h3>
+
+        <p>
+          AI outputs operate within observable workflows, evidence boundaries,
+          validation gates and explicit human decision authority.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mission {
+    border-top: 1px solid rgba(90, 180, 220, 0.07);
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1.02fr)
+      minmax(25rem, 0.98fr);
+
+    gap: clamp(4rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .mission-copy {
+    max-width: 47rem;
+  }
+
+  h2 {
+    max-width: 12ch;
+    margin: 0;
+  }
+
+  .mission-text {
+    display: grid;
+    gap: var(--space-6);
+
+    max-width: 45rem;
+    margin-top: var(--space-8);
+  }
+
+  .mission-text p {
+    font-size: clamp(1rem, 1.2vw, 1.12rem);
+    line-height: 1.8;
+  }
+
+  .mission-text strong {
+    color: var(--aleph-text-primary);
+  }
+
+  .mission-status {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    margin-top: var(--space-8);
+
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+
+    color: var(--aleph-text-muted);
+
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  .mission-status-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+
+    flex: 0 0 auto;
+
+    border-radius: 50%;
+
+    background: var(--aleph-green);
+
+    box-shadow:
+      0 0 12px rgba(85, 214, 158, 0.48);
+  }
+
+  .mission-principles {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .principle-card {
+    position: relative;
+
+    padding: clamp(1.5rem, 3vw, 2rem);
+
+    transition:
+      border-color var(--duration-base) var(--ease-standard),
+      transform var(--duration-base) var(--ease-standard),
+      box-shadow var(--duration-base) var(--ease-standard);
+  }
+
+  .principle-card:hover {
+    transform: translateY(-3px);
+
+    border-color: var(--aleph-border-strong);
+
+    box-shadow:
+      var(--shadow-md),
+      0 0 28px rgba(22, 201, 216, 0.045);
+  }
+
+  .principle-index {
+    display: inline-block;
+
+    margin-bottom: var(--space-6);
+
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+
+    color: var(--aleph-green);
+
+    letter-spacing: var(--tracking-wider);
+  }
+
+  .principle-card h3 {
+    margin-bottom: var(--space-3);
+
+    font-size: clamp(1.25rem, 2vw, 1.55rem);
+  }
+
+  .principle-card p {
+    max-width: 34rem;
+
+    font-size: var(--font-size-sm);
+    line-height: 1.75;
+  }
+
+  @media (max-width: 960px) {
+    .mission-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-12);
+    }
+
+    h2 {
+      max-width: 15ch;
+    }
+
+    .mission-principles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .mission-principles {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

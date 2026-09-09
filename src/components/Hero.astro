@@ -1,0 +1,93 @@
+---
+---
+
+<section class="hero">
+  <div class="hero-atmosphere" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <p class="hero-eyebrow">GOZO, MALTA · AI R&amp;D VENTURE</p>
+      <h1>Engineering<br />Agentic AI<span class="hero-title-accent">systems from Gozo.</span></h1>
+      <p class="hero-description">
+        Aleph Innovation combines{" "}<strong>deterministic software</strong>,{" "}
+        <strong>probabilistic AI</strong>{" "}and{" "}
+        <strong>agentic architectures</strong>{" "}
+        to engineer auditable systems for complex real-world decisions.
+      </p>
+      <div class="hero-actions">
+        <a class="hero-button hero-button-primary" href="#projects">Explore our work <span aria-hidden="true">→</span></a>
+        <a class="hero-button hero-button-secondary" href="/wiki/">Engineering Wiki</a>
+      </div>
+      <p class="hero-status"><span class="status-dot" aria-hidden="true"></span>PRE-INCORPORATION R&amp;D VENTURE · GOZO, MALTA</p>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="visual-glow"></div>
+      <svg class="network-visual" viewBox="0 0 760 650" role="presentation">
+        <defs>
+          <linearGradient id="coastGradient"><stop offset="0%" stop-color="#55d69e"/><stop offset="48%" stop-color="#16c9d8"/><stop offset="100%" stop-color="#315cff"/></linearGradient>
+          <radialGradient id="globeFill"><stop offset="0%" stop-color="#16c9d8" stop-opacity=".13"/><stop offset="55%" stop-color="#315cff" stop-opacity=".045"/><stop offset="100%" stop-color="#315cff" stop-opacity="0"/></radialGradient>
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <g class="network-lines">
+          <path d="M122 236 L215 190 L302 235 L382 164 L472 220 L565 170 L650 238"/>
+          <path d="M215 190 L252 290 L382 164 L410 282 L565 170"/>
+          <path d="M302 235 L410 282 L472 220 L540 315"/>
+        </g>
+        <g class="network-nodes">
+          <circle cx="122" cy="236" r="5"/><circle cx="215" cy="190" r="4.5"/><circle cx="302" cy="235" r="4.5"/>
+          <circle cx="382" cy="164" r="5"/><circle cx="472" cy="220" r="5"/><circle cx="565" cy="170" r="4.5"/><circle cx="650" cy="238" r="5"/>
+        </g>
+        <g class="globe">
+          <circle cx="430" cy="310" r="148" fill="url(#globeFill)"/>
+          <circle class="globe-outline" cx="430" cy="310" r="148"/>
+          <ellipse class="globe-grid" cx="430" cy="310" rx="72" ry="148"/>
+          <ellipse class="globe-grid" cx="430" cy="310" rx="118" ry="148"/>
+          <path class="globe-grid" d="M282 310 H578"/><path class="globe-grid" d="M305 242 Q430 282 555 242"/><path class="globe-grid" d="M305 378 Q430 338 555 378"/>
+          <path class="landmass" d="M394 222 L414 210 L432 218 L451 209 L470 221 L484 244 L477 263 L458 270 L449 288 L428 295 L410 283 L395 270 L383 249 Z"/>
+          <path class="island-mark" d="M424 323 L437 315 L448 326 L444 343 L451 355 L442 372 L432 383 L420 373 L415 354 L418 338 Z"/>
+          <circle class="origin-ring" cx="433" cy="324" r="8"/><circle class="origin-core" cx="433" cy="324" r="3.2"/>
+        </g>
+        <path class="origin-connection" d="M433 324 C432 390 405 430 368 470"/>
+        <path class="coastline" d="M88 552 L135 552 L153 542 L181 541 L196 522 L210 510 L223 542 L249 542 L262 530 L276 532 L289 493 L301 467 L314 514 L328 529 L352 526 L365 509 L378 500 L390 531 L412 537 L443 539 L472 544 L500 548 L528 551 L557 551 L588 552 L622 552 L655 552"/>
+        <path class="architecture-line" d="M568 551 L573 505 L587 505 L593 551 M570 505 L590 505 M574 496 L586 496 M576 496 L579 486 L583 486 L587 496"/>
+        <circle class="local-node" cx="368" cy="470" r="4"/>
+        <path class="sea-line" d="M125 575 H625"/><text class="visual-caption" x="315" y="620">GOZO → GLOBAL SYSTEMS</text>
+      </svg>
+      <div class="visual-legend"><span><i class="legend-dot"></i> LOCAL ENGINEERING</span><span><i class="legend-line"></i> GLOBAL APPLICATION</span></div>
+    </div>
+  </div>
+</section>
+
+<style>
+.hero{position:relative;overflow:hidden;min-height:calc(100vh - 4.8rem);display:flex;align-items:center;padding-block:clamp(4.5rem,8vh,7rem) clamp(4rem,7vh,6rem)}
+.hero-atmosphere{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 32%,rgba(49,92,255,.11),transparent 34%),radial-gradient(circle at 12% 70%,rgba(85,214,158,.035),transparent 28%)}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(32rem,1.1fr);align-items:center;gap:clamp(3rem,6vw,7rem)}
+.hero-content{min-width:0}
+.hero-eyebrow{display:flex;align-items:center;gap:.85rem;margin:0 0 1.9rem;color:var(--aleph-green);font-family:var(--font-mono,monospace);font-size:.76rem;font-weight:700;letter-spacing:.16em}
+.hero-eyebrow::before{content:"";width:1.9rem;height:1px;background:linear-gradient(90deg,var(--aleph-green),var(--aleph-cyan))}
+h1{margin:0;max-width:12.5ch;color:var(--aleph-text-primary);font-size:clamp(3.2rem,5.1vw,6rem);line-height:.96;letter-spacing:-.05em}
+.hero-title-accent{display:block;margin-top:.12em;background:linear-gradient(92deg,var(--aleph-green) 0%,var(--aleph-cyan) 42%,var(--aleph-blue-bright) 82%);background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.hero-description{max-width:44rem;margin:2.25rem 0 0;color:var(--aleph-text-secondary);font-size:clamp(1.05rem,1.3vw,1.22rem);line-height:1.8}
+.hero-description strong{color:var(--aleph-text-primary);font-weight:700}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.4rem}
+.hero-button{display:inline-flex;align-items:center;justify-content:center;gap:.75rem;min-height:3.15rem;padding-inline:1.4rem;border:1px solid var(--aleph-border-strong);border-radius:var(--radius-pill,999px);text-decoration:none;font-size:var(--font-size-sm,.9rem);font-weight:600;transition:transform 160ms ease,border-color 160ms ease,box-shadow 220ms ease}
+.hero-button:hover{transform:translateY(-2px)}
+.hero-button-primary{color:var(--aleph-text-primary);border-color:rgba(85,214,158,.45);background:linear-gradient(120deg,rgba(85,214,158,.16),rgba(22,201,216,.08))}
+.hero-button-secondary{color:var(--aleph-text-secondary);background:rgba(10,33,56,.28)}
+.hero-status{display:flex;align-items:center;gap:.65rem;margin:2.65rem 0 0;color:var(--aleph-text-muted);font-family:var(--font-mono,monospace);font-size:.68rem;letter-spacing:.13em}
+.status-dot{width:.45rem;height:.45rem;border-radius:50%;background:var(--aleph-green);box-shadow:0 0 12px rgba(85,214,158,.7)}
+.hero-visual{position:relative;min-width:0;min-height:42rem;display:flex;align-items:center;justify-content:center;transform:translateY(-1rem)}
+.visual-glow{position:absolute;width:74%;aspect-ratio:1;top:5%;right:1%;border-radius:50%;background:radial-gradient(circle,rgba(22,201,216,.11),rgba(49,92,255,.055) 44%,transparent 72%);filter:blur(26px)}
+.network-visual{position:relative;z-index:1;width:min(110%,53rem);height:auto;overflow:visible;transform:translateX(1.5rem);filter:drop-shadow(0 0 36px rgba(22,201,216,.035))}
+.network-lines path{fill:none;stroke:rgba(49,92,255,.13);stroke-width:1}.network-nodes circle{fill:var(--aleph-cyan);opacity:.72;filter:url(#softGlow)}
+.globe-outline{fill:none;stroke:rgba(22,201,216,.46);stroke-width:1.5}.globe-grid{fill:none;stroke:rgba(80,156,210,.18);stroke-width:1}
+.landmass{fill:rgba(85,214,158,.12);stroke:rgba(85,214,158,.55);stroke-width:1.2}.island-mark{fill:rgba(22,201,216,.11);stroke:rgba(22,201,216,.6);stroke-width:1.2}
+.origin-ring{fill:rgba(85,214,158,.08);stroke:var(--aleph-green);stroke-width:1.2;filter:url(#softGlow)}.origin-core,.local-node{fill:var(--aleph-green);filter:url(#softGlow)}
+.origin-connection{fill:none;stroke:url(#coastGradient);stroke-width:1.35;stroke-dasharray:5 7;opacity:.82}.coastline{fill:none;stroke:url(#coastGradient);stroke-width:2.4;filter:url(#softGlow)}
+.architecture-line{fill:none;stroke:rgba(85,214,158,.88);stroke-width:1.35}.sea-line{fill:none;stroke:rgba(22,201,216,.1);stroke-width:1}
+.visual-caption{fill:var(--aleph-text-muted);font-family:var(--font-mono,monospace);font-size:9px;letter-spacing:4px}
+.visual-legend{position:absolute;z-index:2;right:7%;bottom:3%;display:flex;gap:1.4rem;color:var(--aleph-text-muted);font-family:var(--font-mono,monospace);font-size:.56rem;letter-spacing:.09em;white-space:nowrap}
+.visual-legend span{display:inline-flex;align-items:center;gap:.45rem}.legend-dot{width:.35rem;height:.35rem;border-radius:50%;background:var(--aleph-green)}.legend-line{width:1.7rem;height:1px;background:linear-gradient(90deg,var(--aleph-cyan),var(--aleph-blue))}
+@media(max-width:1050px){.hero{min-height:auto}.hero-grid{grid-template-columns:1fr;gap:2rem}.hero-content{max-width:52rem}h1{max-width:13ch;font-size:clamp(3.2rem,9vw,5.5rem)}.hero-visual{min-height:31rem;margin-top:-1rem;transform:none}.network-visual{width:min(100%,46rem);transform:none}}
+@media(max-width:640px){.hero{padding-block:3.5rem 3rem}.hero-eyebrow{font-size:.64rem}h1{max-width:11ch;font-size:clamp(2.9rem,14vw,4.25rem)}.hero-description{margin-top:1.7rem;font-size:1rem;line-height:1.7}.hero-actions{margin-top:1.9rem}.hero-status{align-items:flex-start;margin-top:2.2rem;line-height:1.55}.hero-visual{min-height:24rem;margin-top:-2rem}.visual-legend{position:static;justify-content:center;flex-wrap:wrap;margin-top:-2rem;white-space:normal}}
+</style>

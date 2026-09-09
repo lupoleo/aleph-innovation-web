@@ -1,0 +1,653 @@
+<section
+  id="about"
+  class="about section"
+  aria-labelledby="about-title"
+>
+  <div class="about-atmosphere" aria-hidden="true"></div>
+
+  <div class="container-wide about-container">
+    <header class="about-header">
+      <p class="about-eyebrow">ABOUT ALEPH INNOVATION</p>
+
+      <h2 id="about-title">
+        Small by design.
+        <span>Global by architecture.</span>
+      </h2>
+
+      <p class="about-lead">
+        Aleph Innovation is an independent AI engineering and R&amp;D venture
+        in formation in Gozo, Malta. We explore how deterministic software,
+        probabilistic models and specialized agents can be combined into
+        auditable systems for complex real-world decisions.
+      </p>
+    </header>
+
+    <div class="about-grid">
+      <article class="about-story">
+        <div class="about-story-topline">
+          <span>GOZO · MALTA</span>
+          <span>AI ENGINEERING &amp; R&amp;D</span>
+        </div>
+
+        <div class="about-story-copy">
+          <h3>Engineering globally relevant systems from a small Mediterranean island.</h3>
+
+          <p>
+            Aleph Innovation starts from a simple premise: advanced engineering
+            does not need to originate from a large technology hub. What matters
+            is the quality of the architecture, the discipline of the
+            implementation and the ability to test what a system actually does.
+          </p>
+
+          <p>
+            Gozo is our operating context and part of our identity, while the
+            systems we build are conceived for international application.
+          </p>
+        </div>
+
+        <div class="about-route" aria-label="Aleph Innovation operating model">
+          <div class="about-route-node">
+            <span class="route-dot"></span>
+            <strong>GOZO</strong>
+            <small>Local engineering</small>
+          </div>
+
+          <div class="about-route-line" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <div class="about-route-node">
+            <span class="route-dot route-dot-cyan"></span>
+            <strong>SYSTEMS</strong>
+            <small>Architecture &amp; validation</small>
+          </div>
+
+          <div class="about-route-line about-route-line-blue" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <div class="about-route-node">
+            <span class="route-dot route-dot-blue"></span>
+            <strong>GLOBAL</strong>
+            <small>International application</small>
+          </div>
+        </div>
+      </article>
+
+      <aside class="about-principles" aria-label="Aleph Innovation principles">
+        <div class="about-principles-heading">
+          <span class="principles-index">01—04</span>
+          <span>OPERATING PRINCIPLES</span>
+        </div>
+
+        <div class="principle">
+          <span class="principle-number">01</span>
+          <div>
+            <h3>Engineering first</h3>
+            <p>
+              Architecture, contracts, evidence and tests come before
+              fashionable AI abstractions.
+            </p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <span class="principle-number">02</span>
+          <div>
+            <h3>Local where practical</h3>
+            <p>
+              Local models and compute are used when they improve control,
+              privacy, reproducibility or economics.
+            </p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <span class="principle-number">03</span>
+          <div>
+            <h3>Cloud where valuable</h3>
+            <p>
+              External models and services are selected deliberately when
+              capability justifies the dependency.
+            </p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <span class="principle-number">04</span>
+          <div>
+            <h3>Build in public</h3>
+            <p>
+              Decisions, experiments, validation results and lessons learned
+              become part of the technical record.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="about-status">
+      <div class="about-status-label">
+        <span class="status-pulse" aria-hidden="true"></span>
+        CURRENT STATUS
+      </div>
+
+      <p>
+        Aleph Innovation is a pre-incorporation R&amp;D venture in Gozo, Malta.
+        Its first public engineering project is
+        <a href="#projects">Agentic Portfolio</a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    position: relative;
+    overflow: hidden;
+
+    border-bottom: 1px solid rgba(90, 180, 220, 0.08);
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(2, 11, 24, 0.08),
+        rgba(7, 27, 48, 0.2),
+        rgba(2, 11, 24, 0.08)
+      );
+  }
+
+  .about-atmosphere {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background:
+      radial-gradient(
+        circle at 12% 68%,
+        rgba(85, 214, 158, 0.055),
+        transparent 28rem
+      ),
+      radial-gradient(
+        circle at 88% 24%,
+        rgba(49, 92, 255, 0.07),
+        transparent 34rem
+      );
+  }
+
+  .about-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-header {
+    max-width: 72rem;
+    margin-bottom: clamp(3.5rem, 6vw, 5.5rem);
+  }
+
+  .about-eyebrow {
+    margin: 0 0 1.35rem;
+
+    color: var(--aleph-green);
+
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.22em;
+  }
+
+  .about-header h2 {
+    max-width: 15ch;
+    margin: 0;
+
+    color: var(--aleph-text-primary);
+
+    font-size: clamp(3rem, 4.8vw, 5.2rem);
+    line-height: 1.01;
+    letter-spacing: -0.05em;
+  }
+
+  .about-header h2 span {
+    display: block;
+
+    margin-top: 0.08em;
+
+    background:
+      linear-gradient(
+        92deg,
+        var(--aleph-green),
+        var(--aleph-cyan) 48%,
+        var(--aleph-blue-bright)
+      );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .about-lead {
+    max-width: 59rem;
+    margin: 1.8rem 0 0;
+
+    color: var(--aleph-text-secondary);
+
+    font-size: clamp(1rem, 1.2vw, 1.14rem);
+    line-height: 1.75;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1.12fr)
+      minmax(20rem, 0.88fr);
+
+    gap: clamp(1.5rem, 3vw, 2.4rem);
+
+    align-items: stretch;
+  }
+
+  .about-story,
+  .about-principles {
+    position: relative;
+
+    border: 1px solid rgba(90, 180, 220, 0.23);
+    border-radius: 1rem;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(10, 37, 61, 0.7),
+        rgba(3, 18, 34, 0.84)
+      );
+
+    box-shadow:
+      inset 0 1px rgba(255, 255, 255, 0.025),
+      0 16px 44px rgba(0, 0, 0, 0.11);
+  }
+
+  .about-story {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 34rem;
+
+    padding: clamp(1.8rem, 3vw, 2.7rem);
+  }
+
+  .about-story::before,
+  .about-principles::before {
+    content: "";
+
+    position: absolute;
+    top: -1px;
+    left: 1.6rem;
+    right: 1.6rem;
+
+    height: 1px;
+  }
+
+  .about-story::before {
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        var(--aleph-green),
+        var(--aleph-cyan),
+        transparent
+      );
+  }
+
+  .about-principles::before {
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        var(--aleph-cyan),
+        var(--aleph-blue),
+        transparent
+      );
+  }
+
+  .about-story-topline,
+  .about-principles-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 1rem;
+
+    color: var(--aleph-text-muted);
+
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+  }
+
+  .about-story-topline span:first-child {
+    color: var(--aleph-green);
+  }
+
+  .about-story-copy {
+    max-width: 45rem;
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .about-story-copy h3 {
+    max-width: 22ch;
+    margin: 0;
+
+    color: var(--aleph-text-primary);
+
+    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+
+  .about-story-copy p {
+    max-width: 43rem;
+    margin: 1.35rem 0 0;
+
+    color: var(--aleph-text-secondary);
+
+    font-size: 0.94rem;
+    line-height: 1.75;
+  }
+
+  .about-route {
+    display: grid;
+    grid-template-columns:
+      auto
+      minmax(2rem, 1fr)
+      auto
+      minmax(2rem, 1fr)
+      auto;
+
+    align-items: center;
+
+    gap: 0.9rem;
+
+    margin-top: auto;
+    padding-top: 3.2rem;
+  }
+
+  .about-route-node {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "dot title"
+      ". note";
+
+    column-gap: 0.55rem;
+
+    align-items: center;
+  }
+
+  .route-dot {
+    grid-area: dot;
+
+    width: 0.42rem;
+    height: 0.42rem;
+
+    border-radius: 50%;
+
+    background: var(--aleph-green);
+
+    box-shadow:
+      0 0 12px rgba(85, 214, 158, 0.55);
+  }
+
+  .route-dot-cyan {
+    background: var(--aleph-cyan);
+
+    box-shadow:
+      0 0 12px rgba(22, 201, 216, 0.5);
+  }
+
+  .route-dot-blue {
+    background: var(--aleph-blue-bright);
+
+    box-shadow:
+      0 0 12px rgba(47, 131, 255, 0.55);
+  }
+
+  .about-route-node strong {
+    grid-area: title;
+
+    color: var(--aleph-text-primary);
+
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .about-route-node small {
+    grid-area: note;
+
+    margin-top: 0.18rem;
+
+    color: var(--aleph-text-muted);
+
+    font-size: 0.62rem;
+
+    white-space: nowrap;
+  }
+
+  .about-route-line {
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(85, 214, 158, 0.25),
+        rgba(22, 201, 216, 0.72)
+      );
+  }
+
+  .about-route-line-blue {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(22, 201, 216, 0.35),
+        rgba(49, 92, 255, 0.78)
+      );
+  }
+
+  /* =======================================================
+     Principles
+     ======================================================= */
+
+  .about-principles {
+    padding: clamp(1.8rem, 3vw, 2.4rem);
+  }
+
+  .about-principles-heading {
+    margin-bottom: 1.5rem;
+
+    color: var(--aleph-cyan);
+  }
+
+  .principles-index {
+    color: var(--aleph-text-muted);
+  }
+
+  .principle {
+    display: grid;
+    grid-template-columns: 2.2rem minmax(0, 1fr);
+
+    gap: 1rem;
+
+    padding-block: 1.35rem;
+
+    border-top: 1px solid rgba(90, 180, 220, 0.11);
+  }
+
+  .principle:last-child {
+    border-bottom: 1px solid rgba(90, 180, 220, 0.11);
+  }
+
+  .principle-number {
+    padding-top: 0.2rem;
+
+    color: var(--aleph-cyan);
+
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+  }
+
+  .principle h3 {
+    margin: 0;
+
+    color: var(--aleph-text-primary);
+
+    font-size: 1.05rem;
+    line-height: 1.3;
+  }
+
+  .principle p {
+    margin: 0.45rem 0 0;
+
+    color: var(--aleph-text-muted);
+
+    font-size: 0.78rem;
+    line-height: 1.58;
+  }
+
+  /* =======================================================
+     Status
+     ======================================================= */
+
+  .about-status {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+
+    gap: clamp(2rem, 4vw, 4rem);
+
+    align-items: center;
+
+    margin-top: 2rem;
+    padding: 1.35rem 1.6rem;
+
+    border-top: 1px solid rgba(90, 180, 220, 0.1);
+    border-bottom: 1px solid rgba(90, 180, 220, 0.1);
+  }
+
+  .about-status-label {
+    display: flex;
+    align-items: center;
+
+    gap: 0.65rem;
+
+    color: var(--aleph-green);
+
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+
+    letter-spacing: 0.16em;
+
+    white-space: nowrap;
+  }
+
+  .status-pulse {
+    width: 0.42rem;
+    height: 0.42rem;
+
+    border-radius: 50%;
+
+    background: var(--aleph-green);
+
+    box-shadow:
+      0 0 10px rgba(85, 214, 158, 0.5);
+  }
+
+  .about-status p {
+    max-width: 62rem;
+    margin: 0;
+
+    color: var(--aleph-text-secondary);
+
+    font-size: 0.82rem;
+    line-height: 1.65;
+  }
+
+  .about-status a {
+    color: var(--aleph-cyan);
+    font-weight: 600;
+  }
+
+  .about-status a:hover {
+    color: var(--aleph-text-primary);
+  }
+
+  /* =======================================================
+     Responsive
+     ======================================================= */
+
+  @media (max-width: 920px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-story {
+      min-height: auto;
+    }
+
+    .about-route {
+      margin-top: 2.5rem;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .about-header h2 {
+      font-size: clamp(2.7rem, 11vw, 4rem);
+    }
+
+    .about-story,
+    .about-principles {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .about-story-topline {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .about-route {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .about-route-line {
+      width: 1px;
+      height: 1.8rem;
+
+      margin-left: 0.2rem;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(85, 214, 158, 0.3),
+          rgba(22, 201, 216, 0.72)
+        );
+    }
+
+    .about-route-line-blue {
+      background:
+        linear-gradient(
+          180deg,
+          rgba(22, 201, 216, 0.35),
+          rgba(49, 92, 255, 0.78)
+        );
+    }
+
+    .about-status {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .about-status-label {
+      white-space: normal;
+    }
+  }
+</style>

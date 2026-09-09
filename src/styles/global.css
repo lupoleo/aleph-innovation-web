@@ -1,0 +1,423 @@
+@import "./tokens.css";
+
+/* =========================================================
+   ALEPH INNOVATION — GLOBAL STYLES
+   WEB-1B.2
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   RESET / BASELINE
+   --------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  background: var(--color-background-primary);
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-body);
+
+  color: var(--color-text-primary);
+  background:
+    radial-gradient(
+      circle at 80% 8%,
+      rgba(49, 92, 255, 0.12),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(85, 214, 158, 0.07),
+      transparent 24rem
+    ),
+    var(--aleph-gradient-page);
+
+  overflow-x: hidden;
+}
+
+/* ---------------------------------------------------------
+   MEDIA
+   --------------------------------------------------------- */
+
+img,
+picture,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+video {
+  max-width: 100%;
+}
+
+/* ---------------------------------------------------------
+   TYPOGRAPHY
+   --------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1 {
+  font-size: clamp(2.8rem, 7vw, var(--font-size-6xl));
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, var(--font-size-4xl));
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, var(--font-size-3xl));
+}
+
+h4 {
+  font-size: var(--font-size-2xl);
+}
+
+p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+strong {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+small {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+}
+
+code {
+  font-size: 0.94em;
+}
+
+pre {
+  margin: 0;
+  overflow-x: auto;
+}
+
+/* ---------------------------------------------------------
+   LINKS
+   --------------------------------------------------------- */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:not([class]) {
+  color: var(--aleph-cyan);
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+
+  transition:
+    color var(--duration-fast) var(--ease-standard),
+    text-decoration-color var(--duration-fast) var(--ease-standard);
+}
+
+a:not([class]):hover {
+  color: var(--aleph-green);
+}
+
+/* ---------------------------------------------------------
+   LISTS
+   --------------------------------------------------------- */
+
+ul,
+ol {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+li + li {
+  margin-top: var(--space-2);
+}
+
+/* ---------------------------------------------------------
+   FORM ELEMENTS
+   --------------------------------------------------------- */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  background: var(--aleph-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ---------------------------------------------------------
+   FOCUS / ACCESSIBILITY
+   --------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--aleph-cyan);
+  outline-offset: 4px;
+}
+
+::selection {
+  color: var(--aleph-text-primary);
+  background: rgba(22, 201, 216, 0.28);
+}
+
+/* ---------------------------------------------------------
+   DOCUMENT / PAGE LAYOUT
+   --------------------------------------------------------- */
+
+.site-root {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+}
+
+.site-main {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.container {
+  width: min(
+    calc(100% - (2 * var(--page-padding-inline))),
+    var(--content-max)
+  );
+
+  margin-inline: auto;
+}
+
+.container-wide {
+  width: min(
+    calc(100% - (2 * var(--page-padding-inline))),
+    var(--content-wide)
+  );
+
+  margin-inline: auto;
+}
+
+.container-reading {
+  width: min(
+    calc(100% - (2 * var(--page-padding-inline))),
+    var(--content-reading)
+  );
+
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-padding-block);
+}
+
+.section-compact {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* ---------------------------------------------------------
+   CONTENT UTILITIES
+   --------------------------------------------------------- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  margin-bottom: var(--space-4);
+
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+
+  color: var(--aleph-green);
+
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: var(--aleph-gradient-primary);
+}
+
+.lead {
+  max-width: 52rem;
+
+  font-size: clamp(
+    var(--font-size-lg),
+    2vw,
+    var(--font-size-xl)
+  );
+
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+
+.text-gradient {
+  color: transparent;
+  background: var(--aleph-gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* ---------------------------------------------------------
+   SURFACES
+   --------------------------------------------------------- */
+
+.aleph-surface {
+  background: var(--aleph-gradient-surface);
+
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.aleph-surface-elevated {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(13, 41, 68, 0.94),
+      rgba(4, 20, 38, 0.92)
+    );
+
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+
+  box-shadow: var(--shadow-md);
+}
+
+/* ---------------------------------------------------------
+   DIVIDERS
+   --------------------------------------------------------- */
+
+.aleph-divider {
+  width: 100%;
+  height: 1px;
+
+  border: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(22, 201, 216, 0.34),
+      rgba(49, 92, 255, 0.34),
+      transparent
+    );
+}
+
+/* ---------------------------------------------------------
+   SCREEN READER UTILITY
+   --------------------------------------------------------- */
+
+.sr-only {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  border: 0;
+}
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  body {
+    font-size: 0.975rem;
+  }
+
+  .section {
+    padding-block: clamp(3rem, 12vw, 5rem);
+  }
+}

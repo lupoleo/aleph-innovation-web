@@ -1,0 +1,521 @@
+/* =========================================================
+   ALEPH INNOVATION — BACKGROUND SYSTEM
+   WEB-1B.3
+
+   Purpose:
+   - create a seamless dark visual environment
+   - extend the visual language of the Aleph banner
+   - introduce restrained network/grid motifs
+   - preserve readability and performance
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   ROOT BACKGROUND LAYER
+   --------------------------------------------------------- */
+
+.aleph-background {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+
+  pointer-events: none;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 82% 14%,
+      rgba(49, 92, 255, 0.11),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 16% 22%,
+      rgba(85, 214, 158, 0.07),
+      transparent 26rem
+    ),
+    radial-gradient(
+      circle at 50% 72%,
+      rgba(22, 201, 216, 0.035),
+      transparent 34rem
+    ),
+    var(--aleph-gradient-page);
+}
+
+
+/* ---------------------------------------------------------
+   ATMOSPHERIC GLOWS
+   --------------------------------------------------------- */
+
+.aleph-background::before,
+.aleph-background::after {
+  content: "";
+  position: absolute;
+
+  width: 46rem;
+  height: 46rem;
+
+  border-radius: 50%;
+
+  filter: blur(80px);
+  opacity: 0.32;
+}
+
+.aleph-background::before {
+  top: -18rem;
+  right: -12rem;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(49, 92, 255, 0.22),
+      rgba(22, 201, 216, 0.08) 42%,
+      transparent 72%
+    );
+}
+
+.aleph-background::after {
+  left: -18rem;
+  bottom: -24rem;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(85, 214, 158, 0.18),
+      rgba(22, 201, 216, 0.06) 44%,
+      transparent 72%
+    );
+}
+
+
+/* ---------------------------------------------------------
+   NETWORK GRID
+   --------------------------------------------------------- */
+
+.aleph-network-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  pointer-events: none;
+
+  opacity: 0.24;
+
+  background-image:
+    linear-gradient(
+      rgba(49, 92, 255, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(49, 92, 255, 0.045) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    72px 72px,
+    72px 72px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.85),
+      rgba(0, 0, 0, 0.2) 58%,
+      transparent 92%
+    );
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.85),
+      rgba(0, 0, 0, 0.2) 58%,
+      transparent 92%
+    );
+}
+
+
+/* ---------------------------------------------------------
+   NETWORK NODE FIELD
+   --------------------------------------------------------- */
+
+.aleph-node-field {
+  position: absolute;
+
+  width: 42rem;
+  height: 42rem;
+
+  pointer-events: none;
+
+  opacity: 0.48;
+
+  background-image:
+    radial-gradient(
+      circle at center,
+      rgba(22, 201, 216, 0.65) 0 1.5px,
+      transparent 2px
+    );
+
+  background-size: 56px 56px;
+
+  mask-image:
+    radial-gradient(
+      circle,
+      black 20%,
+      rgba(0, 0, 0, 0.7) 42%,
+      transparent 74%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      circle,
+      black 20%,
+      rgba(0, 0, 0, 0.7) 42%,
+      transparent 74%
+    );
+}
+
+
+/* ---------------------------------------------------------
+   HERO ATMOSPHERE
+   --------------------------------------------------------- */
+
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at 76% 38%,
+      rgba(22, 201, 216, 0.10),
+      transparent 32%
+    ),
+    radial-gradient(
+      ellipse at 88% 30%,
+      rgba(49, 92, 255, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(2, 11, 24, 0.04),
+      rgba(2, 11, 24, 0.24)
+    );
+}
+
+
+/* ---------------------------------------------------------
+   HERO NETWORK ARC
+   --------------------------------------------------------- */
+
+.hero-network-arc {
+  position: absolute;
+
+  width: min(60vw, 58rem);
+  aspect-ratio: 1;
+
+  top: 6%;
+  right: -12%;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  opacity: 0.44;
+
+  border:
+    1px solid rgba(22, 201, 216, 0.10);
+
+  box-shadow:
+    0 0 80px rgba(22, 201, 216, 0.06),
+    inset 0 0 80px rgba(49, 92, 255, 0.05);
+}
+
+
+/* ---------------------------------------------------------
+   HORIZON / MEDITERRANEAN TRANSITION
+   --------------------------------------------------------- */
+
+.aleph-horizon {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 14rem;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(22, 201, 216, 0.025) 30%,
+      rgba(49, 92, 255, 0.05) 64%,
+      rgba(2, 11, 24, 0.42) 100%
+    );
+}
+
+.aleph-horizon::after {
+  content: "";
+
+  position: absolute;
+
+  left: 4%;
+  right: 4%;
+  bottom: 3.5rem;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(85, 214, 158, 0.34),
+      rgba(22, 201, 216, 0.42),
+      rgba(49, 92, 255, 0.34),
+      transparent
+    );
+
+  box-shadow:
+    0 0 24px rgba(22, 201, 216, 0.14);
+}
+
+
+/* ---------------------------------------------------------
+   SECTION ATMOSPHERE
+   --------------------------------------------------------- */
+
+.section-atmosphere {
+  position: relative;
+  isolation: isolate;
+}
+
+.section-atmosphere::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 15% 45%,
+      rgba(85, 214, 158, 0.035),
+      transparent 22rem
+    ),
+    radial-gradient(
+      circle at 88% 55%,
+      rgba(49, 92, 255, 0.04),
+      transparent 24rem
+    );
+}
+
+
+/* ---------------------------------------------------------
+   TECHNICAL GRID SURFACE
+   --------------------------------------------------------- */
+
+.technical-grid {
+  position: relative;
+
+  background:
+    linear-gradient(
+      rgba(90, 180, 220, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(90, 180, 220, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 36px 36px;
+}
+
+
+/* ---------------------------------------------------------
+   EDGE GLOW
+   --------------------------------------------------------- */
+
+.aleph-edge-glow {
+  position: relative;
+}
+
+.aleph-edge-glow::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -1px;
+
+  z-index: -1;
+
+  border-radius: inherit;
+
+  opacity: 0.65;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(85, 214, 158, 0.16),
+      rgba(22, 201, 216, 0.10),
+      rgba(49, 92, 255, 0.16)
+    );
+
+  filter: blur(16px);
+}
+
+
+/* ---------------------------------------------------------
+   NETWORK LINES UTILITY
+   --------------------------------------------------------- */
+
+.network-lines {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.18;
+
+  background:
+    linear-gradient(
+      32deg,
+      transparent 48%,
+      rgba(22, 201, 216, 0.12) 49%,
+      rgba(22, 201, 216, 0.12) 50%,
+      transparent 51%
+    ),
+    linear-gradient(
+      148deg,
+      transparent 48%,
+      rgba(49, 92, 255, 0.10) 49%,
+      rgba(49, 92, 255, 0.10) 50%,
+      transparent 51%
+    );
+
+  background-size:
+    220px 180px,
+    260px 220px;
+}
+
+
+/* ---------------------------------------------------------
+   CONTENT FADE
+   --------------------------------------------------------- */
+
+.content-fade-top {
+  position: relative;
+}
+
+.content-fade-top::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 8rem;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(2, 11, 24, 0.72),
+      transparent
+    );
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------- */
+
+@media (max-width: 960px) {
+  .aleph-network-grid {
+    background-size:
+      56px 56px,
+      56px 56px;
+
+    opacity: 0.18;
+  }
+
+  .hero-network-arc {
+    width: 70vw;
+    right: -28%;
+    opacity: 0.30;
+  }
+
+  .aleph-node-field {
+    width: 30rem;
+    height: 30rem;
+
+    opacity: 0.32;
+  }
+}
+
+@media (max-width: 640px) {
+  .aleph-background::before,
+  .aleph-background::after {
+    width: 30rem;
+    height: 30rem;
+
+    filter: blur(70px);
+  }
+
+  .aleph-network-grid {
+    opacity: 0.12;
+
+    background-size:
+      44px 44px,
+      44px 44px;
+  }
+
+  .hero-network-arc {
+    width: 28rem;
+
+    top: 12%;
+    right: -16rem;
+
+    opacity: 0.22;
+  }
+
+  .aleph-node-field {
+    width: 22rem;
+    height: 22rem;
+
+    opacity: 0.22;
+  }
+
+  .aleph-horizon {
+    height: 10rem;
+  }
+
+  .aleph-horizon::after {
+    bottom: 2.5rem;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .aleph-background,
+  .aleph-background::before,
+  .aleph-background::after,
+  .aleph-network-grid,
+  .aleph-node-field,
+  .hero-network-arc,
+  .network-lines {
+    animation: none !important;
+    transition: none !important;
+  }
+}

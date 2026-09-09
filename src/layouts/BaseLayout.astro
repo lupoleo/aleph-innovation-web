@@ -1,0 +1,40 @@
+---
+import Header from "../components/Header.astro";
+
+const {
+  title = "Aleph Innovation",
+  description = "Aleph Innovation is an AI venture in formation based in Gozo, Malta, focused on the engineering of Agentic AI systems that combine deterministic software with probabilistic AI."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{title}</title>
+
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#020b18" />
+
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+
+  <body>
+    <div class="aleph-background" aria-hidden="true"></div>
+    <div class="aleph-network-grid" aria-hidden="true"></div>
+
+    <div class="site-root">
+     <Header />
+      <main class="site-main">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  @import "../styles/global.css";
+  @import "../styles/backgrounds.css";
+</style>
