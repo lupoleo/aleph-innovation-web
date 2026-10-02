@@ -367,3 +367,4 @@ Its architecture is intentionally being documented while implementation progress
 For that reason, this Wiki should be read as a versioned engineering record rather than as a claim that the system is a finished investment product.
 
 The executable repository remains the source of truth for implemented behaviour.
+

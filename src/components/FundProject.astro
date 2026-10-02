@@ -1,0 +1,79 @@
+---
+const revolutUrl = "https://revolut.me/leoncinip";
+---
+
+<section class="fund-project" id="fund-project" aria-labelledby="fund-project-title">
+  <div class="fund-project__inner">
+    <div class="fund-project__eyebrow">FUND THE PROJECT</div>
+    <div class="fund-project__grid">
+      <div class="fund-project__content">
+        <h2 id="fund-project-title">Support independent R&amp;D.</h2>
+        <p class="fund-project__lead">Agentic Portfolio is being developed as an independent research and engineering project within Aleph Innovation.</p>
+        <p>If you find the work useful and would like to support its continued development, you can make a voluntary contribution through Revolut.</p>
+
+        <div class="fund-project__actions">
+          <a class="fund-project__button fund-project__button--primary" href={revolutUrl} target="_blank" rel="noopener noreferrer" aria-label="Support Aleph Innovation via Revolut — opens in a new tab">
+            <span>Support via Revolut</span><span aria-hidden="true">↗</span>
+          </a>
+          <a class="fund-project__button fund-project__button--secondary" href="/#contact">
+            <span>Get in touch</span><span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <p class="fund-project__disclaimer">Contributions are voluntary support for the project. They do not represent an investment, purchase of equity, financial product, or entitlement to future returns.</p>
+      </div>
+
+      <aside class="fund-project__options" aria-label="Ways to support the project">
+        <article class="fund-project__option">
+          <div class="fund-project__option-index" aria-hidden="true">01</div>
+          <div>
+            <h3>Support without contact details</h3>
+            <p>No contact information needs to be provided to Aleph Innovation. Choose your contribution amount directly through Revolut.</p>
+          </div>
+        </article>
+
+        <article class="fund-project__option">
+          <div class="fund-project__option-index" aria-hidden="true">02</div>
+          <div>
+            <h3>Support &amp; stay in touch</h3>
+            <p>If you would also like to discuss the project, collaboration or future funding, use the separate contact channel after supporting.</p>
+          </div>
+        </article>
+
+        <div class="fund-project__principles" aria-label="Funding principles">
+          <span>Voluntary support</span><span>No equity</span><span>No financial return</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+.fund-project{position:relative;padding:clamp(3.5rem,6vw,5.5rem) 1.5rem;overflow:hidden}
+.fund-project::before{content:"";position:absolute;width:34rem;height:34rem;right:-14rem;top:2rem;border-radius:50%;background:radial-gradient(circle,rgba(55,214,156,.09) 0%,rgba(55,214,156,0) 70%);pointer-events:none}
+.fund-project__inner{position:relative;width:min(100%,1180px);margin:0 auto}
+.fund-project__eyebrow{margin-bottom:1.35rem;font-size:.74rem;font-weight:700;letter-spacing:.18em;color:var(--color-accent,#59e0b1)}
+.fund-project__grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(20rem,.85fr);gap:clamp(2rem,6vw,5.5rem);align-items:start;padding:clamp(2rem,4vw,3.5rem);border:1px solid rgba(148,163,184,.16);border-radius:1.25rem;background:linear-gradient(135deg,rgba(15,27,48,.92),rgba(8,17,32,.78));box-shadow:0 24px 80px rgba(0,0,0,.16)}
+.fund-project__content h2{margin:0 0 1.25rem;max-width:12ch;font-size:clamp(2.25rem,5vw,4.4rem);line-height:.98;letter-spacing:-.045em}
+.fund-project__content p{max-width:42rem;color:var(--color-text-muted,#aebbd0);line-height:1.75}
+.fund-project__lead{margin-top:0;font-size:clamp(1.05rem,1.5vw,1.2rem);color:var(--color-text,#edf4ff)!important}
+.fund-project__actions{display:flex;flex-wrap:wrap;gap:.85rem;margin:2rem 0 1.5rem}
+.fund-project__button{display:inline-flex;align-items:center;justify-content:center;gap:.7rem;min-height:3rem;padding:.8rem 1.15rem;border-radius:.7rem;font-size:.92rem;font-weight:700;text-decoration:none;transition:transform 160ms ease,border-color 160ms ease,background 160ms ease}
+.fund-project__button:hover{transform:translateY(-2px)}
+.fund-project__button:focus-visible{outline:2px solid var(--color-accent,#59e0b1);outline-offset:3px}
+.fund-project__button--primary{border:1px solid rgba(89,224,177,.48);background:rgba(89,224,177,.12);color:var(--color-accent,#59e0b1)}
+.fund-project__button--primary:hover{border-color:rgba(89,224,177,.8);background:rgba(89,224,177,.18)}
+.fund-project__button--secondary{border:1px solid rgba(148,163,184,.22);background:rgba(148,163,184,.06);color:var(--color-text,#edf4ff)}
+.fund-project__button--secondary:hover{border-color:rgba(148,163,184,.42);background:rgba(148,163,184,.1)}
+.fund-project__disclaimer{margin:0;padding:1.15rem 0 .35rem;border-top:1px solid rgba(148,163,184,.12);font-size:.78rem;line-height:1.55!important;color:var(--color-text-subtle,#7f8da3)!important}
+.fund-project__options{display:grid;gap:1rem}
+.fund-project__option{display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:1.35rem;border:1px solid rgba(148,163,184,.14);border-radius:.9rem;background:rgba(4,12,25,.34)}
+.fund-project__option-index{padding-top:.15rem;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.72rem;letter-spacing:.08em;color:var(--color-accent,#59e0b1)}
+.fund-project__option h3{margin:0 0 .5rem;font-size:1rem;color:var(--color-text,#edf4ff)}
+.fund-project__option p{margin:0;font-size:.88rem;line-height:1.65;color:var(--color-text-muted,#aebbd0)}
+.fund-project__principles{display:flex;flex-wrap:wrap;gap:.55rem;padding-top:.25rem}
+.fund-project__principles span{padding:.42rem .62rem;border:1px solid rgba(89,224,177,.18);border-radius:999px;background:rgba(89,224,177,.045);font-size:.7rem;letter-spacing:.045em;color:var(--color-text-muted,#aebbd0)}
+@media(max-width:860px){.fund-project__grid{grid-template-columns:1fr}.fund-project__content h2{max-width:14ch}}
+@media(max-width:560px){.fund-project{padding-inline:1rem}.fund-project__grid{padding:1.35rem;border-radius:1rem}.fund-project__actions{flex-direction:column}.fund-project__button{width:100%}.fund-project__option{padding:1.1rem}}
+@media(prefers-reduced-motion:reduce){.fund-project__button{transition:none}.fund-project__button:hover{transform:none}}
+</style>

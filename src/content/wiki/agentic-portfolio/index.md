@@ -83,7 +83,7 @@ incrementally as WEB-1C evolves.
 The executable implementation remains authoritative in the Agentic Portfolio
 software repository:
 
-`https://github.com/lupoleo/agentic_portfolio_stage2_5`
+`https://github.com/lupoleo/agentic_portfolio_stage4_0`
 
 The public website and Engineering Wiki are maintained separately in:
 

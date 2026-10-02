@@ -1,0 +1,337 @@
+---
+title: "Architecture"
+description: "Stage 4.0 end-to-end architecture of Agentic Portfolio: real portfolio state, production Scanner universe, research and directional scoring, human selection, deterministic portfolio construction and manual execution."
+project: "agentic-portfolio"
+section: "architecture"
+status: "published"
+updated: "2026-10-02"
+order: 20
+---
+
+import AgenticArchitectureMap from "../../../components/wiki/AgenticArchitectureMap.astro";
+
+# Architecture
+
+Agentic Portfolio Stage 4.0 turns the validated portfolio-analysis, Scanner, research, scoring and CIO components into **one auditable end-to-end workflow**.
+
+The current architecture has two independent upstream sources: the **real Fineco portfolio** and a **production exchange universe**. They converge into an auditable Research Watch Universe, from which the system builds evidence, performs research, scores directional LONG and SHORT hypotheses and may persist zero or more `TradeOpportunity` objects.
+
+Downstream portfolio construction starts only after an operator explicitly selects one opportunity. Real execution remains manual.
+
+<AgenticArchitectureMap />
+
+## Stage 4.0 architectural model
+
+Stage 4.0 is governed by five boundaries:
+
+1. **Real Portfolio + Production Scanner** — authoritative account state and external opportunity discovery remain distinct.
+2. **Research Watch Universe** — Scanner candidates and existing positions converge without losing provenance.
+3. **Evidence, Research & Directional Scoring** — source-backed evidence is interpreted by AI inside deterministic validation and versioned contracts.
+4. **Operator Selection + Portfolio Construction** — exactly one persisted opportunity enters the frozen Portfolio Filter and deterministic trade-construction path.
+5. **CIO + Execution Boundary** — the system may produce an `ExecutionPlan`; broker execution remains under human authority.
+
+Cross-cutting controls preserve **contracts and policy versions, provenance and lineage, persistence and replay, validation and fail-closed semantics**.
+
+## 1. Real state and proposed state are different domains
+
+Fineco is the source of truth for real positions, cash and broker-visible account state.
+
+A simulated or proposed trade must never mutate that state. Stage 4.0 keeps `REAL`, `SIMULATED` and `PROPOSED` states explicitly distinguishable throughout data contracts, persistence and reporting.
+
+A proposal becomes a real position only after external manual execution and a subsequent authoritative portfolio snapshot.
+
+This is a core system invariant:
+
+`REAL ≠ SIMULATED ≠ PROPOSED`
+
+## 2. Two upstream sources
+
+Stage 4.0 begins with two semantically different populations.
+
+### Real portfolio path
+
+The Fineco portfolio snapshot feeds portfolio analysis and canonical risk state.
+
+Existing positions then form the **Portfolio Watch Set**. A current position remains observable even when its instrument class or venue would not qualify for admission as a new Scanner candidate.
+
+This permits the system to research existing exposures whose appropriate action may be HOLD, REDUCE, EXIT or HEDGE rather than a new entry.
+
+### Production Scanner path
+
+The Scanner discovers a broad production exchange universe independently of the current portfolio.
+
+Listings pass through explicit gates for:
+
+- provider and listing identity;
+- canonical instrument taxonomy;
+- instrument eligibility;
+- market-data mapping and verification;
+- history quality and freshness;
+- exchange-session handling;
+- FX conversion where required;
+- liquidity.
+
+A passed gate never implies that a later gate will pass. Unsupported or ambiguous states remain explicit and fail closed.
+
+The result is the **Scanner Candidate Set**: listings admissible for new-opportunity research.
+
+## 3. Research Watch Universe
+
+The two upstream paths converge into:
+
+`Scanner Candidate Set ∪ Portfolio Watch Set`
+
+This union is the **Research Watch Universe**.
+
+A member may have provenance `NEW_CANDIDATE`, `CURRENT_POSITION`, or both. Deduplication does not collapse exact listing identity, security equivalence, market-data identity and economic risk-factor identity into a generic ticker match.
+
+The Research Watch Universe is therefore not just a list of symbols. It is an auditable boundary carrying identity, route, policy and provenance information into Research.
+
+## 4. Evidence and Research
+
+Research consumes the Research Watch Universe and produces normalized evidence and interpretation — not portfolio actions.
+
+The Stage 4 evidence path can include:
+
+- **TECHNICAL**
+- **MARKET**
+- **NEWS**
+- **FUNDAMENTAL**
+- **ANALYST / EXPECTATIONS**
+
+Evidence retains subject and source identity, provider, timestamps, evidence type, quality, relevance, semantic tags and degradation diagnostics.
+
+The LLM may extract, synthesize and classify evidence. Deterministic software continues to enforce schemas, timestamps, identity and provenance.
+
+An unavailable provider does not silently erase a candidate. It creates an explicit degraded evidence state that downstream policy can accept, penalize or block.
+
+### Research completeness
+
+Stage 4 distinguishes missing as-of facts from future uncertainty.
+
+`unknowns` represent facts that exist at the evidence date but were not supplied. `forward_uncertainties` represent future outcomes that present evidence cannot establish.
+
+This distinction prevents inherently unknowable future outcomes from being treated as if the research system simply failed to retrieve existing facts.
+
+## 5. Directional Opportunity Scoring
+
+Opportunity Scoring converts validated market, technical, risk and research inputs into zero or more `TradeOpportunity` objects.
+
+Every hypothesis is directional:
+
+`LONG` or `SHORT`
+
+The score measures support for that direction.
+
+### Shared company assessment
+
+FUNDAMENTAL and EXPECTATIONS describe the company rather than the trade direction. Stage 4 therefore produces one **shared, direction-free company assessment per listing**, based on Fundamental and Analyst evidence.
+
+That assessment is shared by LONG and SHORT hypotheses. Directional transformation occurs deterministically where required.
+
+THESIS and CATALYST remain directional.
+
+This separation prevents the same company fundamentals from being independently reinterpreted into inconsistent LONG and SHORT company frames.
+
+### Materialization gate
+
+A scored hypothesis does not automatically become a `TradeOpportunity`.
+
+Materialization requires the accepted research, direction, confidence and scoring conditions. A zero-opportunity run is valid.
+
+The current architecture therefore distinguishes:
+
+`Scored hypothesis ≠ TradeOpportunity`
+
+## 6. Shadow Ledger
+
+Every directional hypothesis with a confidence-adjusted score can also be recorded in the separate **Shadow Ledger**, whether or not it materializes into a `TradeOpportunity`.
+
+The ledger measures directional and index-relative outcomes after defined observation horizons.
+
+It has **no decision authority**.
+
+Its purpose is empirical: provide outcome evidence before changing score thresholds or related scoring policy.
+
+This creates a second path from scoring:
+
+`Directional hypothesis → Shadow Ledger → Outcome evidence`
+
+without feeding those measurements back into the current decision during the same run.
+
+## 7. Explicit operator selection
+
+Opportunity Scoring may persist zero, one or many opportunities.
+
+Downstream portfolio construction accepts **exactly one explicitly selected opportunity per evaluation run**.
+
+Ranking and selection are separate events. No opportunity enters the Portfolio Filter merely because it ranked first.
+
+There is therefore no implicit batch allocator between Opportunity Scoring and the Portfolio Filter.
+
+A future multi-opportunity optimizer would require a new architecture contract.
+
+## 8. Frozen Portfolio Filter
+
+The selected opportunity enters the frozen Portfolio Filter.
+
+The filter owns portfolio-aware gates including exposure and concentration, marginal risk, correlation and diversification effects, liquidity/history requirements, long/short compatibility and explicit rejection reasons.
+
+An opportunity can therefore be attractive in isolation and still fail portfolio suitability.
+
+`Opportunity quality ≠ Portfolio suitability`
+
+Stage 4 integrates the closed PF-1A through PF-1H semantics rather than silently changing them.
+
+## 9. Instrument construction and sizing
+
+After the selected opportunity passes the Portfolio Filter:
+
+1. **Instrument Selection** resolves the tradable representation.
+2. **Position Sizing** computes the deterministic proposed size.
+3. `TradeProposal` records side, quantity, reference price, notional, costs, rationale and constraints.
+
+The LLM does not own final position sizing.
+
+Prices, quantities, liquidity, portfolio weights and risk values remain deterministic finance responsibilities.
+
+## 10. Portfolio Simulator V2
+
+Portfolio Simulator V2 applies the exact proposal to a copy of the real snapshot and compares pre-trade and simulated post-trade metrics.
+
+The real portfolio remains unchanged.
+
+This transforms the decision question from:
+
+> Is this opportunity attractive?
+
+into:
+
+> What is the marginal portfolio effect of this exact proposed position?
+
+The simulation remains replayable from persisted inputs.
+
+## 11. CIO Decision
+
+The CIO Decision Engine consumes the proposal, simulation, validated evidence, deterministic constraints and unresolved risks.
+
+It may return outcomes such as `APPROVE`, `REJECT`, `REVIEW_REQUIRED` or `BLOCKED`, subject to the canonical contract.
+
+The CIO may reason over qualitative evidence, but it cannot override failed deterministic Scanner or Portfolio Filter gates, invent missing financial data or mutate portfolio state.
+
+An approved CIO decision produces an `ExecutionPlan`, not a broker order.
+
+## 12. ExecutionPlan and human authority
+
+The `ExecutionPlan` is the end of software authority.
+
+It can translate an approved proposal into a broker-ready manual instruction, but the system does not submit the order.
+
+The authority boundary is explicit:
+
+`SOFTWARE AUTHORITY → ExecutionPlan → HUMAN AUTHORITY → Manual Execution`
+
+The operator remains responsible for the real transaction.
+
+## 13. Authoritative outcome
+
+After manual execution, Fineco remains authoritative.
+
+A new portfolio snapshot captures the actual resulting account and position state. The system can link that observed state back to the proposal when possible.
+
+Unexecuted, partially executed and differently executed plans remain distinguishable.
+
+Learning and reporting operate on observed outcomes rather than assumed fills.
+
+## 14. Python / LLM responsibility boundary
+
+### Python owns deterministic finance
+
+Python components own parsing and normalization, instrument taxonomy, identity and mapping validation, exchange calendars, FX conversion, history and liquidity gates, technical indicators, quantitative metrics, portfolio constraints, marginal risk, instrument selection, sizing, simulation, persistence validation and audit integrity.
+
+### LLM responsibilities
+
+LLMs may summarize and compare evidence, extract structured claims, classify themes, catalysts and risks, generate thesis and counter-thesis, explain scores or CIO recommendations, identify missing evidence and produce operator-readable explanations from canonical data.
+
+### LLM prohibitions
+
+The LLM must not:
+
+- fabricate market data or sources;
+- resolve listing identity without deterministic validation;
+- override failed Scanner or Portfolio Filter gates;
+- calculate final position size outside the deterministic engine;
+- change real portfolio state;
+- infer that execution occurred;
+- hide missing inputs behind narrative confidence;
+- place broker orders.
+
+## 15. Persistence, lineage and replay
+
+Stage 4 persistence connects immutable or auditable records across the lifecycle:
+
+`listing → evidence → research → score → opportunity → selection → filter → instrument → size → simulation → decision → execution plan → observed outcome`
+
+Records preserve stable identifiers, schema and policy versions, timestamps, integrity links and enough canonical input to support replay without hidden dependence on process memory.
+
+The Stage 4 orchestration layer owns control flow, lineage and safety validation. Domain decisions remain owned by their respective services.
+
+## 16. Failure and degradation semantics
+
+Stage 4.0 prefers partial, explicit truth over fabricated completeness.
+
+Examples include:
+
+- provider acquisition failure → partial or failed acquisition state;
+- unknown instrument type → fail closed;
+- unsupported mapping → explicit unmapped state;
+- identity mismatch → history cannot be used for that listing;
+- stale or insufficient history → block the dependent path;
+- degraded Research provider → preserve the candidate and record degradation;
+- failed Portfolio Filter constraint → reject;
+- failed simulation → no CIO approval or execution plan;
+- ambiguous execution outcome → wait for authoritative reconciliation.
+
+Retries and caches may improve operations, but they do not change the meaning of a policy decision.
+
+## 17. Current Stage 4.0 status
+
+As of the current Stage 4.0 architecture baseline, the end-to-end live chain runs through the research and scoring path for both LONG and SHORT hypotheses.
+
+Research and Opportunity Scoring contracts have undergone explicit, versioned revisions during live validation, including directional scoring, research-completeness semantics, fundamental freshness and the shared company assessment.
+
+The first complete live Stage 4 opportunity is still governed by the materialization gate. The Shadow Ledger is collecting outcome evidence so future threshold changes can be evidence-driven rather than inferred from anecdotal runs.
+
+The architecture therefore remains an **active integration architecture**, even though many individual checkpoints are closed and frozen.
+
+## 18. Architectural invariants
+
+Stage 4.0 is governed by these invariants:
+
+1. Fineco remains authoritative for real portfolio state.
+2. `REAL`, `SIMULATED` and `PROPOSED` states never collapse into one another.
+3. Python owns deterministic finance.
+4. Missing evidence is explicit; it is never fabricated into a pass.
+5. Source listing identity is preserved through mapping and analysis.
+6. Existing positions remain observable independently of new-candidate eligibility.
+7. Evidence and AI interpretation retain distinct provenance.
+8. LONG and SHORT are explicit directional hypotheses.
+9. Company-frame assessment is shared and direction-free where required by the scoring contract.
+10. A scored hypothesis does not automatically become a `TradeOpportunity`.
+11. Shadow-ledger measurements do not affect current decisions.
+12. Exactly one opportunity is explicitly selected for each downstream evaluation.
+13. The frozen Portfolio Filter remains portfolio-aware and deterministic.
+14. Instrument selection and sizing precede exact portfolio simulation.
+15. Deterministic gates cannot be silently overridden by AI output.
+16. An approved CIO decision produces an execution plan, not an order.
+17. Broker execution remains manual.
+18. Only a subsequent authoritative snapshot establishes new real portfolio state.
+
+## Why this architecture
+
+Stage 4.0 is not an autonomous trading bot and not a collection of free-running LLM agents.
+
+It is an auditable decision-support workflow in which deterministic software, probabilistic reasoning and human authority have different responsibilities.
+
+The architecture is deliberately explicit about those boundaries because agentic capability becomes more useful when the system can also explain **what it knew, where it came from, which policy applied, which component made each decision and where machine authority ended**.
+
