@@ -1,5 +1,4 @@
 ---
-
 const navItems = [
   { label: "Paradigm", href: "/#paradigm" },
   { label: "Projects", href: "/#projects" },
@@ -40,6 +39,34 @@ const navItems = [
         }
       </ul>
     </nav>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation menu">
+        <span class="mobile-nav-label">Menu</span>
+
+        <span class="mobile-nav-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </summary>
+
+      <nav class="mobile-nav-panel" aria-label="Mobile navigation">
+        <ul>
+          {
+            navItems.map((item) => (
+              <li>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <a class="mobile-wiki-link" href="/wiki/">
+          Engineering Wiki
+        </a>
+      </nav>
+    </details>
 
     <a class="header-cta" href="/#wiki">
       Engineering Wiki
@@ -273,17 +300,123 @@ const navItems = [
     transform: translateY(-1px);
   }
 
+  .mobile-nav {
+    position: relative;
+    display: none;
+    justify-self: end;
+  }
+
+  .mobile-nav summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+
+    min-height: 2.7rem;
+    padding-inline: var(--space-4);
+
+    border: 1px solid var(--aleph-border-strong);
+    border-radius: var(--radius-pill);
+
+    background: rgba(7, 27, 48, 0.82);
+
+    color: var(--aleph-text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobile-nav summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-nav summary:focus-visible {
+    outline: 2px solid var(--aleph-cyan);
+    outline-offset: 3px;
+  }
+
+  .mobile-nav-icon {
+    display: grid;
+    gap: 3px;
+    width: 1rem;
+  }
+
+  .mobile-nav-icon span {
+    display: block;
+    width: 100%;
+    height: 1px;
+
+    background: currentColor;
+  }
+
+  .mobile-nav-panel {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+
+    width: min(20rem, calc(100vw - 2rem));
+    padding: 0.75rem;
+
+    border: 1px solid var(--aleph-border-strong);
+    border-radius: var(--radius-lg);
+
+    background: rgba(2, 11, 24, 0.98);
+    box-shadow: var(--shadow-md);
+  }
+
+  .mobile-nav-panel ul {
+    display: grid;
+    gap: 0.15rem;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
+  .mobile-nav-panel li {
+    margin: 0;
+  }
+
+  .mobile-nav-panel a {
+    display: block;
+
+    padding: 0.8rem 0.9rem;
+
+    border-radius: var(--radius-md);
+
+    color: var(--aleph-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .mobile-nav-panel a:hover,
+  .mobile-nav-panel a:focus-visible {
+    background: rgba(22, 201, 216, 0.07);
+    color: var(--aleph-text-primary);
+  }
+
+  .mobile-wiki-link {
+    margin-top: 0.5rem;
+
+    border: 1px solid rgba(22, 201, 216, 0.22);
+
+    color: var(--aleph-green) !important;
+  }
+
   @media (max-width: 1100px) {
     .header-inner {
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto 1fr auto;
     }
 
-    .desktop-nav {
+    .desktop-nav,
+    .header-cta {
       display: none;
     }
 
-    .header-cta {
-      justify-self: end;
+    .mobile-nav {
+      display: block;
+      grid-column: 3;
     }
   }
 
@@ -308,10 +441,28 @@ const navItems = [
 
     .header-cta {
       min-height: 2.35rem;
-
       padding-inline: var(--space-3);
-
       font-size: var(--font-size-xs);
+    }
+
+    .mobile-nav-panel {
+      width: 15rem;
+      max-width: calc(100vw - 2rem);
+      right: 0;
+      left: auto;
+      padding: 0.65rem;
+    }
+
+    .mobile-nav-panel ul {
+      gap: 0;
+    }
+
+    .mobile-nav-panel a {
+      padding: 0.52rem 0.65rem;
+    }
+
+    .mobile-wiki-link {
+      margin-top: 0.45rem;
     }
   }
 
