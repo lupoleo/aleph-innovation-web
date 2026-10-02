@@ -3,8 +3,13 @@ import Header from "../components/Header.astro";
 
 const {
   title = "Aleph Innovation",
-  description = "Aleph Innovation is an AI venture in formation based in Gozo, Malta, focused on the engineering of Agentic AI systems that combine deterministic software with probabilistic AI."
+  description = "Aleph Innovation is an AI venture in formation based in Gozo, Malta, focused on the engineering of Agentic AI systems that combine deterministic software with probabilistic AI.",
+  canonicalPath = Astro.url.pathname,
+  socialImage = "/og-image.png",
 } = Astro.props;
+
+const canonicalURL = new URL(canonicalPath, Astro.site);
+const socialImageURL = new URL(socialImage, Astro.site);
 ---
 
 <!doctype html>
@@ -15,10 +20,33 @@ const {
 
     <title>{title}</title>
 
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#020b18" />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
 
-    <link rel="icon" href="/favicon.svg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Aleph Innovation" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={socialImageURL} />
+  <meta
+    property="og:image:alt"
+    content="Aleph Innovation — Engineering Agentic AI Systems"
+  />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={socialImageURL} />
+  <meta
+    name="twitter:image:alt"
+    content="Aleph Innovation — Engineering Agentic AI Systems"
+  />
+
+  <meta name="theme-color" content="#020b18" />
+
+  <link rel="icon" href="/favicon.svg" />
+
   </head>
 
   <body>

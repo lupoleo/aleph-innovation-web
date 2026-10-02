@@ -11,7 +11,11 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={currentPath}
+>
   <section class="wiki-shell">
     <div class="container-wide wiki-shell-grid">
       <aside class="wiki-sidebar-column">
