@@ -193,6 +193,51 @@ const {
     color: var(--aleph-green);
   }
 
+  .wiki-article :global(table) {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+
+    margin: 1.5rem 0 2rem;
+
+    border-collapse: collapse;
+
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .wiki-article :global(th),
+  .wiki-article :global(td) {
+    padding: 0.7rem 1.1rem;
+
+    border-bottom: 1px solid rgba(90, 180, 220, 0.12);
+
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .wiki-article :global(th) {
+    border-bottom: 1px solid rgba(90, 180, 220, 0.35);
+
+    color: var(--aleph-green);
+
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .wiki-article :global(td) {
+    color: var(--aleph-text-secondary);
+  }
+
+  .wiki-article :global(tbody tr:hover) {
+    background: rgba(22, 201, 216, 0.035);
+  }
+
   @media (max-width: 900px) {
     .wiki-shell-grid {
       grid-template-columns: 1fr;

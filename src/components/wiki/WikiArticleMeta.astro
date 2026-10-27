@@ -9,7 +9,7 @@ const {
 const projectLabel =
   project === "agentic-portfolio"
     ? "AGENTIC PORTFOLIO"
-    : project.toUpperCase();
+    : project.replaceAll("-", " ").toUpperCase();
 
 const statusLabel = status.toUpperCase();
 

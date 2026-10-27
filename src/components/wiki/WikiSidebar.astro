@@ -4,47 +4,37 @@ const {
   project = "agentic-portfolio",
 } = Astro.props;
 
+const projects = {
+  "agentic-portfolio": {
+    name: "Agentic Portfolio",
+    source: "https://github.com/lupoleo/agentic_portfolio_stage4_0",
+    items: [
+      { label: "Agentic Portfolio", href: "/wiki/agentic-portfolio/" },
+      { label: "System Overview", href: "/wiki/agentic-portfolio/system-overview/" },
+      { label: "Architecture", href: "/wiki/agentic-portfolio/architecture/" },
+      { label: "Contracts & Data Types", href: "/wiki/agentic-portfolio/contracts/" },
+      { label: "Implementation", href: "/wiki/agentic-portfolio/implementation/" },
+      { label: "Testing & Validation", href: "/wiki/agentic-portfolio/testing/" },
+      { label: "Development History", href: "/wiki/agentic-portfolio/development-history/" },
+    ],
+  },
+  "environmental-monitoring": {
+    name: "Environmental Monitoring",
+    source: null,
+    items: [
+      { label: "Environmental Monitoring", href: "/wiki/environmental-monitoring/" },
+      { label: "Architecture & Gates", href: "/wiki/environmental-monitoring/architecture/" },
+      { label: "Gozo Risk Overview", href: "/wiki/environmental-monitoring/risk-overview/" },
+      { label: "Gozo Risk Map ↗", href: "/gozo-risk-map/index.html" },
+    ],
+  },
+};
+
+const current = projects[project] ?? projects["agentic-portfolio"];
+
 const items = [
-  {
-    label: "Wiki Home",
-    href: "/wiki/",
-    scope: "global",
-  },
-  {
-    label: "Agentic Portfolio",
-    href: "/wiki/agentic-portfolio/",
-    scope: "project",
-  },
-  {
-    label: "System Overview",
-    href: "/wiki/agentic-portfolio/system-overview/",
-    scope: "project",
-  },
-  {
-    label: "Architecture",
-    href: "/wiki/agentic-portfolio/architecture/",
-    scope: "project",
-  },
-  {
-    label: "Contracts & Data Types",
-    href: "/wiki/agentic-portfolio/contracts/",
-    scope: "project",
-  },
-  {
-    label: "Implementation",
-    href: "/wiki/agentic-portfolio/implementation/",
-    scope: "project",
-  },
-  {
-    label: "Testing & Validation",
-    href: "/wiki/agentic-portfolio/testing/",
-    scope: "project",
-  },
-  {
-    label: "Development History",
-    href: "/wiki/agentic-portfolio/development-history/",
-    scope: "project",
-  },
+  { label: "Wiki Home", href: "/wiki/" },
+  ...current.items.map((item, index) => ({ ...item, projectStart: index === 0 })),
 ];
 
 const normalize = (value) => {
@@ -58,7 +48,7 @@ const normalizedCurrentPath = normalize(currentPath);
 <nav class="wiki-sidebar" aria-label="Engineering Wiki">
   <div class="wiki-sidebar-heading">
     <span class="wiki-sidebar-kicker">ENGINEERING WIKI</span>
-    <strong>Agentic Portfolio</strong>
+    <strong>{current.name}</strong>
     <small>Public technical documentation</small>
   </div>
 
@@ -71,7 +61,7 @@ const normalizedCurrentPath = normalize(currentPath);
           normalize(item.href) === normalizedCurrentPath;
 
         return (
-          <li class:list={{ "project-start": item.label === "Agentic Portfolio" }}>
+          <li class:list={{ "project-start": item.projectStart }}>
             <a
               href={item.href}
               class:list={{ active }}
@@ -86,17 +76,21 @@ const normalizedCurrentPath = normalize(currentPath);
     }
   </ul>
 
-  <div class="wiki-sidebar-source">
-    <span>SOURCE OF TRUTH</span>
+  {
+    current.source && (
+      <div class="wiki-sidebar-source">
+        <span>SOURCE OF TRUTH</span>
 
-    <a
-      href="https://github.com/lupoleo/agentic_portfolio_stage4_0"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Python repository ↗
-    </a>
-  </div>
+        <a
+          href={current.source}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Python repository ↗
+        </a>
+      </div>
+    )
+  }
 </nav>
 
 <style>

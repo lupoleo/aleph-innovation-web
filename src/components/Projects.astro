@@ -138,6 +138,116 @@
         </div>
       </article>
 
+      <article
+        id="environmental-monitoring"
+        class="project-card project-card-featured"
+      >
+        <div class="project-topline">
+          <span class="project-status project-status-active">
+            RUNNING R&amp;D
+          </span>
+
+          <span class="project-number">02</span>
+        </div>
+
+        <div class="project-content">
+          <p class="project-domain">
+            ENVIRONMENT · GOZO · AGENTIC AI
+          </p>
+
+          <h3>Environmental Monitoring</h3>
+
+          <p class="project-lead">
+            An open, auditable early-warning system for Gozo that combines
+            low-cost sensors, public and satellite data, deterministic rules
+            and bounded AI agents.
+          </p>
+
+          <p class="project-description">
+            The project starts with the water cycle: sewage overflows, sea
+            outfalls, slurry discharges and flash floods. Every reading passes
+            explicit validation gates, every claim cites independent evidence,
+            and a named person approves every public advisory.
+          </p>
+
+          <div class="project-architecture">
+            <span>SENSE</span>
+            <i>→</i>
+            <span>VALIDATE</span>
+            <i>→</i>
+            <span>DETECT</span>
+            <i>→</i>
+            <span>CORROBORATE</span>
+            <i>→</i>
+            <span>HUMAN DECISION</span>
+          </div>
+
+          <div class="project-tags">
+            <span>IoT Sensors</span>
+            <span>LoRaWAN</span>
+            <span>PostGIS</span>
+            <span>Copernicus</span>
+            <span>Agentic AI</span>
+            <span>Validation Gates</span>
+          </div>
+
+          <div class="project-actions">
+            <a
+              class="project-action project-action-primary"
+              href="/wiki/environmental-monitoring/"
+            >
+              Explore the architecture
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a
+              class="project-action project-action-secondary"
+              href="/gozo-risk-map/index.html"
+            >
+              Gozo Risk Map
+            </a>
+          </div>
+        </div>
+
+        <div class="project-visual" aria-hidden="true">
+          <div class="project-system-map">
+            <div class="system-node system-node-market">
+              <span>SENSORS</span>
+            </div>
+
+            <div class="system-rail system-rail-1"></div>
+
+            <div class="system-node system-node-research">
+              <span>DATA</span>
+            </div>
+
+            <div class="system-rail system-rail-2"></div>
+
+            <div class="system-node system-node-ai">
+              <span>AI</span>
+            </div>
+
+            <div class="system-rail system-rail-3"></div>
+
+            <div class="system-node system-node-risk">
+              <span>EVIDENCE</span>
+            </div>
+
+            <div class="system-rail system-rail-4"></div>
+
+            <div class="system-node system-node-cio">
+              <span>HUMAN</span>
+            </div>
+          </div>
+
+          <div class="project-visual-caption">
+            MEASURED EVIDENCE
+            <span>+</span>
+            HUMAN AUTHORITY
+          </div>
+        </div>
+      </article>
+
       <div class="concept-heading">
         <span>EXPLORATORY CONCEPTS</span>
         <p>
@@ -146,34 +256,6 @@
       </div>
 
       <div class="concept-grid">
-        <article class="project-card project-card-concept">
-          <div class="project-topline">
-            <span class="project-status project-status-concept">
-              CONCEPT
-            </span>
-
-            <span class="project-number">02</span>
-          </div>
-
-          <p class="project-domain">
-            ENVIRONMENT · OBSERVATION
-          </p>
-
-          <h3>Environmental Monitoring</h3>
-
-          <p>
-            Explore how heterogeneous sensor data, public datasets and AI
-            interpretation could support local environmental observation and
-            anomaly detection.
-          </p>
-
-          <div class="concept-footer">
-            <span>DATA FUSION</span>
-            <span>MONITORING</span>
-            <span>ANOMALY DETECTION</span>
-          </div>
-        </article>
-
         <article class="project-card project-card-concept">
           <div class="project-topline">
             <span class="project-status project-status-concept">
@@ -775,7 +857,7 @@
 
   .concept-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     gap: 1.25rem;
   }

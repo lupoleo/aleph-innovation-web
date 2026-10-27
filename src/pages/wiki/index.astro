@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const title = "Engineering Wiki — Aleph Innovation";
 const description =
-  "Public engineering documentation for Aleph Innovation projects, beginning with Agentic Portfolio.";
+  "Public engineering documentation for Aleph Innovation projects, including Agentic Portfolio and Environmental Monitoring.";
 ---
 
 <BaseLayout title={title} description={description}>
@@ -56,6 +56,35 @@ const description =
 
           <a href="/wiki/agentic-portfolio/">
             Enter Agentic Portfolio Wiki
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+        <article class="wiki-project-card">
+          <div class="wiki-project-topline">
+            <span class="wiki-project-status">CONCEPT</span>
+            <span>02</span>
+          </div>
+
+          <p class="wiki-project-domain">
+            ENVIRONMENT · OBSERVATION
+          </p>
+
+          <h2>Environmental Monitoring</h2>
+
+          <p>
+            An open, auditable early-warning system for Gozo, where sensors,
+            deterministic rules and bounded AI agents assemble evidence and a
+            named person approves every public advisory.
+          </p>
+
+          <div class="wiki-project-map">
+            <span>Overview</span>
+            <span>Architecture</span>
+            <span>Gozo Risks</span>
+          </div>
+
+          <a href="/wiki/environmental-monitoring/">
+            Enter Environmental Monitoring Wiki
             <span aria-hidden="true">→</span>
           </a>
         </article>
@@ -139,6 +168,11 @@ const description =
 
     font-size: clamp(1rem, 1.2vw, 1.14rem);
     line-height: 1.75;
+  }
+
+  .wiki-projects {
+    display: grid;
+    gap: 1.5rem;
   }
 
   .wiki-project-card {

@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gozo Risk Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>/* required styles */
+ 
+ .leaflet-pane,
+ .leaflet-tile,
+ .leaflet-marker-icon,
+ .leaflet-marker-shadow,
+ .leaflet-tile-container,
+ .leaflet-pane > svg,
+ .leaflet-pane > canvas,
+ .leaflet-zoom-box,
+ .leaflet-image-layer,
+ .leaflet-layer {
+ 	position: absolute;
+ 	left: 0;
+ 	top: 0;
+ 	}
+ .leaflet-container {
+ 	overflow: hidden;
+ 	}
+ .leaflet-tile,
+ .leaflet-marker-icon,
+ .leaflet-marker-shadow {
+ 	-webkit-user-select: none;
+ 	 -moz-user-select: none;
+ 	 user-select: none;
+ 	 -webkit-user-drag: none;
+ 	}
+ /* Prevents IE11 from highlighting tiles in blue */
+ .leaflet-tile::selection {
+ 	background: transparent;
+ }
+ /* Safari renders non-retina tile on retina better with this, but Chrome is worse */
+ .leaflet-safari .leaflet-tile {
+ 	image-rendering: -webkit-optimize-contrast;
+ 	}
+ /* hack that prevents hw layers "stretching" when loading new tiles */
+ .leaflet-safari .leaflet-tile-container {
+ 	width: 1600px;
+ 	height: 1600px;
+ 	-webkit-transform-origin: 0 0;
+ 	}
+ .leaflet-marker-icon,
+ .leaflet-marker-shadow {
+ 	display: block;
+ 	}
+ /* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
+ /* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
+ .leaflet-container .leaflet-overlay-pane svg {
+ 	max-width: none !important;
+ 	max-height: none !important;
+ 	}
+ .leaflet-container .leaflet-marker-pane img,
+ .leaflet-container .leaflet-shadow-pane img,
+ .leaflet-container .leaflet-tile-pane img,
+ .leaflet-container img.leaflet-image-layer,
+ .leaflet-container .leaflet-tile {
+ 	max-width: none !important;
+ 	max-height: none !important;
+ 	width: auto;
+ 	padding: 0;
+ 	}
+ 
+ .leaflet-container img.leaflet-tile {
+ 	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
+ 	mix-blend-mode: plus-lighter;
+ }
+ 
+ .leaflet-container.leaflet-touch-zoom {
+ 	-ms-touch-action: pan-x pan-y;
+ 	touch-action: pan-x pan-y;
+ 	}
+ .leaflet-container.leaflet-touch-drag {
+ 	-ms-touch-action: pinch-zoom;
+ 	/* Fallback for FF which doesn't support pinch-zoom */
+ 	touch-action: none;
+ 	touch-action: pinch-zoom;
+ }
+ .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+ 	-ms-touch-action: none;
+ 	touch-action: none;
+ }
+ .leaflet-container {
+ 	-webkit-tap-highlight-color: transparent;
+ }
+ .leaflet-container a {
+ 	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+ }
+ .leaflet-tile {
+ 	filter: inherit;
+ 	visibility: hidden;
+ 	}
+ .leaflet-tile-loaded {
+ 	visibility: inherit;
+ 	}
+ .leaflet-zoom-box {
+ 	width: 0;
+ 	height: 0;
+ 	-moz-box-sizing: border-box;
+ 	 box-sizing: border-box;
+ 	z-index: 800;
+ 	}
+ /* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+ .leaflet-overlay-pane svg {
+ 	-moz-user-select: none;
+ 	}
+ 
+ .leaflet-pane { z-index: 400; }
+ 
+ .leaflet-tile-pane { z-index: 200; }
+ .leaflet-overlay-pane { z-index: 400; }
+ .leaflet-shadow-pane { z-index: 500; }
+ .leaflet-marker-pane { z-index: 600; }
+ .leaflet-tooltip-pane { z-index: 650; }
+ .leaflet-popup-pane { z-index: 700; }
+ 
+ .leaflet-map-pane canvas { z-index: 100; }
+ .leaflet-map-pane svg { z-index: 200; }
+ 
+ .leaflet-vml-shape {
+ 	width: 1px;
+ 	height: 1px;
+ 	}
+ .lvml {
+ 	behavior: url(#default#VML);
+ 	display: inline-block;
+ 	position: absolute;
+ 	}
+ 
+ 
+ /* control positioning */
+ 
+ .leaflet-control {
+ 	position: relative;
+ 	z-index: 800;
+ 	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+ 	pointer-events: auto;
+ 	}
+ .leaflet-top,
+ .leaflet-bottom {
+ 	position: absolute;
+ 	z-index: 1000;
+ 	pointer-events: none;
+ 	}
+ .leaflet-top {
+ 	top: 0;
+ 	}
+ .leaflet-right {
+ 	right: 0;
+ 	}
+ .leaflet-bottom {
+ 	bottom: 0;
+ 	}
+ .leaflet-left {
+ 	left: 0;
+ 	}
+ .leaflet-control {
+ 	float: left;
+ 	clear: both;
+ 	}
+ .leaflet-right .leaflet-control {
+ 	float: right;
+ 	}
+ .leaflet-top .leaflet-control {
+ 	margin-top: 10px;
+ 	}
+ .leaflet-bottom .leaflet-control {
+ 	margin-bottom: 10px;
+ 	}
+ .leaflet-left .leaflet-control {
+ 	margin-left: 10px;
+ 	}
+ .leaflet-right .leaflet-control {
+ 	margin-right: 10px;
+ 	}
+ 
+ 
+ /* zoom and fade animations */
+ 
+ .leaflet-fade-anim .leaflet-popup {
+ 	opacity: 0;
+ 	-webkit-transition: opacity 0.2s linear;
+ 	 -moz-transition: opacity 0.2s linear;
+ 	 transition: opacity 0.2s linear;
+ 	}
+ .leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+ 	opacity: 1;
+ 	}
+ .leaflet-zoom-animated {
+ 	-webkit-transform-origin: 0 0;
+ 	 -ms-transform-origin: 0 0;
+ 	 transform-origin: 0 0;
+ 	}
+ svg.leaflet-zoom-animated {
+ 	will-change: transform;
+ }
+ 
+ .leaflet-zoom-anim .leaflet-zoom-animated {
+ 	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+ 	 -moz-transition: -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+ 	 transition: transform 0.25s cubic-bezier(0,0,0.25,1);
+ 	}
+ .leaflet-zoom-anim .leaflet-tile,
+ .leaflet-pan-anim .leaflet-tile {
+ 	-webkit-transition: none;
+ 	 -moz-transition: none;
+ 	 transition: none;
+ 	}
+ 
+ .leaflet-zoom-anim .leaflet-zoom-hide {
+ 	visibility: hidden;
+ 	}
+ 
+ 
+ /* cursors */
+ 
+ .leaflet-interactive {
+ 	cursor: pointer;
+ 	}
+ .leaflet-grab {
+ 	cursor: -webkit-grab;
+ 	cursor: -moz-grab;
+ 	cursor: grab;
+ 	}
+ .leaflet-crosshair,
+ .leaflet-crosshair .leaflet-interactive {
+ 	cursor: crosshair;
+ 	}
+ .leaflet-popup-pane,
+ .leaflet-control {
+ 	cursor: auto;
+ 	}
+ .leaflet-dragging .leaflet-grab,
+ .leaflet-dragging .leaflet-grab .leaflet-interactive,
+ .leaflet-dragging .leaflet-marker-draggable {
+ 	cursor: move;
+ 	cursor: -webkit-grabbing;
+ 	cursor: -moz-grabbing;
+ 	cursor: grabbing;
+ 	}
+ 
+ /* marker & overlays interactivity */
+ .leaflet-marker-icon,
+ .leaflet-marker-shadow,
+ .leaflet-image-layer,
+ .leaflet-pane > svg path,
+ .leaflet-tile-container {
+ 	pointer-events: none;
+ 	}
+ 
+ .leaflet-marker-icon.leaflet-interactive,
+ .leaflet-image-layer.leaflet-interactive,
+ .leaflet-pane > svg path.leaflet-interactive,
+ svg.leaflet-image-layer.leaflet-interactive path {
+ 	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+ 	pointer-events: auto;
+ 	}
+ 
+ /* visual tweaks */
+ 
+ .leaflet-container {
+ 	background: #ddd;
+ 	outline-offset: 1px;
+ 	}
+ .leaflet-container a {
+ 	color: #0078A8;
+ 	}
+ .leaflet-zoom-box {
+ 	border: 2px dotted #38f;
+ 	background: rgba(255,255,255,0.5);
+ 	}
+ 
+ 
+ /* general typography */
+ .leaflet-container {
+ 	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+ 	font-size: 12px;
+ 	font-size: 0.75rem;
+ 	line-height: 1.5;
+ 	}
+ 
+ 
+ /* general toolbar styles */
+ 
+ .leaflet-bar {
+ 	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+ 	border-radius: 4px;
+ 	}
+ .leaflet-bar a {
+ 	background-color: #fff;
+ 	border-bottom: 1px solid #ccc;
+ 	width: 26px;
+ 	height: 26px;
+ 	line-height: 26px;
+ 	display: block;
+ 	text-align: center;
+ 	text-decoration: none;
+ 	color: black;
+ 	}
+ .leaflet-bar a,
+ .leaflet-control-layers-toggle {
+ 	background-position: 50% 50%;
+ 	background-repeat: no-repeat;
+ 	display: block;
+ 	}
+ .leaflet-bar a:hover,
+ .leaflet-bar a:focus {
+ 	background-color: #f4f4f4;
+ 	}
+ .leaflet-bar a:first-child {
+ 	border-top-left-radius: 4px;
+ 	border-top-right-radius: 4px;
+ 	}
+ .leaflet-bar a:last-child {
+ 	border-bottom-left-radius: 4px;
+ 	border-bottom-right-radius: 4px;
+ 	border-bottom: none;
+ 	}
+ .leaflet-bar a.leaflet-disabled {
+ 	cursor: default;
+ 	background-color: #f4f4f4;
+ 	color: #bbb;
+ 	}
+ 
+ .leaflet-touch .leaflet-bar a {
+ 	width: 30px;
+ 	height: 30px;
+ 	line-height: 30px;
+ 	}
+ .leaflet-touch .leaflet-bar a:first-child {
+ 	border-top-left-radius: 2px;
+ 	border-top-right-radius: 2px;
+ 	}
+ .leaflet-touch .leaflet-bar a:last-child {
+ 	border-bottom-left-radius: 2px;
+ 	border-bottom-right-radius: 2px;
+ 	}
+ 
+ /* zoom control */
+ 
+ .leaflet-control-zoom-in,
+ .leaflet-control-zoom-out {
+ 	font: bold 18px 'Lucida Console', Monaco, monospace;
+ 	text-indent: 1px;
+ 	}
+ 
+ .leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
+ 	font-size: 22px;
+ 	}
+ 
+ 
+ /* layers control */
+ 
+ .leaflet-control-layers {
+ 	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+ 	background: #fff;
+ 	border-radius: 5px;
+ 	}
+ .leaflet-control-layers-toggle {
+ 	background-image: none;
+ 	width: 36px;
+ 	height: 36px;
+ 	}
+ .leaflet-retina .leaflet-control-layers-toggle {
+ 	background-image: none;
+ 	background-size: 26px 26px;
+ 	}
+ .leaflet-touch .leaflet-control-layers-toggle {
+ 	width: 44px;
+ 	height: 44px;
+ 	}
+ .leaflet-control-layers .leaflet-control-layers-list,
+ .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+ 	display: none;
+ 	}
+ .leaflet-control-layers-expanded .leaflet-control-layers-list {
+ 	display: block;
+ 	position: relative;
+ 	}
+ .leaflet-control-layers-expanded {
+ 	padding: 6px 10px 6px 6px;
+ 	color: #333;
+ 	background: #fff;
+ 	}
+ .leaflet-control-layers-scrollbar {
+ 	overflow-y: scroll;
+ 	overflow-x: hidden;
+ 	padding-right: 5px;
+ 	}
+ .leaflet-control-layers-selector {
+ 	margin-top: 2px;
+ 	position: relative;
+ 	top: 1px;
+ 	}
+ .leaflet-control-layers label {
+ 	display: block;
+ 	font-size: 13px;
+ 	font-size: 1.08333em;
+ 	}
+ .leaflet-control-layers-separator {
+ 	height: 0;
+ 	border-top: 1px solid #ddd;
+ 	margin: 5px -10px 5px -6px;
+ 	}
+ 
+ /* Default icon URLs */
+ .leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
+ 	background-image: none;
+ 	}
+ 
+ 
+ /* attribution and scale controls */
+ 
+ .leaflet-container .leaflet-control-attribution {
+ 	background: #fff;
+ 	background: rgba(255, 255, 255, 0.8);
+ 	margin: 0;
+ 	}
+ .leaflet-control-attribution,
+ .leaflet-control-scale-line {
+ 	padding: 0 5px;
+ 	color: #333;
+ 	line-height: 1.4;
+ 	}
+ .leaflet-control-attribution a {
+ 	text-decoration: none;
+ 	}
+ .leaflet-control-attribution a:hover,
+ .leaflet-control-attribution a:focus {
+ 	text-decoration: underline;
+ 	}
+ .leaflet-attribution-flag {
+ 	display: inline !important;
+ 	vertical-align: baseline !important;
+ 	width: 1em;
+ 	height: 0.6669em;
+ 	}
+ .leaflet-left .leaflet-control-scale {
+ 	margin-left: 5px;
+ 	}
+ .leaflet-bottom .leaflet-control-scale {
+ 	margin-bottom: 5px;
+ 	}
+ .leaflet-control-scale-line {
+ 	border: 2px solid #777;
+ 	border-top: none;
+ 	line-height: 1.1;
+ 	padding: 2px 5px 1px;
+ 	white-space: nowrap;
+ 	-moz-box-sizing: border-box;
+ 	 box-sizing: border-box;
+ 	background: rgba(255, 255, 255, 0.8);
+ 	text-shadow: 1px 1px #fff;
+ 	}
+ .leaflet-control-scale-line:not(:first-child) {
+ 	border-top: 2px solid #777;
+ 	border-bottom: none;
+ 	margin-top: -2px;
+ 	}
+ .leaflet-control-scale-line:not(:first-child):not(:last-child) {
+ 	border-bottom: 2px solid #777;
+ 	}
+ 
+ .leaflet-touch .leaflet-control-attribution,
+ .leaflet-touch .leaflet-control-layers,
+ .leaflet-touch .leaflet-bar {
+ 	box-shadow: none;
+ 	}
+ .leaflet-touch .leaflet-control-layers,
+ .leaflet-touch .leaflet-bar {
+ 	border: 2px solid rgba(0,0,0,0.2);
+ 	background-clip: padding-box;
+ 	}
+ 
+ 
+ /* popup */
+ 
+ .leaflet-popup {
+ 	position: absolute;
+ 	text-align: center;
+ 	margin-bottom: 20px;
+ 	}
+ .leaflet-popup-content-wrapper {
+ 	padding: 1px;
+ 	text-align: left;
+ 	border-radius: 12px;
+ 	}
+ .leaflet-popup-content {
+ 	margin: 13px 24px 13px 20px;
+ 	line-height: 1.3;
+ 	font-size: 13px;
+ 	font-size: 1.08333em;
+ 	min-height: 1px;
+ 	}
+ .leaflet-popup-content p {
+ 	margin: 17px 0;
+ 	margin: 1.3em 0;
+ 	}
+ .leaflet-popup-tip-container {
+ 	width: 40px;
+ 	height: 20px;
+ 	position: absolute;
+ 	left: 50%;
+ 	margin-top: -1px;
+ 	margin-left: -20px;
+ 	overflow: hidden;
+ 	pointer-events: none;
+ 	}
+ .leaflet-popup-tip {
+ 	width: 17px;
+ 	height: 17px;
+ 	padding: 1px;
+ 
+ 	margin: -10px auto 0;
+ 	pointer-events: auto;
+ 
+ 	-webkit-transform: rotate(45deg);
+ 	 -moz-transform: rotate(45deg);
+ 	 -ms-transform: rotate(45deg);
+ 	 transform: rotate(45deg);
+ 	}
+ .leaflet-popup-content-wrapper,
+ .leaflet-popup-tip {
+ 	background: white;
+ 	color: #333;
+ 	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+ 	}
+ .leaflet-container a.leaflet-popup-close-button {
+ 	position: absolute;
+ 	top: 0;
+ 	right: 0;
+ 	border: none;
+ 	text-align: center;
+ 	width: 24px;
+ 	height: 24px;
+ 	font: 16px/24px Tahoma, Verdana, sans-serif;
+ 	color: #757575;
+ 	text-decoration: none;
+ 	background: transparent;
+ 	}
+ .leaflet-container a.leaflet-popup-close-button:hover,
+ .leaflet-container a.leaflet-popup-close-button:focus {
+ 	color: #585858;
+ 	}
+ .leaflet-popup-scrolled {
+ 	overflow: auto;
+ 	}
+ 
+ .leaflet-oldie .leaflet-popup-content-wrapper {
+ 	-ms-zoom: 1;
+ 	}
+ .leaflet-oldie .leaflet-popup-tip {
+ 	width: 24px;
+ 	margin: 0 auto;
+ 
+ 	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+ 	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+ 	}
+ 
+ .leaflet-oldie .leaflet-control-zoom,
+ .leaflet-oldie .leaflet-control-layers,
+ .leaflet-oldie .leaflet-popup-content-wrapper,
+ .leaflet-oldie .leaflet-popup-tip {
+ 	border: 1px solid #999;
+ 	}
+ 
+ 
+ /* div icon */
+ 
+ .leaflet-div-icon {
+ 	background: #fff;
+ 	border: 1px solid #666;
+ 	}
+ 
+ 
+ /* Tooltip */
+ /* Base styles for the element that has a tooltip */
+ .leaflet-tooltip {
+ 	position: absolute;
+ 	padding: 6px;
+ 	background-color: #fff;
+ 	border: 1px solid #fff;
+ 	border-radius: 3px;
+ 	color: #222;
+ 	white-space: nowrap;
+ 	-webkit-user-select: none;
+ 	-moz-user-select: none;
+ 	-ms-user-select: none;
+ 	user-select: none;
+ 	pointer-events: none;
+ 	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+ 	}
+ .leaflet-tooltip.leaflet-interactive {
+ 	cursor: pointer;
+ 	pointer-events: auto;
+ 	}
+ .leaflet-tooltip-top:before,
+ .leaflet-tooltip-bottom:before,
+ .leaflet-tooltip-left:before,
+ .leaflet-tooltip-right:before {
+ 	position: absolute;
+ 	pointer-events: none;
+ 	border: 6px solid transparent;
+ 	background: transparent;
+ 	content: "";
+ 	}
+ 
+ /* Directions */
+ 
+ .leaflet-tooltip-bottom {
+ 	margin-top: 6px;
+ }
+ .leaflet-tooltip-top {
+ 	margin-top: -6px;
+ }
+ .leaflet-tooltip-bottom:before,
+ .leaflet-tooltip-top:before {
+ 	left: 50%;
+ 	margin-left: -6px;
+ 	}
+ .leaflet-tooltip-top:before {
+ 	bottom: 0;
+ 	margin-bottom: -12px;
+ 	border-top-color: #fff;
+ 	}
+ .leaflet-tooltip-bottom:before {
+ 	top: 0;
+ 	margin-top: -12px;
+ 	margin-left: -6px;
+ 	border-bottom-color: #fff;
+ 	}
+ .leaflet-tooltip-left {
+ 	margin-left: -6px;
+ }
+ .leaflet-tooltip-right {
+ 	margin-left: 6px;
+ }
+ .leaflet-tooltip-left:before,
+ .leaflet-tooltip-right:before {
+ 	top: 50%;
+ 	margin-top: -6px;
+ 	}
+ .leaflet-tooltip-left:before {
+ 	right: 0;
+ 	margin-right: -12px;
+ 	border-left-color: #fff;
+ 	}
+ .leaflet-tooltip-right:before {
+ 	left: 0;
+ 	margin-left: -12px;
+ 	border-right-color: #fff;
+ 	}
+ 
+ /* Printing */
+ 
+ @media print {
+ 	/* Prevent printers from removing background-images of controls. */
+ 	.leaflet-control {
+ 		-webkit-print-color-adjust: exact;
+ 		print-color-adjust: exact;
+ 		}
+ 	}
+ </style>
+<style>
+/* Layout: full-bleed map, floating search and chip bar top-left, detail panel as left card (bottom sheet on phones), map controls bottom-right */
+:root{
+  --ui-bg:#ffffff; --ui-fg:#1d2a2c; --ui-muted:#5d6b6c; --ui-line:#e1e6e4; --ui-hover:#f1f5f3;
+  --accent:#0f6e74; --accent-ink:#ffffff; --accent-soft:#dff0ee;
+  --sea:#a9d3dc; --land:#f4efe4; --urban:#ebe3d3; --farm:#e7ebcf; --green:#d3e5c0; --scrub:#dfe6c8; --wood:#bcd7a8;
+  --rock:#e6e0d4; --beach:#f6e7b8; --cliff:#c9bfae; --bld:#ddd2c0; --bld-line:#cbbfa9; --industrial:#e4dde6; --plaza:#efe9df;
+  --road:#ffffff; --road-case:#d4cbbb; --road-major:#fbe3a5; --road-major-case:#e0b866; --track:#c3b59c; --water-in:#9fcbd6;
+  --council:#9a8f7c; --label:#3c3a33; --label-halo:rgba(255,255,255,.9); --label-sea:#3f7688;
+  --crit:#c2362b; --high:#e07b1f; --med:#d6a822; --low:#5c8f3a; --sensor:#2d5fa8; --sim:#7a3fb0;
+  --shadow:0 2px 6px rgba(20,40,40,.18),0 8px 24px rgba(20,40,40,.12);
+  --ff-ui:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ff-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ui-bg:#1b2324; --ui-fg:#e6eeec; --ui-muted:#9fb0ae; --ui-line:#2e3a3b; --ui-hover:#243031;
+  --accent:#4fc1bd; --accent-ink:#0d2223; --accent-soft:#173a3a;
+  --sea:#13303a; --land:#232a27; --urban:#2d3230; --farm:#28302a; --green:#26362a; --scrub:#29332a; --wood:#22392a;
+  --rock:#2c2f2b; --beach:#3d3a2b; --cliff:#3a3832; --bld:#3a3d38; --bld-line:#474a43; --industrial:#2f2c34; --plaza:#2e302c;
+  --road:#4a5150; --road-case:#2b302f; --road-major:#7a6a3e; --road-major-case:#4f4428; --track:#5b5446; --water-in:#1d4654;
+  --council:#7d8a84; --label:#dfe6e2; --label-halo:rgba(20,26,26,.88); --label-sea:#8fc2d1;
+  --shadow:0 2px 6px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35); color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --ui-bg:#1b2324; --ui-fg:#e6eeec; --ui-muted:#9fb0ae; --ui-line:#2e3a3b; --ui-hover:#243031;
+  --accent:#4fc1bd; --accent-ink:#0d2223; --accent-soft:#173a3a;
+  --sea:#13303a; --land:#232a27; --urban:#2d3230; --farm:#28302a; --green:#26362a; --scrub:#29332a; --wood:#22392a;
+  --rock:#2c2f2b; --beach:#3d3a2b; --cliff:#3a3832; --bld:#3a3d38; --bld-line:#474a43; --industrial:#2f2c34; --plaza:#2e302c;
+  --road:#4a5150; --road-case:#2b302f; --road-major:#7a6a3e; --road-major-case:#4f4428; --track:#5b5446; --water-in:#1d4654;
+  --council:#7d8a84; --label:#dfe6e2; --label-halo:rgba(20,26,26,.88); --label-sea:#8fc2d1;
+  --shadow:0 2px 6px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35); color-scheme:dark;}
+html,body{height:100%}
+[hidden]{display:none!important}
+body{background:var(--sea);color:var(--ui-fg);font-family:var(--ff-ui);font-size:14px;overflow:hidden}
+#map{position:absolute;inset:0;background:var(--sea)}
+.leaflet-container{background:var(--sea);font-family:var(--ff-ui)}
+/* top bar */
+.top{position:absolute;z-index:1000;top:calc(12px + env(safe-area-inset-top,0px));left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start;pointer-events:none}
+.top>*{pointer-events:auto}
+.search{position:relative;width:392px;max-width:100%;background:var(--ui-bg);border-radius:24px;box-shadow:var(--shadow);display:flex;align-items:center;height:48px;padding:0 6px 0 16px;gap:8px}
+.search .brand{display:inline-flex;align-items:center;min-height:40px;text-decoration:none;font-weight:700;font-size:13px;letter-spacing:.04em;color:var(--accent);white-space:nowrap;border-right:1px solid var(--ui-line);padding-right:10px}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ui-fg);font:500 15px var(--ff-ui)}
+.search input::placeholder{color:var(--ui-muted)}
+.iconbtn{width:36px;height:36px;border-radius:50%;border:0;background:transparent;color:var(--ui-muted);display:grid;place-items:center;cursor:pointer}
+.iconbtn:hover{background:var(--ui-hover);color:var(--ui-fg)}
+.iconbtn:focus-visible,.chip:focus-visible,.btn:focus-visible,.res:focus-visible,.risk-row:focus-visible,.basemap:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.results{position:absolute;top:54px;left:0;right:0;background:var(--ui-bg);border-radius:16px;box-shadow:var(--shadow);max-height:min(60vh,420px);overflow:auto;padding:6px 0}
+.res{display:flex;gap:12px;align-items:center;padding:9px 16px;cursor:pointer;width:100%;border:0;background:none;text-align:left;color:var(--ui-fg);font:inherit}
+.res:hover,.res.on{background:var(--ui-hover)}
+.res .ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--ui-hover);color:var(--ui-muted);font-size:12px;font-weight:700}
+.res b{font-weight:600;display:block}
+.res small{color:var(--ui-muted)}
+.chips{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;max-width:100%;padding:6px 2px 8px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:17px;border:0;background:var(--ui-bg);color:var(--ui-fg);box-shadow:var(--shadow);font:500 13.5px var(--ff-ui);cursor:pointer;white-space:nowrap}
+.chip:hover{background:var(--ui-hover)}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent),var(--shadow)}
+.chip .dot{width:9px;height:9px;border-radius:50%}
+.chip.sim[aria-pressed="true"]{background:color-mix(in srgb,var(--sim) 16%,var(--ui-bg));color:var(--sim);box-shadow:inset 0 0 0 1.5px var(--sim),var(--shadow)}
+/* panel */
+.panel{position:absolute;z-index:999;left:max(12px,env(safe-area-inset-left,0px));top:calc(122px + env(safe-area-inset-top,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));width:392px;background:var(--ui-bg);border-radius:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
+.panel.collapsed{bottom:auto;height:52px}
+.phead{display:flex;align-items:center;gap:8px;padding:10px 8px 10px 16px;border-bottom:1px solid var(--ui-line);min-height:52px}
+.phead h2{flex:1;margin:0;font-size:15px;font-weight:700;text-wrap:balance}
+.pbody{overflow:auto;padding:14px 16px 20px;display:flex;flex-direction:column;gap:14px}
+.panel.collapsed .pbody{display:none}
+.kicker{font:500 11px var(--ff-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ui-muted)}
+.lead{margin:0;color:var(--ui-fg);line-height:1.5}
+.muted{color:var(--ui-muted)}
+.risk-list{display:flex;flex-direction:column;border-top:1px solid var(--ui-line)}
+.risk-row{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center;padding:10px 4px;border:0;border-bottom:1px solid var(--ui-line);background:none;color:var(--ui-fg);text-align:left;cursor:pointer;font:inherit;width:100%}
+.risk-row:hover{background:var(--ui-hover)}
+.rid{font:600 12px var(--ff-mono);color:var(--ui-muted)}
+.risk-row b{font-weight:600;display:block;line-height:1.3}
+.risk-row small{color:var(--ui-muted)}
+.score{font:600 13px var(--ff-mono);font-variant-numeric:tabular-nums;padding:3px 8px;border-radius:10px;color:#fff}
+.sev-crit{background:var(--crit)}.sev-high{background:var(--high)}.sev-med{background:var(--med);color:#2a2200}.sev-low{background:var(--low)}
+.meters{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.meter{background:var(--ui-hover);border-radius:12px;padding:10px}
+.meter .v{font:600 20px var(--ff-mono);font-variant-numeric:tabular-nums}
+.meter .bar{height:4px;border-radius:2px;background:var(--ui-line);margin-top:6px;overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--accent)}
+.facts{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;line-height:1.45}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font:500 12px var(--ff-ui);padding:4px 10px;border-radius:12px;background:var(--ui-hover);color:var(--ui-fg)}
+.tag.sensor{background:color-mix(in srgb,var(--sensor) 14%,var(--ui-bg));color:var(--sensor)}
+.btn{border:0;border-radius:18px;height:36px;padding:0 16px;font:600 13.5px var(--ff-ui);cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 1px var(--ui-line)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.src a{color:var(--accent)}
+.note{font-size:12.5px;color:var(--ui-muted);line-height:1.45;border-left:3px solid var(--ui-line);padding-left:10px}
+.simbox{border-radius:12px;padding:12px;background:color-mix(in srgb,var(--sim) 10%,var(--ui-bg));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sim) 35%,transparent)}
+.simbox .kicker{color:var(--sim)}
+.steps{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+.steps li{display:grid;grid-template-columns:54px 1fr;gap:8px;padding:8px;border-radius:8px;opacity:.5}
+.steps li.done{opacity:1}
+.steps li.now{opacity:1;background:var(--ui-bg);box-shadow:0 0 0 1.5px var(--sim)}
+.steps time{font:500 12px var(--ff-mono);color:var(--sim)}
+/* controls */
+.ctrls{position:absolute;z-index:1000;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.zoom{background:var(--ui-bg);border-radius:10px;box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
+.zoom button{width:40px;height:40px;border:0;background:transparent;color:var(--ui-fg);font:500 22px var(--ff-ui);cursor:pointer}
+.zoom button+button{border-top:1px solid var(--ui-line)}
+.zoom button:hover{background:var(--ui-hover)}
+.round{width:40px;height:40px;border-radius:10px;border:0;background:var(--ui-bg);box-shadow:var(--shadow);color:var(--ui-fg);display:grid;place-items:center;cursor:pointer}
+.basemap{position:absolute;z-index:1000;left:calc(max(12px,env(safe-area-inset-left,0px)) + 404px);bottom:calc(28px + env(safe-area-inset-bottom,0px));width:72px;height:72px;border-radius:10px;border:2px solid var(--ui-bg);box-shadow:var(--shadow);background-size:cover;background-position:center;cursor:pointer;padding:0;overflow:hidden;display:flex;align-items:flex-end}
+.basemap span{display:block;width:100%;font:600 11.5px var(--ff-ui);color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.65));padding:14px 0 5px;text-align:center}
+.legend{position:absolute;z-index:1000;right:calc(max(12px,env(safe-area-inset-right,0px)) + 52px);bottom:calc(28px + env(safe-area-inset-bottom,0px));background:var(--ui-bg);border-radius:12px;box-shadow:var(--shadow);padding:10px 12px;display:flex;flex-direction:column;gap:6px;font-size:12.5px}
+.legend div{display:flex;align-items:center;gap:8px}
+.legend i{width:12px;height:12px;border-radius:50%;display:inline-block;border:2px solid var(--ui-bg);box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.legend .sq{border-radius:3px}
+.coords{position:absolute;z-index:1000;right:max(12px,env(safe-area-inset-right,0px));bottom:env(safe-area-inset-bottom,0px);font:500 11px var(--ff-mono);color:var(--ui-muted);background:var(--ui-bg);padding:3px 8px;border-radius:6px 6px 0 0;opacity:.92}
+.attr{position:absolute;z-index:1000;left:calc(max(12px,env(safe-area-inset-left,0px)) + 404px);bottom:env(safe-area-inset-bottom,0px);font-size:10.5px;color:var(--ui-muted);background:var(--ui-bg);padding:3px 8px;border-radius:6px 6px 0 0;opacity:.92;max-width:calc(100% - 640px)}
+.leaflet-control-scale{margin:0!important}
+.leaflet-control-scale-line{background:var(--ui-bg);color:var(--ui-fg);border-color:var(--ui-muted)}
+/* labels */
+.lbl{white-space:nowrap;font:600 12px var(--ff-ui);color:var(--label);text-shadow:0 0 3px var(--label-halo),0 0 3px var(--label-halo),0 0 2px var(--label-halo);transform:translate(-50%,-50%);pointer-events:none}
+.lbl.town{font-size:13.5px;font-weight:700;letter-spacing:.01em}
+.lbl.town small{display:block;font-weight:500;font-size:10.5px;opacity:.75;text-align:center}
+.lbl.island{font-size:17px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;opacity:.55}
+.lbl.sea{font-style:italic;font-weight:500;color:var(--label-sea);font-size:12px}
+.lbl.poi{font-weight:500;font-size:11px;transform:translate(10px,-50%)}
+#map:not(.z13) .lbl.town.minor,#map:not(.z14) .lbl.sea,#map:not(.z15) .lbl.poi,#map.z14 .lbl.island{display:none}
+.poi-dot{width:8px;height:8px;border-radius:50%;background:var(--ui-muted);border:1.5px solid var(--ui-bg);transform:translate(-50%,-50%)}
+#map:not(.z15) .poi-dot{display:none}
+/* risk & sensor pins */
+.pin{position:relative;width:30px;height:30px;transform:translate(-50%,-100%)}
+.pin .h{position:absolute;inset:0;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--c);box-shadow:0 2px 6px rgba(0,0,0,.35);border:2px solid #fff}
+.pin span{position:absolute;inset:0;display:grid;place-items:center;font:700 10px var(--ff-mono);color:#fff;padding-bottom:2px}
+.pin.sel .h{box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 35%,transparent),0 2px 6px rgba(0,0,0,.35)}
+.sens{width:16px;height:16px;border-radius:4px;background:var(--sensor);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);transform:translate(-50%,-50%) rotate(45deg)}
+.sens.gw{background:#fff;border-color:var(--sensor)}
+.pulse{width:22px;height:22px;border-radius:50%;background:var(--sim);transform:translate(-50%,-50%);box-shadow:0 0 0 0 color-mix(in srgb,var(--sim) 60%,transparent);animation:pulse 1.6s infinite}
+@keyframes pulse{to{box-shadow:0 0 0 22px transparent}}
+@media (prefers-reduced-motion: reduce){.pulse{animation:none}}
+.leaflet-tooltip{background:var(--ui-bg);color:var(--ui-fg);border:0;border-radius:8px;box-shadow:var(--shadow);font:500 12.5px var(--ff-ui);padding:5px 9px}
+.leaflet-tooltip:before{display:none}
+/* phone */
+@media (max-width:720px), (max-width:1023px) and (orientation:portrait){
+  .search{width:100%}
+  .panel{left:0;right:0;width:auto;top:auto;bottom:0;max-height:52vh;border-radius:16px 16px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
+  .panel.collapsed{top:auto;bottom:0;height:auto;max-height:none}
+  .legend{display:none}
+  .basemap{left:max(12px,env(safe-area-inset-left,0px));bottom:auto;top:calc(116px + env(safe-area-inset-top,0px));width:56px;height:56px}
+  .ctrls{bottom:auto;top:calc(116px + env(safe-area-inset-top,0px))}
+  .attr,.coords,.leaflet-control-scale{display:none}
+}
+@media (max-height:500px) and (min-width:721px){
+  .search{width:340px}
+  .panel{width:300px;top:calc(104px + env(safe-area-inset-top,0px))}
+  .basemap{left:calc(max(12px,env(safe-area-inset-left,0px)) + 312px);width:56px;height:56px}
+  .legend,.attr{display:none}
+}
+</style>
+
+<div id="map" role="application" aria-label="Interactive map of environmental and community risks in Gozo"></div>
+
+<div class="top">
+  <div class="search" role="search">
+    <a class="brand" href="/wiki/environmental-monitoring/" title="Back to the Aleph Innovation wiki">&larr; ALEPH</a>
+    <input id="q" type="search" autocomplete="off" placeholder="Search Gozo: places, beaches, risks, sensors" aria-label="Search the map">
+    <button class="iconbtn" id="qclear" aria-label="Clear search" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="results" id="results" role="listbox" hidden></div>
+  </div>
+  <div class="chips" id="chips" role="toolbar" aria-label="Map layers"></div>
+</div>
+
+<aside class="panel" id="panel" aria-live="polite">
+  <div class="phead">
+    <button class="iconbtn" id="back" aria-label="Back to risk overview" hidden><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <h2 id="ptitle">Gozo risk overview</h2>
+    <button class="iconbtn" id="collapse" aria-label="Collapse panel" aria-expanded="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 15l6-6 6 6"/></svg></button>
+  </div>
+  <div class="pbody" id="pbody"></div>
+</aside>
+
+<button class="basemap" id="basemap" aria-label="Switch to satellite view"><span id="basemapLabel">Satellite</span></button>
+<div class="legend" id="legend">
+  <div><i style="background:var(--crit)"></i>Critical priority (≥ 100)</div>
+  <div><i style="background:var(--high)"></i>High (60–99)</div>
+  <div><i style="background:var(--med)"></i>Medium (40–59)</div>
+  <div><i style="background:var(--low)"></i>Watch (&lt; 40)</div>
+  <div><i class="sq" style="background:var(--sensor)"></i>Planned sensor</div>
+</div>
+<div class="ctrls">
+  <button class="round" id="home" aria-label="Show all of Gozo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button></div>
+</div>
+<div class="coords" id="coords">36.0450° N, 14.2550° E</div>
+<div class="attr" id="attr">Map data © OpenStreetMap contributors via Overture Maps (ODbL) · Imagery: contains modified Copernicus Sentinel-2 data, 9 Aug 2025 · Risk content: Aleph Innovation</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+const TOWNS=[
+{en:'Victoria',mt:'Ir-Rabat',lat:36.0443,lon:14.2390},
+{en:'Xagħra',mt:'Ix-Xagħra',lat:36.0503,lon:14.2647},
+{en:'Nadur',mt:'In-Nadur',lat:36.0378,lon:14.2942},
+{en:'Qala',mt:'Il-Qala',lat:36.0359,lon:14.3097},
+{en:'Għajnsielem',mt:'Għajnsielem',lat:36.0267,lon:14.2878,minor:1},
+{en:'Mġarr',mt:'L-Imġarr',lat:36.0250,lon:14.2985,minor:1},
+{en:'Xewkija',mt:'Ix-Xewkija',lat:36.0328,lon:14.2581},
+{en:'Sannat',mt:'Ta\' Sannat',lat:36.0245,lon:14.2436,minor:1},
+{en:'Munxar',mt:'Il-Munxar',lat:36.0300,lon:14.2335,minor:1},
+{en:'Fontana',mt:'Il-Fontana',lat:36.0370,lon:14.2360,minor:1},
+{en:'Kerċem',mt:'Ta\' Kerċem',lat:36.0414,lon:14.2272,minor:1},
+{en:'San Lawrenz',mt:'San Lawrenz',lat:36.0553,lon:14.2038,minor:1},
+{en:'Għarb',mt:'L-Għarb',lat:36.0603,lon:14.2090},
+{en:'Għasri',mt:'L-Għasri',lat:36.0583,lon:14.2275,minor:1},
+{en:'Żebbuġ',mt:'Iż-Żebbuġ',lat:36.0722,lon:14.2361},
+{en:'Marsalforn',mt:'Marsalforn',lat:36.0718,lon:14.2590,minor:1},
+{en:'Xlendi',mt:'Ix-Xlendi',lat:36.0300,lon:14.2165,minor:1}
+];
+const S={
+ sewage:['MaltaToday: Gozo sewage plant to double capacity','https://www.maltatoday.com.mt/news/national/136422/gozo_sewage_treatment_plant_to_double_capacity'],
+ mep:['MaltaToday: MEP wants urgent action on sewage pollution (24 Mar 2026)','https://www.maltatoday.com.mt/news/national/140542/mep_wants_urgent_action_on_yearly_sewage_pollution_around_maltese_waters'],
+ diving:['DivingInfo: Ras il-Ħobż drainage leak or not? (Mar 2026)','https://www.divinginfo.mt/dangerous-games-at-ras-il-hobz-drainage-leak-or-not/'],
+ fessej:['MaltaToday: Repeated sewage overflow in Gozo','https://www.maltatoday.com.mt/environment/environment/74838/repeated_sewage_overflow_in_gozo_infuriates_diver'],
+ farm:['MaltaToday: Farm waste illegally discharged into Gozo sewer','https://www.maltatoday.com.mt/news/national/97950/farm_waste_illegally_discharged_into_gozo_sewer'],
+ newwater:['MaltaToday: Gozo new water suspended due to illegal dumping','https://maltatoday.com.mt/environment/energy/89307/gozo_new_water_suspended_due_to_illegal_sewage_dumping'],
+ manure:['MaltaToday: Over 200 daily tonnes of animal manure','https://www.maltatoday.com.mt/environment/environment/118296/over_200_daily_tonnes_of_animal_manure_need_collecting'],
+ bathing:['BusinessNow: Bathing water quality registers stark decline','https://businessnow.mt/water-quality-of-maltese-beaches-registers-stark-decline/'],
+ bwp:['Environmental Health Directorate: bathing water profile (Xlendi 2026)','https://environmentalhealth.gov.mt/wp-content/uploads/2026/08/BWP-22_Xlendi_2026.pdf'],
+ permits:['The Shift: 6,000 development permits in Gozo since 2013','https://theshiftnews.com/?p=47530'],
+ heat:['Italpress: Malta records hottest July day at 43.3°C','https://www.italpress.com/malta-records-hottest-july-day-at-43-3c/'],
+ tourism:['NSO: Regional tourism 2025','https://nso.gov.mt/regional-tourism-2025/'],
+ transport:['Malta Business Weekly: Gozo growth and transport','https://maltabusinessweekly.com/gozos-growth-fuels-new-demands-on-transport-and-planning/30183/'],
+ golden:['Libelium: crowd monitoring at Golden Bay','https://www.libelium.com/libeliumworld/success-stories/how-libeliums-crowd-monitoring-is-helping-save-a-maltese-paradise'],
+ xini:['Guide Me Malta: Mġarr ix-Xini taken over by boats','https://www.guidememalta.com/en/seafloor-damage-rubbish-diesel-popular-inlet-bay-in-gozo-gets-taken-over-by-boats'],
+ nitrate:['MaltaToday: Malta water table fails test','https://www.maltatoday.com.mt/news/national/125093/malta_water_table_fails_test_due_to_high_nitrates'],
+ water:['MaltaToday: Gozo water infrastructure upgrades','https://www.maltatoday.com.mt/news/national/135450/gozos_water_infrastructure_gets_major_boost_with_strategic_updates'],
+ era:['ERA: Data from air monitoring stations','https://era.org.mt/data-from-air-monitoring-stations/'],
+ eco:['Ministry for Gozo: EcoMedIslands launch','https://innovationandgreening-gozo.gov.mt/?p=1644'],
+ slime:['The Shift: Sea slime and fish farms','https://theshiftnews.com/2023/09/15/sea-slime-remains-a-problem-as-fish-farms-create-sewage-dump-of-waste/'],
+ pop:['MaltaToday: Gozo population projected to hit 52,000','https://www.maltatoday.com.mt/news/national/137511/gozos_population_projected_to_hit_52000_in_2042'],
+ carry:['MaltaToday: Gozo carrying capacity study','https://www.maltatoday.com.mt/news/national/118380/gozo_ecoisland_or_new_cosmopolis_study_to_find_carrying_capacity'],
+ dt:['RIU: Digital Twin of Malta','https://riu.gov.mt/launch-of-the-digital-twin-of-malta-dtmt-01/']
+};
+const RISKS=[
+{id:'R1',name:'Sewage overflows and marine discharges',domain:'Water cycle',domainLabel:'Water cycle',L:5,I:5,M:5,mvp:'Yes',
+ facts:['Gozo Wastewater Treatment Plant (Ras il-Ħobż) runs at 6,000 m³/day and has repeatedly exceeded design limits in summer peaks.','Divers report plumes after heavy rain; an overflow at Tal-Fessej lasted over five hours.','On 24 March 2026 the European Commission said Maltese seawater readings still breach EU rules; at least nine leaks closed beaches in 2025.','WSC plans a €25m upgrade to 12,000 m³/day with membrane bioreactor technology.'],
+ indicators:['Turbidity','Conductivity','Water temperature','Dissolved oxygen','Rainfall intensity','Sewer level'],sensors:['Coastal buoy','Sewer node','Rain gauge'],sources:[S.sewage,S.mep,S.diving,S.fessej],
+ sites:[{name:'Gozo Wastewater Treatment Plant, Ras il-Ħobż',lat:36.0191,lon:14.2778,note:'Gozo\'s only sewage treatment plant, operating since 2007. Planned expansion to 12,000 m³/day on adjacent farmland.'},
+        {name:'Submarine outfall area off Ras il-Ħobż',lat:36.0118,lon:14.2795,approx:1,radius:450,note:'Treated effluent leaves through a deep outfall near the Ras il-Ħobż pinnacle (seabed about 80 m). Position is approximate.'},
+        {name:'Tal-Fessej shore',lat:36.0153,lon:14.2758,note:'Site of a reported sewage overflow lasting over five hours, popular with divers.'}]},
+{id:'R2',name:'Bathing water quality decline',domain:'Coast',domainLabel:'Coast & marine',L:5,I:4,M:5,mvp:'Yes',
+ facts:['Excellent-rated bathing sites in Malta fell from 86 of 87 (2016) to 77 (2025) and 56 in the first week of August 2026.','Gozo has the lowest share of excellent waters, at 56.5% of its beaches.','Samples are fortnightly in season, so short overflow events can be missed.'],
+ indicators:['Daily swim-risk forecast','Turbidity','Rain in previous 48 h','Outfall alerts','Last lab result'],sensors:['Coastal buoy','Rain gauge'],sources:[S.bathing,S.bwp],
+ sites:[{name:'Xlendi Bay',lat:36.0300,lon:14.2165},{name:'Marsalforn Bay',lat:36.0718,lon:14.2605},{name:'Qbajjar Bay',lat:36.0763,lon:14.2522},{name:'Xwejni Bay',lat:36.0786,lon:14.2483},{name:'Ramla l-Ħamra',lat:36.0622,lon:14.2836},{name:'San Blas Bay',lat:36.0572,lon:14.3004},{name:'Ħondoq ir-Rummien',lat:36.0279,lon:14.3226},{name:'Ramla taż-Żewwieqa (Mġarr)',lat:36.0267,lon:14.2986},{name:'Mġarr ix-Xini',lat:36.0203,lon:14.2712},{name:'Dwejra (Inland Sea)',lat:36.0537,lon:14.1912},{name:'Wied il-Għasri',lat:36.0787,lon:14.2284},{name:'Blue Lagoon, Comino',lat:36.0141,lon:14.3244},{name:'Santa Maria Bay, Comino',lat:36.0164,lon:14.3367}]},
+{id:'R3',name:'Illegal farm slurry and manure disposal',domain:'Water cycle',domainLabel:'Water cycle',L:4,I:5,M:4,mvp:'Yes',
+ facts:['Liquid farm waste dumped into the Gozo sewer has suspended the slurry facility and put the repaired outfall at risk.','Illegal dumping has also suspended Gozo\'s reclaimed \"new water\" supply to farmers.','Maltese farms produce up to 200 tonnes of slurry a day; Gozo has no dedicated manure plant.'],
+ indicators:['Ammonium','Conductivity','Sewer flow','Time of discharge'],sensors:['Sewer node'],sources:[S.farm,S.newwater,S.manure],
+ sites:[{name:'Sewer inflow to the treatment plant',lat:36.0205,lon:14.2770,approx:1,note:'Slurry signatures (ammonium and conductivity spikes) can be detected upstream of the plant within minutes.'},{name:'Ramla valley farmland',lat:36.0515,lon:14.2838,approx:1,radius:600,note:'Agricultural valley draining to Ramla Bay. Manure spreading on fields is still common practice in Gozo.'}]},
+{id:'R4',name:'Overdevelopment, construction dust and noise',domain:'Land',domainLabel:'Development',L:5,I:4,M:4,mvp:'Phase 2',
+ facts:['Over 6,000 planning applications approved in Gozo from 2013 to 2020; about 1,400 a year in 2019–2020.','About one in six applications were outside development zones.','Business chambers warn over-development is damaging Gozo\'s tourism.'],
+ indicators:['PM10','PM2.5','Noise','New built-up area (Sentinel-2)','Planning applications per locality'],sensors:['Air-quality node'],sources:[S.permits],
+ sites:[{name:'Xagħra',lat:36.0503,lon:14.2647,radius:700},{name:'Qala',lat:36.0359,lon:14.3097,radius:600},{name:'Nadur',lat:36.0378,lon:14.2942,radius:650},{name:'Żebbuġ and Marsalforn',lat:36.0705,lon:14.2470,radius:900},{name:'Sannat',lat:36.0245,lon:14.2436,radius:550}]},
+{id:'R5',name:'Extreme heat',domain:'Climate',domainLabel:'Heat & floods',L:5,I:4,M:4,mvp:'Phase 2',
+ facts:['Malta recorded its hottest July day on 18 July 2026, at 43.3°C.','Heat drives water and electricity demand and marine heatwaves.','The Research Innovation Unit\'s Urban Heat Island tools and DTMT-01 digital twin can be reused.'],
+ indicators:['Air temperature','Humidity','Heat index','Land surface temperature'],sensors:['Air-quality node (T/RH)'],sources:[S.heat,S.dt],
+ sites:[{name:'Victoria centre',lat:36.0443,lon:14.2410,radius:700,note:'Dense urban core and Gozo General Hospital nearby; the main heat-island candidate.'}]},
+{id:'R6',name:'Flash flooding in valleys',domain:'Climate',domainLabel:'Heat & floods',L:4,I:4,M:4,mvp:'Phase 2',
+ facts:['Short intense storms flood valleys draining to Marsalforn and Xlendi and low streets in Victoria.','Runoff carries soil, manure and sewage into bays (links to R1, R2, R3).'],
+ indicators:['Rainfall intensity','Valley water level','Runoff alerts'],sensors:['Rain gauge','Valley water-level radar'],sources:[S.dt],
+ sites:[{name:'Wied ta\' Marsalforn',lat:36.0665,lon:14.2565},{name:'Wied tax-Xlendi',lat:36.0336,lon:14.2298},{name:'Wied il-Għasri',lat:36.0694,lon:14.2267},{name:'Wied ir-Ramla',lat:36.0490,lon:14.2816}]},
+{id:'R7',name:'Tourism carrying capacity',domain:'Community',domainLabel:'Community',L:5,I:3,M:4,mvp:'Phase 2',
+ facts:['Gozo and Comino received 589,343 tourists in 2025; 67.4% were Malta residents.','Same-day visitors more than doubled to nearly 1.9 million (2014–2024).','At Golden Bay, privacy-compliant counters found 3.4 m² per person at peak.'],
+ indicators:['Real-time occupancy','Dwell time','Visitors per m²'],sensors:['Beach occupancy counter'],sources:[S.tourism,S.transport,S.golden],
+ sites:[{name:'Blue Lagoon, Comino',lat:36.0150,lon:14.3238,radius:350},{name:'Ramla l-Ħamra',lat:36.0614,lon:14.2846},{name:'Dwejra',lat:36.0500,lon:14.1925},{name:'Xlendi',lat:36.0306,lon:14.2178}]},
+{id:'R8',name:'Harbour, boat and fuel pollution',domain:'Water cycle',domainLabel:'Water cycle',L:4,I:3,M:4,mvp:'Phase 2',
+ facts:['Mġarr Harbour hosts the ferry terminal, fishing fleet and fuel handling.','Enclosed bays like Mġarr ix-Xini fill with 20+ cruisers in summer: diesel, rubbish and anchor damage in a Natura 2000 area.'],
+ indicators:['Hydrocarbon fluorescence','Turbidity','Sentinel-1 oil slicks','AIS vessel tracks'],sensors:['Harbour buoy (Phase 2)'],sources:[S.xini],
+ sites:[{name:'Mġarr Harbour and fuel outlet',lat:36.0242,lon:14.2981},{name:'Mġarr ix-Xini anchorage',lat:36.0190,lon:14.2722}]},
+{id:'R9',name:'Groundwater over-abstraction and salinisation',domain:'Water cycle',domainLabel:'Water cycle',L:5,I:5,M:2,mvp:'Phase 3',
+ facts:['The Gozo mean sea level aquifer loses about 1.2 million m³ a year and has poor quantitative status.','It passes the 50 mg/L nitrate test but is at risk of salinisation.','The Ħondoq reverse osmosis plant gives Gozo water autonomy; a €2m extra train is being added.'],
+ indicators:['Borehole level','Borehole conductivity','RO production','Reclaimed water use'],sensors:[],sources:[S.nitrate,S.water],
+ sites:[{name:'Gozo mean sea level aquifer (island-wide)',lat:36.0440,lon:14.2620,approx:1,note:'The aquifer underlies the whole island; the pin marks its centre, not a single well.'},{name:'Ħondoq reverse osmosis plant',lat:36.0292,lon:14.3205,approx:1}]},
+{id:'R10',name:'Ferry and traffic emissions',domain:'Air',domainLabel:'Air & noise',L:4,I:3,M:4,mvp:'Phase 2',
+ facts:['ERA\'s only Gozo air station is at Għarb, a rural background site; none at Mġarr or Victoria.','A €130m fleet expansion to five vessels by 2029 will raise traffic at Mġarr.','A baseline is needed before any decision on the Malta–Gozo tunnel.'],
+ indicators:['NO₂','PM2.5','PM10','Vehicle and ferry movements'],sensors:['Air-quality node'],sources:[S.era,S.transport],
+ sites:[{name:'Mġarr ferry terminal',lat:36.0235,lon:14.2983},{name:'Mġarr–Victoria road',lat:36.0315,lon:14.2700,approx:1},{name:'ERA Għarb station (reference)',lat:36.0610,lon:14.2100,approx:1}]},
+{id:'R11',name:'Seasonal waste overflow',domain:'Community',domainLabel:'Community',L:4,I:3,M:4,mvp:'Phase 3',
+ facts:['Short-let zones and bays produce large waste peaks in summer.','EcoMedIslands (launched in Gozo on 28–29 Oct 2025) pilots underground bins with fill-level sensors.'],
+ indicators:['Bin fill level','Collection frequency','Litter reports'],sensors:[],sources:[S.eco],
+ sites:[{name:'Marsalforn short-let zone',lat:36.0712,lon:14.2575,approx:1},{name:'Xlendi short-let zone',lat:36.0300,lon:14.2185,approx:1}]},
+{id:'R12',name:'Coastal erosion and seagrass loss',domain:'Coast',domainLabel:'Coast & marine',L:3,I:4,M:3,mvp:'Phase 3',
+ facts:['Posidonia oceanica meadows protect beaches and store carbon; damaged by anchoring, turbidity, coastal works and warming.','A planned Marsalforn breakwater was criticised for its impact on seagrass.','Dwejra is on Malta\'s UNESCO tentative list and within Natura 2000.'],
+ indicators:['Seagrass extent (Sentinel-2)','Shoreline change','Anchoring density (AIS)'],sensors:[],sources:[['MaltaToday: Breakwater protection for Marsalforn will damage seagrass','https://www.maltatoday.com.mt/news/national/131720/breakwater_protection_for_marsalforn_will_damage_seagrass']],
+ sites:[{name:'Marsalforn breakwater proposal',lat:36.0732,lon:14.2625,approx:1},{name:'Ramla dunes and bay',lat:36.0632,lon:14.2840},{name:'Dwejra coast',lat:36.0478,lon:14.1890}]},
+{id:'R13',name:'Aquaculture effluent and sea slime',domain:'Marine',domainLabel:'Coast & marine',L:3,I:3,M:3,mvp:'Phase 3',
+ facts:['Tuna pens produce oily slime that reaches bays and coasts.','A 2023 proposal would move pens to a zone about 4.5 km off Qala; Qala Local Council objected.'],
+ indicators:['Surface slicks (Sentinel-2/3)','Chlorophyll-a','Citizen reports'],sensors:[],sources:[S.slime],
+ sites:[{name:'Proposed aquaculture zone off Qala',lat:36.0400,lon:14.3520,approx:1,radius:900,note:'Indicative only: the proposal places the zone about 4.5 km off Qala. Exact boundaries were not found in public sources.'}]},
+{id:'R14',name:'Demographic and social pressure',domain:'Community',domainLabel:'Community',L:4,I:4,M:2,mvp:'Context layer',
+ facts:['Gozo had 40,191 residents in 2022, projected to reach 51,766 in 2042.','Foreign residents rose from 1,357 (2011) to 7,662 (2021); in Żebbuġ they are 42% of residents.','Density rose from 422 to 572 people per km² (1995–2021).'],
+ indicators:['Residents per locality','Visitors per resident','Indicators per capita'],sensors:[],sources:[S.pop,S.carry],
+ sites:[{name:'Żebbuġ',lat:36.0722,lon:14.2361},{name:'Victoria',lat:36.0460,lon:14.2370}]}
+];
+const SENSORS=[
+{type:'Coastal water-quality buoy',site:'Ras il-Ħobż / Tal-Fessej, near the outfall',lat:36.0138,lon:14.2772,phase:1,measures:'Temperature, conductivity, turbidity, dissolved oxygen, chlorophyll',risks:['R1','R2']},
+{type:'Coastal water-quality buoy',site:'Xlendi Bay',lat:36.0288,lon:14.2148,phase:1,measures:'Temperature, conductivity, turbidity, dissolved oxygen, chlorophyll',risks:['R1','R2']},
+{type:'Coastal water-quality buoy',site:'Marsalforn Bay',lat:36.0738,lon:14.2612,phase:1,measures:'Temperature, conductivity, turbidity, dissolved oxygen, chlorophyll',risks:['R1','R2']},
+{type:'Sewer and stormwater node',site:'Treatment plant inlet',lat:36.0198,lon:14.2772,phase:1,measures:'Level, flow proxy, conductivity, ammonium, temperature',risks:['R1','R3']},
+{type:'Sewer and stormwater node',site:'Victoria trunk sewer',lat:36.0405,lon:14.2500,phase:1,measures:'Level, flow proxy, conductivity, ammonium, temperature',risks:['R1','R3']},
+{type:'Sewer and stormwater node',site:'Xlendi trunk sewer',lat:36.0322,lon:14.2205,phase:1,measures:'Level, flow proxy, conductivity, ammonium, temperature',risks:['R1','R3']},
+{type:'Sewer and stormwater node',site:'Marsalforn trunk sewer',lat:36.0688,lon:14.2578,phase:1,measures:'Level, flow proxy, conductivity, ammonium, temperature',risks:['R1','R3']},
+{type:'Rain gauge',site:'Victoria',lat:36.0452,lon:14.2372,phase:1,measures:'Rainfall intensity',risks:['R1','R6']},
+{type:'Rain gauge',site:'Nadur',lat:36.0385,lon:14.2955,phase:1,measures:'Rainfall intensity',risks:['R1','R6']},
+{type:'Rain gauge',site:'Għarb',lat:36.0598,lon:14.2078,phase:1,measures:'Rainfall intensity',risks:['R1','R6']},
+{type:'Rain gauge',site:'Xewkija',lat:36.0335,lon:14.2595,phase:1,measures:'Rainfall intensity',risks:['R1','R6']},
+{type:'Valley water-level radar',site:'Wied ta\' Marsalforn',lat:36.0655,lon:14.2560,phase:1,measures:'Flood level in the valley',risks:['R6']},
+{type:'Valley water-level radar',site:'Wied tax-Xlendi',lat:36.0354,lon:14.2331,phase:1,measures:'Flood level in the valley',risks:['R6']},
+{type:'Valley water-level radar',site:'Wied il-Għasri',lat:36.0700,lon:14.2268,phase:1,measures:'Flood level in the valley',risks:['R6']},
+{type:'Air-quality node',site:'Mġarr ferry terminal',lat:36.0232,lon:14.2990,phase:2,measures:'PM1, PM2.5, PM10, NO₂, temperature, humidity, noise',risks:['R10','R5']},
+{type:'Air-quality node',site:'Mġarr harbour road',lat:36.0262,lon:14.2948,phase:2,measures:'PM1, PM2.5, PM10, NO₂, temperature, humidity, noise',risks:['R10']},
+{type:'Air-quality node',site:'Mġarr–Victoria road',lat:36.0318,lon:14.2690,phase:2,measures:'PM1, PM2.5, PM10, NO₂, temperature, humidity, noise',risks:['R10','R4']},
+{type:'Air-quality node',site:'Victoria, It-Tokk square',lat:36.0448,lon:14.2398,phase:2,measures:'PM1, PM2.5, PM10, NO₂, temperature, humidity, noise',risks:['R10','R5']},
+{type:'Air-quality node',site:'Victoria, Republic Street',lat:36.0425,lon:14.2455,phase:2,measures:'PM1, PM2.5, PM10, NO₂, temperature, humidity, noise',risks:['R10','R5']},
+{type:'Air-quality node',site:'Xagħra',lat:36.0508,lon:14.2660,phase:2,measures:'PM1, PM2.5, PM10, NO₂, temperature, humidity, noise',risks:['R4']},
+{type:'Air-quality node',site:'Marsalforn',lat:36.0705,lon:14.2585,phase:2,measures:'PM1, PM2.5, PM10, NO₂, temperature, humidity, noise',risks:['R4','R7']},
+{type:'Air-quality node',site:'Co-located with ERA Għarb station',lat:36.0614,lon:14.2108,phase:2,measures:'Calibration against the reference station',risks:['R10']},
+{type:'Beach occupancy counter',site:'Ramla l-Ħamra',lat:36.0610,lon:14.2850,phase:2,measures:'Anonymous Wi-Fi and Bluetooth device counts',risks:['R7']},
+{type:'Beach occupancy counter',site:'Xlendi',lat:36.0310,lon:14.2160,phase:2,measures:'Anonymous Wi-Fi and Bluetooth device counts',risks:['R7']},
+{type:'Beach occupancy counter',site:'Dwejra',lat:36.0525,lon:14.1915,phase:2,measures:'Anonymous Wi-Fi and Bluetooth device counts',risks:['R7']},
+{type:'Beach occupancy counter',site:'Marsalforn',lat:36.0715,lon:14.2610,phase:2,measures:'Anonymous Wi-Fi and Bluetooth device counts',risks:['R7']},
+{type:'Beach occupancy counter',site:'Mġarr ix-Xini',lat:36.0205,lon:14.2705,phase:2,measures:'Anonymous Wi-Fi and Bluetooth device counts',risks:['R7']},
+{type:'LoRaWAN gateway',site:'Victoria, Citadel area',lat:36.0466,lon:14.2400,phase:1,measures:'Network coverage for all sensors',risks:['R1','R2','R3','R6']},
+{type:'LoRaWAN gateway',site:'Nadur',lat:36.0372,lon:14.2930,phase:1,measures:'Network coverage for all sensors',risks:['R1','R2','R3','R6']},
+{type:'LoRaWAN gateway',site:'Għarb',lat:36.0608,lon:14.2085,phase:1,measures:'Network coverage for all sensors',risks:['R1','R2','R3','R6']},
+{type:'LoRaWAN gateway',site:'Mġarr',lat:36.0270,lon:14.2995,phase:1,measures:'Network coverage for all sensors',risks:['R1','R2','R3','R6']}
+];
+const SIM=[
+{t:'23:10',title:'Heavy rain detected',body:'Victoria gauge reads 38 mm/h. Rule R-RAIN-1 (over 25 mm/h) opens an event. Deterministic.',lat:36.0452,lon:14.2372},
+{t:'23:24',title:'Sewer surge at the plant inlet',body:'Level rises 2.4× above the seasonal baseline; conductivity drops (stormwater dilution). Gate G1 data check passed.',lat:36.0198,lon:14.2772},
+{t:'23:41',title:'Turbidity spike at Ras il-Ħobż buoy',body:'Turbidity 6× baseline, water 1.8°C warmer than the surrounding sea. Gate G2 statistical check passed (p < 0.01).',lat:36.0138,lon:14.2772},
+{t:'23:52',title:'Agent assembles the evidence dossier',body:'Sentinel agent: "probable overflow", confidence 0.82, citing 3 independent records. Gate G3 passed (two or more independent signals).',lat:36.0118,lon:14.2795},
+{t:'00:05',title:'Operator decision',body:'Duty operator reviews the dossier, approves a precautionary swim advisory for Mġarr ix-Xini and notifies WSC and ERA. Gate G4: human approval logged.',lat:36.0203,lon:14.2712},
+{t:'07:30',title:'Lab confirmation and public update',body:'Morning samples are sent to an accredited lab; the advisory stays until results are back. Map and bulletin update automatically.',lat:36.0203,lon:14.2712}
+];
+
+</script>
+<script>
+(function(){
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const BOUNDS = [[35.99,14.17],[36.09,14.36]];
+const map = L.map('map',{zoomControl:false,attributionControl:false,preferCanvas:true,minZoom:11,maxZoom:19,maxBounds:[[35.93,14.08],[36.15,14.45]],maxBoundsViscosity:.8,zoomSnap:.25,zoomDelta:.5,wheelPxPerZoomLevel:90});
+
+const SHEET_Q='(max-width:720px), (max-width:1023px) and (orientation:portrait)', SHORT_Q='(max-height:500px)';
+const sheetMode = () => matchMedia(SHEET_Q).matches;
+let startCollapsed = sheetMode() || matchMedia(SHORT_Q).matches;
+const padOpts = () => { const r=document.getElementById('panel').getBoundingClientRect();
+  return sheetMode() ? {paddingTopLeft:[16,130],paddingBottomRight:[16,Math.round(r.height)+16]}
+                     : {paddingTopLeft:[Math.round(r.right)+16,110],paddingBottomRight:[60,30]}; };
+const fit = () => map.fitBounds([[36.005,14.18],[36.085,14.345]],padOpts());
+fit();
+L.control.scale({imperial:false,position:'bottomright'}).addTo(map);
+// panes
+const Z={base:401,cover:402,water:403,bld:404,roads:405,sat:450,risk:620};
+const R={};
+Object.entries(Z).forEach(([p,z])=>{map.createPane(p).style.zIndex=z; if(p!=='sat'&&p!=='risk') R[p]=L.canvas({pane:p,padding:.4,tolerance:4});});
+map.getPane('sat').style.pointerEvents='none';
+
+const layers = {};
+let styleFns = [];
+function restyle(){ styleFns.forEach(f=>f()); }
+
+function load(url){ return fetch(url).then(r=>{ if(!r.ok) throw new Error(url+' '+r.status); return r.json(); }); }
+
+// ---- base map ----
+load('land.json').then(g=>{
+  const l = L.geoJSON(g,{pane:'base',renderer:R.base,interactive:false,style:()=>({stroke:true,color:css('--cliff'),weight:.8,fillColor:css('--land'),fillOpacity:1})}).addTo(map);
+  styleFns.push(()=>l.setStyle({color:css('--cliff'),fillColor:css('--land')}));
+});
+const coverColor = k => ({farm:'--farm',green:'--green',park:'--green',urban:'--urban',scrub:'--scrub',wood:'--wood',rock:'--rock',cliff:'--cliff',beach:'--beach',reef:'--rock',sport:'--green',plaza:'--plaza',industrial:'--industrial',construction:'--industrial',civic:'--industrial',quarry:'--rock',saltpan:'--water-in'})[k]||'--land';
+load('landcover.json').then(g=>{
+  const st = f => ({stroke:false,fillColor:css(coverColor(f.properties.k)),fillOpacity:f.properties.k==='urban'?.9:.85});
+  const l = L.geoJSON(g,{pane:'cover',renderer:R.cover,interactive:false,style:st}).addTo(map);
+  styleFns.push(()=>l.setStyle(st));
+});
+load('water.json').then(g=>{
+  const st = f => (f.geometry.type.includes('Line')?{color:css('--water-in'),weight:1.6,opacity:.9}:{stroke:false,fillColor:css('--water-in'),fillOpacity:.95});
+  const l = L.geoJSON(g,{pane:'water',renderer:R.water,interactive:false,style:st}).addTo(map);
+  styleFns.push(()=>l.setStyle(st));
+});
+load('councils.json').then(g=>{
+  const st = ()=>({color:css('--council'),weight:1,dashArray:'4 4',fill:false,opacity:.6});
+  layers.councils = L.geoJSON(g,{pane:'water',renderer:R.water,interactive:false,style:st}).addTo(map);
+  styleFns.push(()=>layers.councils.setStyle(st()));
+});
+let bld=null;
+load('buildings.json').then(g=>{
+  const st = ()=>({color:css('--bld-line'),weight:.5,fillColor:css('--bld'),fillOpacity:1});
+  bld = L.geoJSON(g,{pane:'bld',renderer:R.bld,interactive:false,style:st});
+  styleFns.push(()=>bld.setStyle(st()));
+  zoomClass();
+});
+const roadW = (r,z) => { const base={1:5,2:4.2,3:3.6,4:2.6,5:1.8,6:1.2,7:.9}[r]||1; return base*Math.pow(1.35,Math.max(0,z-14)); };
+let roadsCase, roadsFill;
+load('roads.json').then(g=>{
+  const minZ = r => ({1:0,2:0,3:12.5,4:14,5:15,6:15,7:16})[r]||16;
+  const z = () => map.getZoom();
+  const caseSt = f => { const r=f.properties.r, show=z()>=minZ(r)&&r<=5; return {color:css(r<=2?'--road-major-case':'--road-case'),weight:show?roadW(r,z())+1.6:0,opacity:show?1:0,lineCap:'round'}; };
+  const fillSt = f => { const r=f.properties.r, show=z()>=minZ(r); const path=r>=6; return {color:css(r<=2?'--road-major':(path?'--track':'--road')),weight:show?roadW(r,z()):0,opacity:show?1:0,dashArray:path?'3 3':null,lineCap:'round'}; };
+  roadsCase = L.geoJSON(g,{pane:'roads',renderer:R.roads,interactive:false,style:caseSt}).addTo(map);
+  roadsFill = L.geoJSON(g,{pane:'roads',renderer:R.roads,style:fillSt,onEachFeature:(f,l)=>{ if(f.properties.n) l.bindTooltip(f.properties.n,{sticky:true,direction:'top',offset:[0,-6]}); }}).addTo(map);
+  const rs = ()=>{roadsCase.setStyle(caseSt);roadsFill.setStyle(fillSt);};
+  styleFns.push(rs); map.on('zoomend',rs);
+});
+// satellite
+const sat = L.imageOverlay('satellite.jpg',BOUNDS,{pane:'sat',opacity:1,interactive:false});
+let satOn=false;
+const bm = document.getElementById('basemap');
+function setBase(on){
+  satOn=on;
+  if(on){ sat.addTo(map); } else { sat.remove(); }
+  document.getElementById('basemapLabel').textContent = on?'Map':'Satellite';
+  bm.setAttribute('aria-label', on?'Switch to map view':'Switch to satellite view');
+  bm.style.backgroundImage = on? 'none' : "url('satellite.jpg')";
+  bm.style.backgroundColor = on? css('--land') : '';
+  document.getElementById('map').classList.toggle('sat',on);
+}
+bm.addEventListener('click',()=>setBase(!satOn));
+setBase(false);
+
+// labels
+const labelLayer = L.layerGroup().addTo(map);
+TOWNS.forEach(t=>L.marker([t.lat,t.lon],{interactive:false,pane:'risk',icon:L.divIcon({className:'',html:`<div class="lbl town${t.minor?' minor':''}">${t.en}${t.mt&&t.mt!==t.en?`<small>${t.mt}</small>`:''}</div>`,iconSize:[0,0]})}).addTo(labelLayer));
+[{n:'GOZO',lat:36.058,lon:14.305},{n:'COMINO',lat:36.004,lon:14.336}].forEach(t=>L.marker([t.lat,t.lon],{interactive:false,pane:'risk',icon:L.divIcon({className:'',html:`<div class="lbl island">${t.n}</div>`,iconSize:[0,0]})}).addTo(labelLayer));
+load('bays.json').then(g=>g.features.forEach(f=>{const [x,y]=f.geometry.coordinates;L.marker([y,x],{interactive:false,pane:'risk',icon:L.divIcon({className:'',html:`<div class="lbl sea">${f.properties.n}</div>`,iconSize:[0,0]})}).addTo(labelLayer);}));
+let PLACES=[];
+const poiLayer = L.layerGroup().addTo(map);
+load('places.json').then(p=>{ PLACES=p; p.forEach(([n,c,x,y])=>{ if(!['Beach','Historic site','Church','Museum','Hospital','Square','Hill','Diving','Government office','Library'].includes(c)) return; L.marker([y,x],{pane:'roads',icon:L.divIcon({className:'',html:'<div class="poi-dot"></div>',iconSize:[0,0]})}).bindTooltip(`<b>${esc(n)}</b><br><span style="opacity:.7">${c}</span>`,{direction:'top',offset:[0,-6]}).addTo(poiLayer); }); });
+
+function zoomClass(){
+  const z=map.getZoom(), el=document.getElementById('map');
+  [13,14,15,16].forEach(k=>el.classList.toggle('z'+k,z>=k));
+  if(bld){ if(z>=14.5 && !map.hasLayer(bld)) bld.addTo(map); if(z<14.5 && map.hasLayer(bld)) bld.remove(); }
+}
+map.on('zoomend',zoomClass); zoomClass();
+map.on('mousemove',e=>{document.getElementById('coords').textContent=`${e.latlng.lat.toFixed(4)}° N, ${e.latlng.lng.toFixed(4)}° E`;});
+
+// ---- risks ----
+const sevOf = p => p>=100?'crit':p>=60?'high':p>=40?'med':'low';
+const sevVar = s => ({crit:'--crit',high:'--high',med:'--med',low:'--low'})[s];
+const DOMAINS = [
+  {id:'all',name:'All risks'},
+  {id:'Water cycle',name:'Water cycle'},
+  {id:'Coast',name:'Coast & marine'},
+  {id:'Climate',name:'Heat & floods'},
+  {id:'Air',name:'Air & noise'},
+  {id:'Land',name:'Development'},
+  {id:'Community',name:'Community'}
+];
+const domainOf = r => r.domain==='Marine'?'Coast':r.domain;
+let activeDomain='all', showSensors=false, selKey=null;
+const riskLayer = L.layerGroup().addTo(map);
+const zoneLayer = L.layerGroup().addTo(map);
+const markers = [];
+RISKS.forEach(r=>{
+  r.sev = sevOf(r.L*r.I*r.M); r.P = r.L*r.I*r.M;
+  r.sites.forEach((s,i)=>{
+    const key=r.id+'-'+i;
+    const icon = () => L.divIcon({className:'',html:`<div class="pin${selKey===key?' sel':''}" style="--c:var(${sevVar(r.sev)})"><div class="h"></div><span>${r.id}</span></div>`,iconSize:[0,0]});
+    const m = L.marker([s.lat,s.lon],{pane:'risk',icon:icon(),keyboard:true,title:`${r.id} ${r.name}: ${s.name}`,riseOnHover:true});
+    m.bindTooltip(`<b>${esc(s.name)}</b><br>${r.id} · ${esc(r.name)}`,{direction:'top',offset:[0,-30]});
+    m.on('click',()=>openSite(r,s,key));
+    markers.push({r,s,key,m,icon});
+    if(s.radius){ const z=L.circle([s.lat,s.lon],{radius:s.radius,pane:'water',renderer:R.water,interactive:false}); z._risk=r; zoneLayer.addLayer(z); }
+  });
+});
+function styleZones(){ zoneLayer.eachLayer(z=>{const r=z._risk; const c=css(sevVar(r.sev)); const vis = activeDomain==='all'||domainOf(r)===activeDomain; z.setStyle({color:c,weight:1.5,dashArray:'5 5',fillColor:c,fillOpacity:vis?.10:0,opacity:vis?.8:0});}); }
+styleFns.push(styleZones);
+function refreshRisks(){
+  riskLayer.clearLayers();
+  markers.forEach(o=>{ if(activeDomain==='all'||domainOf(o.r)===activeDomain){ o.m.setIcon(o.icon()); riskLayer.addLayer(o.m);} });
+  styleZones();
+}
+// sensors
+const sensorLayer = L.layerGroup();
+SENSORS.forEach(s=>{
+  const m=L.marker([s.lat,s.lon],{pane:'risk',icon:L.divIcon({className:'',html:`<div class="sens${s.type==='LoRaWAN gateway'?' gw':''}"></div>`,iconSize:[0,0]}),title:s.type+': '+s.site});
+  m.bindTooltip(`<b>${esc(s.type)}</b><br>${esc(s.site)} · Phase ${s.phase}`,{direction:'top',offset:[0,-10]});
+  m.on('click',()=>openSensor(s));
+  sensorLayer.addLayer(m);
+});
+
+// ---- chips ----
+const chipsEl=document.getElementById('chips');
+DOMAINS.forEach(d=>{
+  const b=document.createElement('button'); b.className='chip'; b.textContent=d.name; b.dataset.d=d.id; b.setAttribute('aria-pressed',d.id==='all');
+  b.onclick=()=>{ activeDomain=d.id; chipsEl.querySelectorAll('[data-d]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.d===d.id)); refreshRisks(); if(view==='overview') renderOverview(); };
+  chipsEl.appendChild(b);
+});
+const sb=document.createElement('button'); sb.className='chip'; sb.innerHTML='<span class="dot" style="background:var(--sensor);border-radius:2px;transform:rotate(45deg)"></span>Planned sensors'; sb.setAttribute('aria-pressed','false');
+sb.onclick=()=>{showSensors=!showSensors; sb.setAttribute('aria-pressed',showSensors); showSensors?sensorLayer.addTo(map):sensorLayer.remove(); if(showSensors&&view==='overview') renderSensorsList();};
+chipsEl.appendChild(sb);
+const simb=document.createElement('button'); simb.className='chip sim'; simb.innerHTML='<span class="dot" style="background:var(--sim)"></span>Storm event demo'; simb.setAttribute('aria-pressed','false');
+simb.onclick=()=>{ if(simb.getAttribute('aria-pressed')==='true'){ stopSim(); renderOverview(); } else startSim(); };
+chipsEl.appendChild(simb);
+
+// ---- panel ----
+const panel=document.getElementById('panel'), pbody=document.getElementById('pbody'), ptitle=document.getElementById('ptitle'), back=document.getElementById('back');
+let view='overview';
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);}
+function setPanel(title,html,isDetail){ ptitle.textContent=title; pbody.innerHTML=html; back.hidden=!isDetail; pbody.scrollTop=0; if(isDetail||!startCollapsed) expand(true); else { startCollapsed=false; expand(false); fit(); } }
+function expand(on){ panel.classList.toggle('collapsed',!on); const c=document.getElementById('collapse'); c.setAttribute('aria-expanded',on); c.setAttribute('aria-label',on?'Collapse panel':'Expand panel'); c.innerHTML= on?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 15l6-6 6 6"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>'; }
+document.getElementById('collapse').onclick=()=>expand(panel.classList.contains('collapsed'));
+back.onclick=()=>{ selKey=null; refreshRisks(); renderOverview(); };
+function renderOverview(){
+  view='overview';
+  const list = RISKS.slice().sort((a,b)=>b.P-a.P).filter(r=>activeDomain==='all'||domainOf(r)===activeDomain);
+  setPanel('Gozo risk overview',`
+    <div class="kicker">Agentic Environmental Monitoring · Gozo pilot</div>
+    <p class="lead">Fourteen environmental and community risks, ranked by priority (likelihood × impact × monitorability, each scored 1–5). Pins mark where each risk concentrates. Select a risk to see its evidence, indicators and planned sensors.</p>
+    <div class="risk-list">${list.map(r=>`<button class="risk-row" data-r="${r.id}"><span class="rid">${r.id}</span><span><b>${esc(r.name)}</b><small>${esc(r.domainLabel)} · ${r.sites.length} site${r.sites.length>1?'s':''}${r.mvp==='Yes'?' · MVP':''}</small></span><span class="score sev-${r.sev}">${r.P}</span></button>`).join('')}</div>
+    <p class="note">Scores are a first expert estimate from public sources (October 2026), to be re-scored with ERA, the Water Services Corporation and local councils. Sensor sites are proposals, not installations.</p>`,false);
+  pbody.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>openRisk(RISKS.find(r=>r.id===b.dataset.r)));
+}
+function meters(r){ return `<div class="meters">${[['Likelihood',r.L],['Impact',r.I],['Monitorability',r.M]].map(([k,v])=>`<div class="meter"><div class="kicker">${k}</div><div class="v">${v}<span class="muted" style="font-size:12px">/5</span></div><div class="bar"><i style="width:${v*20}%"></i></div></div>`).join('')}</div>`; }
+function riskBody(r){
+  return `${meters(r)}
+   <div><div class="kicker">What is happening</div><ul class="facts">${r.facts.map(f=>`<li>${f}</li>`).join('')}</ul></div>
+   <div><div class="kicker">What the system measures</div><div class="tags" style="margin-top:6px">${r.indicators.map(i=>`<span class="tag">${esc(i)}</span>`).join('')}</div></div>
+   <div><div class="kicker">Planned sensing</div><div class="tags" style="margin-top:6px">${r.sensors.length?r.sensors.map(i=>`<span class="tag sensor">${esc(i)}</span>`).join(''):'<span class="muted">Public data and satellite only</span>'}</div></div>
+   <div class="src"><div class="kicker">Sources</div><ul class="facts">${r.sources.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a></li>`).join('')}</ul></div>`;
+}
+function openRisk(r){
+  view='risk'; selKey=null;
+  if(activeDomain!=='all'&&domainOf(r)!==activeDomain){ activeDomain='all'; chipsEl.querySelectorAll('[data-d]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.d==='all')); }
+  refreshRisks();
+  setPanel(`${r.id} · ${r.name}`,`<div class="kicker">${esc(r.domainLabel)} · Priority <span class="score sev-${r.sev}">${r.P}</span> · ${r.mvp==='Yes'?'MVP scope':r.mvp}</div>
+   <div><div class="kicker">Sites on the map</div><div class="tags" style="margin-top:6px">${r.sites.map((s,i)=>`<button class="tag" style="border:0;cursor:pointer" data-s="${i}">${esc(s.name)}</button>`).join('')}</div></div>
+   ${riskBody(r)}`,true);
+  pbody.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{const i=+b.dataset.s; openSite(r,r.sites[i],r.id+'-'+i);});
+  const b=L.latLngBounds(r.sites.map(s=>[s.lat,s.lon]));
+  if(r.sites.length===1) map.flyTo(b.getCenter(),Math.max(map.getZoom(),14),{duration:.8}); else map.flyToBounds(b.pad(.3),{maxZoom:15,duration:.8,...padOpts()});
+}
+function openSite(r,s,key){
+  view='site'; selKey=key; refreshRisks();
+  setPanel(s.name,`<div class="kicker">${r.id} · ${esc(r.name)} · Priority <span class="score sev-${r.sev}">${r.P}</span></div>
+   ${s.note?`<p class="lead">${s.note}</p>`:''}
+   <div class="btnrow"><button class="btn ghost" id="allsites">All ${r.sites.length} site${r.sites.length>1?'s':''} for ${r.id}</button></div>
+   ${riskBody(r)}
+   <p class="note">${s.lat.toFixed(4)}° N, ${s.lon.toFixed(4)}° E${s.approx?' · approximate location':''}</p>`,true);
+  document.getElementById('allsites').onclick=()=>openRisk(r);
+  map.flyTo([s.lat,s.lon],Math.max(map.getZoom(),15.5),{duration:.8});
+}
+function openSensor(s){
+  view='sensor';
+  setPanel(s.type,`<div class="kicker">Planned sensor · Phase ${s.phase}</div>
+   <p class="lead"><b>${esc(s.site)}</b></p>
+   <div><div class="kicker">Measures</div><p class="lead">${esc(s.measures)}</p></div>
+   <div><div class="kicker">Risks covered</div><div class="tags" style="margin-top:6px">${s.risks.map(id=>{const r=RISKS.find(x=>x.id===id);return `<button class="tag" style="border:0;cursor:pointer" data-r="${id}">${id} · ${esc(r.name)}</button>`;}).join('')}</div></div>
+   <p class="note">Proposed site, to be agreed with the asset owner and the local council. ${s.lat.toFixed(4)}° N, ${s.lon.toFixed(4)}° E</p>`,true);
+  pbody.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>openRisk(RISKS.find(r=>r.id===b.dataset.r)));
+  map.flyTo([s.lat,s.lon],Math.max(map.getZoom(),15.5),{duration:.8});
+}
+function renderSensorsList(){
+  const by={}; SENSORS.forEach(s=>{(by[s.type]=by[s.type]||[]).push(s);});
+  view='sensors';
+  setPanel('Planned sensor network',`<p class="lead">${SENSORS.length} devices on a LoRaWAN network. Phase 1 covers sewage, bathing water and floods; Phase 2 adds air quality and beach occupancy.</p>
+  <div class="risk-list">${Object.entries(by).map(([t,a])=>`<div class="risk-row" style="cursor:default"><span class="rid">${a.length}×</span><span><b>${esc(t)}</b><small>${esc(a[0].measures)}</small></span><span class="tag">Phase ${a[0].phase}</span></div>`).join('')}</div>`,true);
+}
+renderOverview();
+
+// ---- search ----
+const q=document.getElementById('q'), res=document.getElementById('results'), qc=document.getElementById('qclear');
+const norm = s => s.toLowerCase().replace(/għ/g,'gh').replace(/ħ/g,'h').replace(/ż/g,'z').replace(/ċ/g,'c').replace(/ġ/g,'g').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’']/g,'');
+let hits=[], hi=-1;
+function search(){
+  const t=norm(q.value.trim()); qc.hidden=!q.value;
+  if(t.length<2){res.hidden=true;return;}
+  const out=[];
+  RISKS.forEach(r=>{ if(norm(r.id+' '+r.name+' '+r.domainLabel+' '+r.indicators.join(' ')).includes(t)) out.push({k:'risk',r,label:`${r.id} · ${r.name}`,sub:'Risk · priority '+r.P,ic:r.id}); r.sites.forEach((s,i)=>{ if(norm(s.name).includes(t)) out.push({k:'site',r,s,i,label:s.name,sub:`${r.id} · ${r.name}`,ic:'●'}); }); });
+  TOWNS.forEach(x=>{ if(norm(x.en+' '+(x.mt||'')).includes(t)) out.push({k:'town',x,label:x.en,sub:(x.mt&&x.mt!==x.en?x.mt+' · ':'')+'Locality',ic:'⌂'}); });
+  SENSORS.forEach(s=>{ if(norm(s.type+' '+s.site).includes(t)) out.push({k:'sensor',s,label:s.type,sub:s.site+' · planned',ic:'◆'}); });
+  PLACES.forEach(([n,c,x,y])=>{ if(out.length<40 && norm(n+' '+c).includes(t)) out.push({k:'place',n,c,x,y,label:n,sub:c,ic:'•'}); });
+  hits=out.slice(0,12); hi=-1;
+  res.innerHTML = hits.length? hits.map((h,i)=>`<button class="res" role="option" data-i="${i}"><span class="ic">${esc(h.ic)}</span><span><b>${esc(h.label)}</b><small>${esc(h.sub)}</small></span></button>`).join('') : '<div class="res muted" style="cursor:default">No matches in Gozo. Try a village, beach or risk such as "sewage".</div>';
+  res.hidden=false;
+  res.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>pick(hits[+b.dataset.i]));
+}
+let tmpMarker=null;
+function pick(h){
+  res.hidden=true; q.value=h.label; qc.hidden=false;
+  if(tmpMarker){tmpMarker.remove();tmpMarker=null;}
+  if(h.k==='risk') openRisk(h.r);
+  else if(h.k==='site') openSite(h.r,h.s,h.r.id+'-'+h.i);
+  else if(h.k==='sensor'){ if(!showSensors) sb.click(); openSensor(h.s); }
+  else if(h.k==='town'){ map.flyTo([h.x.lat,h.x.lon],15,{duration:.8}); }
+  else { map.flyTo([h.y,h.x],17,{duration:.8}); tmpMarker=L.marker([h.y,h.x],{pane:'risk',icon:L.divIcon({className:'',html:'<div class="pin" style="--c:var(--accent)"><div class="h"></div><span>•</span></div>',iconSize:[0,0]})}).bindTooltip(`<b>${esc(h.n)}</b><br>${esc(h.c)}`,{direction:'top',offset:[0,-30],permanent:true}).addTo(map); }
+}
+q.addEventListener('input',search);
+q.addEventListener('keydown',e=>{
+  const bs=[...res.querySelectorAll('[data-i]')]; if(!bs.length) return;
+  if(e.key==='ArrowDown'){hi=Math.min(bs.length-1,hi+1);e.preventDefault();}
+  else if(e.key==='ArrowUp'){hi=Math.max(0,hi-1);e.preventDefault();}
+  else if(e.key==='Enter'){pick(hits[Math.max(0,hi)]);e.preventDefault();return;}
+  else if(e.key==='Escape'){res.hidden=true;return;}
+  bs.forEach((b,i)=>b.classList.toggle('on',i===hi));
+});
+qc.onclick=()=>{q.value='';qc.hidden=true;res.hidden=true;if(tmpMarker){tmpMarker.remove();tmpMarker=null;}q.focus();};
+document.addEventListener('click',e=>{ if(!e.target.closest('.search')) res.hidden=true; });
+
+// ---- controls ----
+document.getElementById('zin').onclick=()=>map.zoomIn(1);
+document.getElementById('zout').onclick=()=>map.zoomOut(1);
+document.getElementById('home').onclick=fit;
+
+// ---- simulated storm event ----
+let simLayer=null, simTimer=null, simStep=-1;
+function stopSim(){ clearInterval(simTimer); simTimer=null; if(simLayer){simLayer.remove();simLayer=null;} simb.setAttribute('aria-pressed','false'); }
+function startSim(){
+  stopSim(); simb.setAttribute('aria-pressed','true'); simLayer=L.layerGroup().addTo(map); simStep=-1; view='sim';
+  map.flyToBounds([[36.012,14.23],[36.05,14.30]],{duration:.8,...padOpts()});
+  renderSim(); simTimer=setInterval(()=>{ if(simStep<SIM.length-1){simStep++;renderSim();} else {clearInterval(simTimer);} },2600);
+  simStep=0; renderSim();
+}
+function renderSim(){
+  if(!simLayer) return;
+  simLayer.clearLayers();
+  SIM.forEach((s,i)=>{ if(i<=simStep && s.lat) L.marker([s.lat,s.lon],{pane:'risk',interactive:false,icon:L.divIcon({className:'',html:i===simStep?'<div class="pulse"></div>':'<div class="pulse" style="animation:none;opacity:.55;width:14px;height:14px"></div>',iconSize:[0,0]})}).addTo(simLayer); });
+  setPanel('Storm event demo',`<div class="simbox"><div class="kicker">Simulated example · not real data</div>
+   <p class="lead" style="margin-top:6px">How the system handles a heavy-rain night: deterministic checks first, an agent assembles evidence, a person decides.</p>
+   <ol class="steps">${SIM.map((s,i)=>`<li class="${i<simStep?'done':i===simStep?'now':''}"><time>${s.t}</time><span><b>${esc(s.title)}</b><br><span class="muted">${esc(s.body)}</span></span></li>`).join('')}</ol></div>
+   <div class="btnrow"><button class="btn" id="simReplay">Replay</button><button class="btn ghost" id="simEnd">End demo</button></div>`,true);
+  document.getElementById('simReplay').onclick=startSim;
+  document.getElementById('simEnd').onclick=()=>{stopSim();renderOverview();};
+}
+
+// theme changes
+const mq=matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener?.('change',restyle);
+new MutationObserver(restyle).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+refreshRisks();
+})();
+</script>
