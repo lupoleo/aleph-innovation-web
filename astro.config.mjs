@@ -7,5 +7,11 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   site: "https://alephinnovation.com",
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      // Tell search engines when each page was last rebuilt.
+      lastmod: new Date(),
+    }),
+  ],
 });
