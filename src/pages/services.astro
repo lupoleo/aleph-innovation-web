@@ -53,7 +53,13 @@ const services = [
     ],
     format: "Workshop or 1 to 2 week assessment",
     price: "Workshops from €1,500",
-    audience: "SMEs, professional firms, business associations",
+    audience: "SMEs, professional firms, business associations, universities, research groups and individuals",
+    links: [
+      { label: "Training for companies", href: "/services/training/companies/" },
+      { label: "Training for universities and research", href: "/services/training/universities/" },
+      { label: "Courses for individuals", href: "/services/training/individuals/" },
+      { label: "All training offers", href: "/services/training/" },
+    ],
   },
 ];
 
@@ -173,6 +179,16 @@ const structuredData = {
                 <dd>{service.audience}</dd>
               </div>
             </dl>
+
+            {service.links && (
+              <div class="service-links">
+                {service.links.map((link) => (
+                  <a href={link.href}>
+                    {link.label} <span aria-hidden="true">→</span>
+                  </a>
+                ))}
+              </div>
+            )}
           </article>
         ))
       }
@@ -431,6 +447,32 @@ const structuredData = {
   .service-facts .service-price {
     color: var(--aleph-text-primary);
     font-weight: var(--font-weight-semibold);
+  }
+
+  .service-links {
+    display: grid;
+    gap: var(--space-2);
+
+    margin-top: var(--space-6);
+  }
+
+  .service-links a {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+
+    padding: var(--space-3) var(--space-4);
+
+    border: 1px solid var(--aleph-border-subtle);
+    border-radius: var(--radius-md);
+
+    color: var(--aleph-text-primary);
+    font-size: var(--font-size-sm);
+  }
+
+  .service-links a:hover {
+    border-color: rgba(22, 201, 216, 0.4);
+    color: var(--aleph-cyan);
   }
 
   .services-note {

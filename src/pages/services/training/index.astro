@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Footer from "../../../components/Footer.astro";
+import { publishedOffers } from "../../../data/training";
+
+const shared = [
+  "Hands-on from the first hour: every session ends with something working",
+  "Private by design: models run on your own machines, data stays in the EU",
+  "Compute-heavy steps run in a virtual environment to run models, included in the price",
+  "Fixed prices, written proposals, certificates of attendance",
+];
+---
+
+<BaseLayout
+  title="AI training — Aleph Innovation"
+  description="Hands-on AI training in Malta, Gozo and online: enterprise programmes for companies, academic programmes for universities and research, and short courses for individuals."
+>
+  <section class="training-hero section" aria-labelledby="hub-title">
+    <div class="container-wide">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/services/">Services</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">AI training</span>
+      </nav>
+      <p class="eyebrow">AI training and advisory</p>
+      <h1 id="hub-title">Learn AI by building it, on infrastructure you control.</h1>
+      <p class="lead">
+        One hands-on programme, from how language models work to private
+        assistants and customised models, offered in formats for companies,
+        academia and individuals.
+      </p>
+      <ul class="hub-shared">
+        {shared.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-compact" aria-label="Training offers">
+    <div class="container-wide hub-grid">
+      {
+        publishedOffers.map((o) => (
+          <a class="hub-card" href={`/services/training/${o.slug}/`}>
+            <span class="hub-eyebrow">{o.eyebrow}</span>
+            <h2>{o.cardTitle}</h2>
+            <p>{o.cardText}</p>
+            <span class="hub-price">{o.cardPrice}</span>
+            <span class="hub-more">See packages and curriculum →</span>
+          </a>
+        ))
+      }
+    </div>
+    <p class="container-wide services-note">
+      Company and academic prices exclude VAT. Every engagement starts with a
+      written, fixed-price proposal.
+    </p>
+  </section>
+
+  <section class="services-cta section" aria-labelledby="cta-title">
+    <div class="container-wide cta-inner">
+      <h2 id="cta-title">Not sure which format fits?</h2>
+      <p>Book a free 30-minute call and we'll suggest the right course for your team or for you.</p>
+      <a
+        class="services-button services-button-primary"
+        href="mailto:info@alephinnovation.com?subject=AI%20training"
+      >
+        info@alephinnovation.com
+      </a>
+      <p class="cta-location">Gozo, Malta · on site in Malta and Gozo, live online across the EU</p>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  @import "../../../styles/training.css";
+</style>
