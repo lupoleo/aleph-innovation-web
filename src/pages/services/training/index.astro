@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Footer from "../../../components/Footer.astro";
+import TrainerCard from "../../../components/TrainerCard.astro";
 import { publishedOffers } from "../../../data/training";
 
 const shared = [
@@ -54,6 +55,8 @@ const shared = [
       written, fixed-price proposal.
     </p>
   </section>
+
+  <TrainerCard />
 
   <section class="services-cta section" aria-labelledby="cta-title">
     <div class="container-wide cta-inner">
