@@ -628,7 +628,7 @@ Per i componenti probabilistici, un parsing JSON riuscito non basta. Anche il co
 
 ## 30. Autorità sull'implementazione
 
-Il Wiki tecnico spiega pubblicamente l'architettura e il modello di implementazione.
+La Wiki tecnica spiega pubblicamente l'architettura e il modello di implementazione.
 
 Non è la specifica eseguibile.
 
@@ -639,7 +639,7 @@ In caso di discrepanza, l'autorità sull'implementazione resta a:
 3. il codice Python eseguibile;
 4. le evidenze di accettazione automatiche e dal vivo.
 
-Il Wiki deve evolvere insieme a questi artefatti, ma non deve inventare silenziosamente dettagli di implementazione che il repository non supporta.
+La Wiki deve evolvere insieme a questi artefatti, ma non deve inventare silenziosamente dettagli di implementazione che il repository non supporta.
 
 ## Direzione attuale dell'implementazione
 

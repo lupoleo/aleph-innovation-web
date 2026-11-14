@@ -1,6 +1,6 @@
 ---
 title: "Agentic Portfolio"
-description: "Panoramica di ingegneria e documentazione tecnica del primo progetto di R&S attivo di Aleph Innovation."
+description: "Panoramica di ingegneria e documentazione tecnica del primo progetto di R&D attivo di Aleph Innovation."
 project: "agentic-portfolio"
 section: "project-home"
 status: "published"
@@ -10,7 +10,7 @@ order: 0
 
 # Agentic Portfolio
 
-Agentic Portfolio è il primo progetto di R&S attivo di Aleph Innovation.
+Agentic Portfolio è il primo progetto di R&D attivo di Aleph Innovation.
 
 Studia come analisi deterministica del portafoglio, controlli quantitativi del
 rischio, ricerca strutturata, IA probabilistica e supporto decisionale agentico
@@ -65,7 +65,7 @@ Il progetto segue alcuni principi fondamentali:
 
 ## Mappa della documentazione
 
-Il Wiki tecnico di Agentic Portfolio è destinato a crescere nelle seguenti aree:
+La Wiki tecnica di Agentic Portfolio è destinata a crescere nelle seguenti aree:
 
 - Panoramica del sistema
 - Architettura
@@ -84,9 +84,9 @@ Portfolio:
 
 `https://github.com/lupoleo/agentic_portfolio_stage4_0`
 
-Il sito pubblico e il Wiki tecnico sono mantenuti separatamente in:
+Il sito pubblico e la Wiki tecnica sono mantenuti separatamente in:
 
 `https://github.com/lupoleo/aleph-innovation-web`
 
-Il Wiki spiega il sistema di ingegneria; il repository software resta la fonte
+La Wiki spiega il sistema di ingegneria; il repository software resta la fonte
 di verità per il codice eseguibile.

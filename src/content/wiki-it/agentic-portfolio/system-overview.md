@@ -360,10 +360,10 @@ Alcuni invarianti riassumono l'architettura:
 
 ## Maturità attuale
 
-Agentic Portfolio è un sistema di R&S attivo.
+Agentic Portfolio è un sistema di R&D attivo.
 
 La sua architettura viene documentata intenzionalmente mentre l'implementazione procede. Alcune aree del ciclo di vita sono mature e coperte da test di regressione; altre sono ancora in fase di sviluppo.
 
-Per questo motivo il Wiki va letto come un registro di ingegneria versionato, non come l'affermazione che il sistema sia un prodotto di investimento finito.
+Per questo motivo la Wiki va letta come un registro di ingegneria versionato, non come l'affermazione che il sistema sia un prodotto di investimento finito.
 
 Il repository eseguibile resta la fonte di verità per il comportamento implementato.

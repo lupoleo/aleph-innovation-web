@@ -10,7 +10,7 @@ order: 0
 
 # Monitoraggio ambientale
 
-Monitoraggio ambientale è il secondo progetto di R&S di Aleph Innovation,
+Monitoraggio ambientale è il secondo progetto di R&D di Aleph Innovation,
 attualmente in fase di concept.
 
 Gozo sta crescendo: più visitatori, più edilizia e più traffico su un'isola di

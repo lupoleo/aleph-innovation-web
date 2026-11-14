@@ -77,7 +77,7 @@ export const trainerIt: typeof trainer = {
     },
     {
       title: "Agentic Portfolio",
-      text: "un progetto di ricerca aperto sull'analisi degli investimenti assistita dall'IA, documentato pubblicamente nel wiki tecnico.",
+      text: "un progetto di ricerca aperto sull'analisi degli investimenti assistita dall'IA, documentato pubblicamente nella Wiki tecnica.",
     },
   ],
   teaching:

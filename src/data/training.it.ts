@@ -25,11 +25,11 @@ export const trainingOffersIt: TrainingOffer[] = [
       "Cinque pacchetti. I prezzi si intendono per un gruppo riservato, in sede presso il cliente, IVA esclusa.",
     priceColumns: ["Pacchetto", "Durata", "Gruppo", "A chi è rivolto", "Prezzo (IVA esclusa)"],
     packages: [
-      { name: "AI Essentials", duration: "Mezza giornata (3,5 h)", group: "fino a 15", audience: "Tutto il personale", price: "1.500 €" },
+      { name: "Fondamenti di IA", duration: "Mezza giornata (3,5 h)", group: "fino a 15", audience: "Tutto il personale", price: "1.500 €" },
       { name: "IA applicata ai vostri documenti", duration: "1 giorno (7 h)", group: "fino a 15", audience: "Manager, analisti, professionisti", price: "2.600 €" },
-      { name: "Private AI Stack", duration: "3 giorni, oppure 6 sessioni da 3 h", group: "fino a 10", audience: "Sviluppatori, personale IT e data", price: "7.500 €" },
-      { name: "Custom Model Lab (avanzato)", duration: "2 giorni", group: "fino a 10", audience: "Personale tecnico che ha completato Private AI Stack o equivalente", price: "5.800 €" },
-      { name: "AI Adoption Assessment", duration: "Da 1 a 2 settimane", group: "direzione + persone chiave", audience: "Chi prende le decisioni", price: "da 3.500 €" },
+      { name: "Stack IA privato", duration: "3 giorni, oppure 6 sessioni da 3 h", group: "fino a 10", audience: "Sviluppatori, personale IT e data", price: "7.500 €" },
+      { name: "Laboratorio modelli personalizzati (avanzato)", duration: "2 giorni", group: "fino a 10", audience: "Personale tecnico che ha completato Stack IA privato o equivalente", price: "5.800 €" },
+      { name: "Valutazione per l'adozione dell'IA", duration: "Da 1 a 2 settimane", group: "direzione + persone chiave", audience: "Chi prende le decisioni", price: "da 3.500 €" },
     ],
     priceNotes: [
       "Posti singoli: le aziende che iscrivono da 1 a 3 persone possono prenotare posti in un'edizione aperta a calendario, a 250 € a persona al giorno.",
@@ -37,7 +37,7 @@ export const trainingOffersIt: TrainingOffer[] = [
     ],
     curriculum: [
       {
-        title: "AI Essentials (mezza giornata)",
+        title: "Fondamenti di IA (mezza giornata)",
         modules: [
           "Come funzionano i modelli linguistici, in parole semplici: cosa fanno bene, dove sbagliano, perché inventano.",
           "Prompt che funzionano: istruzioni, esempi, ragionamento passo per passo, verifica della risposta.",
@@ -49,7 +49,7 @@ export const trainingOffersIt: TrainingOffer[] = [
       {
         title: "IA applicata ai vostri documenti (1 giorno)",
         modules: [
-          "I contenuti di AI Essentials, in forma condensata.",
+          "I contenuti del corso Fondamenti di IA, in forma condensata.",
           "Classificare ed estrarre informazioni da email, fatture, contratti o report.",
           "Interrogare i propri documenti con risposte che citano la fonte.",
           "Un assistente IA privato, mostrato in funzione su un singolo computer senza che alcun dato esca dall'azienda.",
@@ -58,7 +58,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         outcome: "Le attività riprogettate, misurate rispetto ai tempi attuali, e un piano di adozione a 90 giorni.",
       },
       {
-        title: "Private AI Stack (3 giorni)",
+        title: "Stack IA privato (3 giorni)",
         modules: [
           "Giorno 1, il modello: come un modello legge il testo, dimensioni e compressione dei modelli, scelta di un modello aperto adatto al vostro hardware e alle vostre esigenze di licenza, esecuzione in locale.",
           "Giorno 1, prompt e ragionamento: i moderni modelli di ragionamento, output strutturati leggibili dal vostro software.",
@@ -70,7 +70,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         outcome: "Un assistente IA privato funzionante sui propri computer, e le competenze per gestirlo senza che i dati escano dall'azienda.",
       },
       {
-        title: "Custom Model Lab (2 giorni, avanzato)",
+        title: "Laboratorio modelli personalizzati (2 giorni, avanzato)",
         modules: [
           "Quando conviene personalizzare un modello e quando bastano prompt o retrieval.",
           "Costruire un dataset di addestramento a partire da esempi aziendali, con controlli di qualità.",
@@ -82,7 +82,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         outcome: "Un modello addestrato sui propri dati, un report di valutazione che lo confronta con il modello di partenza e un processo ripetibile.",
       },
       {
-        title: "AI Adoption Assessment (da 1 a 2 settimane)",
+        title: "Valutazione per l'adozione dell'IA (da 1 a 2 settimane)",
         modules: [
           "Interviste e analisi dei processi chiave.",
           "Un report scritto: dove si inserisce l'IA, risparmi attesi, rischi e classificazione secondo l'AI Act per ogni caso d'uso.",
@@ -122,9 +122,9 @@ export const trainingOffersIt: TrainingOffer[] = [
     packages: [
       { name: "Alfabetizzazione IA per lo studio e la ricerca", duration: "Mezza giornata (3,5 h)", group: "fino a 30", audience: "Studenti, ricercatori, personale accademico", price: "1.050 €", extra: { a: "1.500 €" } },
       { name: "IA applicata ai dati di ricerca", duration: "1 giorno (7 h)", group: "fino a 20", audience: "Ricercatori e studenti post-laurea di qualsiasi disciplina", price: "1.820 €", extra: { a: "2.600 €" } },
-      { name: "Private AI Stack Bootcamp", duration: "3 giorni, oppure 6 sessioni da 3 h nell'arco di un semestre", group: "fino a 16 (con un tutor)", audience: "Studenti di informatica, ingegneria e data science", price: "5.250 €", extra: { a: "7.500 €" } },
-      { name: "Custom Model Lab (avanzato)", duration: "2 giorni", group: "fino a 12", audience: "Studenti di laurea magistrale e dottorato, ingegneri della ricerca", price: "4.060 €", extra: { a: "5.800 €" } },
-      { name: "Research Programme Partner", duration: "6 mesi", group: "un gruppo di ricerca", audience: "Gruppi che necessitano di un ambiente IA privato e di supporto continuativo", price: "da 2.450 €", extra: { a: "da 3.500 €" } },
+      { name: "Bootcamp Stack IA privato", duration: "3 giorni, oppure 6 sessioni da 3 h nell'arco di un semestre", group: "fino a 16 (con un tutor)", audience: "Studenti di informatica, ingegneria e data science", price: "5.250 €", extra: { a: "7.500 €" } },
+      { name: "Laboratorio modelli personalizzati (avanzato)", duration: "2 giorni", group: "fino a 12", audience: "Studenti di laurea magistrale e dottorato, ingegneri della ricerca", price: "4.060 €", extra: { a: "5.800 €" } },
+      { name: "Partner per programmi di ricerca", duration: "6 mesi", group: "un gruppo di ricerca", audience: "Gruppi che necessitano di un ambiente IA privato e di supporto continuativo", price: "da 2.450 €", extra: { a: "da 3.500 €" } },
     ],
     priceNotes: [
       "Posti singoli in un'edizione aperta a calendario: 175 € a persona al giorno per il personale di istituzioni accademiche.",
@@ -153,7 +153,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         outcome: "Un'analisi funzionante di un dataset del proprio ambito e una sezione metodologica da adattare.",
       },
       {
-        title: "Private AI Stack Bootcamp (3 giorni o 6 sessioni)",
+        title: "Bootcamp Stack IA privato (3 giorni o 6 sessioni)",
         modules: [
           "Dentro il modello: token, embedding, attention, dimensioni e compressione dei modelli.",
           "Eseguire modelli aperti in locale: scegliere un modello in base a hardware e licenza, misurarne velocità e qualità.",
@@ -165,7 +165,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         outcome: "Un progetto da portfolio, un attestato e l'intero stack in funzione sul proprio portatile. Per i corsi che danno crediti, la valutazione può essere definita con il docente responsabile.",
       },
       {
-        title: "Custom Model Lab (2 giorni, avanzato)",
+        title: "Laboratorio modelli personalizzati (2 giorni, avanzato)",
         modules: [
           "I metodi di addestramento alla base dei modelli attuali: fine-tuning supervisionato, preference tuning, reinforcement learning con ricompense verificabili.",
           "Costruire e documentare un dataset di addestramento secondo gli standard della ricerca.",
@@ -176,7 +176,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         outcome: "Un modello addestrato, un report di valutazione e una model card pronta per l'appendice di un articolo.",
       },
       {
-        title: "Research Programme Partner (6 mesi)",
+        title: "Partner per programmi di ricerca (6 mesi)",
         modules: [
           "Un workshop di avvio per il gruppo.",
           "Un ambiente IA privato per i dati sensibili o non pubblicati del gruppo.",
@@ -187,7 +187,7 @@ export const trainingOffersIt: TrainingOffer[] = [
     ],
     terms: [
       { label: "Dove", text: "In università ovunque a Malta e Gozo (trasferta inclusa) oppure live online. L'istituzione mette a disposizione aula e proiettore." },
-      { label: "Formati semestrali", text: "Il Bootcamp e il Custom Model Lab possono essere suddivisi in sessioni settimanali di 3 ore per adattarsi all'orario delle lezioni." },
+      { label: "Formati semestrali", text: "Il Bootcamp e il Laboratorio modelli personalizzati possono essere suddivisi in sessioni settimanali di 3 ore per adattarsi all'orario delle lezioni." },
       { label: "Dotazione", text: `I partecipanti portano il proprio portatile (consigliati 16 GB di RAM). Le fasi più pesanti dal punto di vista del calcolo si svolgono in ${VIRTUAL_ENV}.` },
       { label: "Progetti di ricerca finanziati", text: "Qualsiasi pacchetto può essere inserito in una proposta di finanziamento come attività di formazione o di capacity building. Forniamo una descrizione, una voce di budget e un prezzo che resta fisso per tutta la durata del progetto." },
       { label: "Dati", text: "I dati di ricerca restano nell'UE e, negli esercizi private stack, non lasciano mai i computer dei partecipanti, il che semplifica le approvazioni in materia di protezione dei dati ed etica." },
@@ -218,8 +218,8 @@ export const trainingOffersIt: TrainingOffer[] = [
       "Privato 1-to-1, +50% (IVA 18% inclusa)",
     ],
     packages: [
-      { name: "AI Starter", duration: "2 serate da 3 h", group: "Live online", audience: "Nessuno", price: "100 €", extra: { a: "118 €", b: "150 €", c: "177 €" } },
-      { name: "Costruisci il tuo assistente privato", duration: "2 giorni (weekend)", group: "Live online o a Gozo", audience: "AI Starter o dimestichezza di base con il computer", price: "200 €", extra: { a: "236 €", b: "300 €", c: "354 €" } },
+      { name: "Primi passi con l'IA", duration: "2 serate da 3 h", group: "Live online", audience: "Nessuno", price: "100 €", extra: { a: "118 €", b: "150 €", c: "177 €" } },
+      { name: "Costruisci il tuo assistente privato", duration: "2 giorni (weekend)", group: "Live online o a Gozo", audience: "Primi passi con l'IA o dimestichezza di base con il computer", price: "200 €", extra: { a: "236 €", b: "300 €", c: "354 €" } },
       { name: "Il tuo primo fine-tuning", duration: "1 giorno", group: "Live online o a Gozo", audience: "Costruisci il tuo assistente privato, Python di base", price: "100 €", extra: { a: "118 €", b: "150 €", c: "177 €" } },
       { name: "Percorso completo (tutti e tre)", duration: "5 sessioni", group: "Come sopra", audience: "Nessuno", price: "360 €", extra: { a: "425 €", b: "540 €", c: "637 €" } },
     ],
@@ -229,7 +229,7 @@ export const trainingOffersIt: TrainingOffer[] = [
     ],
     curriculum: [
       {
-        title: "AI Starter (2 serate)",
+        title: "Primi passi con l'IA (2 serate)",
         modules: [
           "Che cos'è un modello linguistico e come produce il testo, senza matematica.",
           "Scrivere prompt che danno risultati affidabili, e accorgersi quando la risposta è sbagliata.",
