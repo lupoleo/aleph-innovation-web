@@ -1,3 +1,89 @@
+---
+import { getLang } from "../i18n";
+
+const lang = getLang(Astro);
+---
+
+{lang === "it" ? (
+<section id="mission" class="mission section section-atmosphere" aria-labelledby="mission-title">
+  <div class="container mission-grid">
+    <div class="mission-copy">
+      <p class="eyebrow">MISSIONE</p>
+
+      <h2 id="mission-title">
+        L'IA progettata come un sistema,
+        <span class="text-gradient">non come una scatola nera.</span>
+      </h2>
+
+      <div class="mission-text">
+        <p>
+          Aleph Innovation è una realtà di intelligenza artificiale in fase di
+          costituzione con sede a <strong>Gozo, Malta</strong>, dedicata
+          all'ingegneria di sistemi di Agentic AI che uniscono
+          <strong>software deterministico</strong> e
+          <strong>IA probabilistica</strong>.
+        </p>
+
+        <p>
+          Il primo progetto di ricerca e sviluppo, <strong>Agentic Portfolio</strong>,
+          applica questa architettura all'analisi degli investimenti,
+          all'analisi quantitativa, al rischio di portafoglio e al supporto
+          alle decisioni assistito dall'IA.
+        </p>
+
+        <p>
+          Aleph adotta un approccio <strong>engineering-first</strong> e
+          <strong>building in public</strong>: documenta architettura,
+          implementazione, test, errori e lezioni apprese man mano che i
+          progetti evolvono.
+        </p>
+      </div>
+
+      <div class="mission-status">
+        <span class="mission-status-dot" aria-hidden="true"></span>
+        <span>Stato attuale: realtà di R&amp;D in fase di costituzione</span>
+      </div>
+    </div>
+
+    <div class="mission-principles" aria-label="I principi di ingegneria di Aleph Innovation">
+      <article class="principle-card aleph-surface">
+        <span class="principle-index">01</span>
+
+        <h3>Nucleo deterministico</h3>
+
+        <p>
+          Contratti, vincoli, calcolo numerico, validazione e stato del
+          sistema restano espliciti e verificabili.
+        </p>
+      </article>
+
+      <article class="principle-card aleph-surface">
+        <span class="principle-index">02</span>
+
+        <h3>Ragionamento probabilistico</h3>
+
+        <p>
+          I modelli linguistici contribuiscono con interpretazione, ricerca e
+          ragionamento contestuale dove il solo software deterministico non
+          basta.
+        </p>
+      </article>
+
+      <article class="principle-card aleph-surface">
+        <span class="principle-index">03</span>
+
+        <h3>Governance progettata</h3>
+
+        <p>
+          Gli output dell'IA operano all'interno di flussi osservabili,
+          perimetri di evidenza, punti di validazione e un'autorità
+          decisionale umana esplicita.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+) : (
 <section id="mission" class="mission section section-atmosphere" aria-labelledby="mission-title">
   <div class="container mission-grid">
     <div class="mission-copy">
@@ -73,6 +159,7 @@
     </div>
   </div>
 </section>
+)}
 
 <style>
   .mission {

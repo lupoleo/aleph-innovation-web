@@ -1,0 +1,41 @@
+---
+import { render } from "astro:content";
+
+import WikiLayout from "../layouts/WikiLayout.astro";
+import WikiArticleMeta from "../components/wiki/WikiArticleMeta.astro";
+import { getLang, localizePath } from "../i18n";
+
+const lang = getLang(Astro);
+const { entry } = Astro.props;
+
+const { Content } = await render(entry);
+
+const slug = entry.id.endsWith("/index")
+  ? entry.id.slice(0, -"/index".length)
+  : entry.id;
+
+const currentPath = localizePath(`/wiki/${slug}/`, lang);
+
+const suffix = {
+  en: "Aleph Innovation Engineering Wiki",
+  it: "Wiki tecnica di Aleph Innovation",
+}[lang];
+
+const pageTitle = `${entry.data.title} — ${suffix}`;
+---
+
+<WikiLayout
+  title={pageTitle}
+  description={entry.data.description}
+  currentPath={currentPath}
+  project={entry.data.project}
+>
+  <WikiArticleMeta
+    project={entry.data.project}
+    section={entry.data.section}
+    status={entry.data.status}
+    updated={entry.data.updated}
+  />
+
+  <Content />
+</WikiLayout>

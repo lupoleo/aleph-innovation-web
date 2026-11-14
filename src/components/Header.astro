@@ -1,23 +1,71 @@
 ---
-const navItems = [
-  { label: "Paradigm", href: "/#paradigm" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Services", href: "/services/" },
-  { label: "Agentic Portfolio", href: "/#agentic-portfolio" },
-  { label: "Environment", href: "/#environmental-monitoring" },
-  { label: "Wiki", href: "/#wiki" },
-  { label: "Fund", href: "/#fund-project" },
-  { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" }
-];
+import { getLang, localizePath, alternatePaths, languages, type Lang } from "../i18n";
+
+const lang = getLang(Astro);
+const l = (path: string) => localizePath(path, lang);
+
+const labels = {
+  en: {
+    nav: [
+      { label: "Paradigm", href: "/#paradigm" },
+      { label: "Projects", href: "/#projects" },
+      { label: "Services", href: "/services/" },
+      { label: "Agentic Portfolio", href: "/#agentic-portfolio" },
+      { label: "Environment", href: "/#environmental-monitoring" },
+      { label: "Wiki", href: "/#wiki" },
+      { label: "Fund", href: "/#fund-project" },
+      { label: "About", href: "/#about" },
+      { label: "Contact", href: "/#contact" },
+    ],
+    home: "Aleph Innovation home",
+    primary: "Primary navigation",
+    open: "Open navigation menu",
+    menu: "Menu",
+    mobile: "Mobile navigation",
+    wiki: "Engineering Wiki",
+    switcher: "Choose language",
+  },
+  it: {
+    nav: [
+      { label: "Paradigma", href: "/#paradigm" },
+      { label: "Progetti", href: "/#projects" },
+      { label: "Servizi", href: "/services/" },
+      { label: "Agentic Portfolio", href: "/#agentic-portfolio" },
+      { label: "Ambiente", href: "/#environmental-monitoring" },
+      { label: "Wiki", href: "/#wiki" },
+      { label: "Sostieni", href: "/#fund-project" },
+      { label: "Chi siamo", href: "/#about" },
+      { label: "Contatti", href: "/#contact" },
+    ],
+    home: "Aleph Innovation, home page",
+    primary: "Navigazione principale",
+    open: "Apri il menu di navigazione",
+    menu: "Menu",
+    mobile: "Navigazione mobile",
+    wiki: "Wiki tecnica",
+    switcher: "Scegli la lingua",
+  },
+}[lang];
+
+const navItems = labels.nav.map((item) => ({ ...item, href: l(item.href) }));
+
+// Same page in the other language, keeping the #section if there is one.
+const alternates = alternatePaths(Astro.url.pathname);
+const switcher = (["en", "it"] as Lang[]).map((code) => ({
+  code,
+  href: alternates[code],
+  label: languages[code].label,
+  name: languages[code].name,
+  current: code === lang,
+}));
 ---
 
 <header class="site-header">
   <div class="container-wide header-inner">
     <a
       class="brand"
-      href="/"
-      aria-label="Aleph Innovation home"
+      href={l("/")}
+      aria-label={labels.home}
     >
       <span class="brand-mark" aria-hidden="true">
         <span class="brand-mark-primary"></span>
@@ -30,7 +78,7 @@ const navItems = [
       </span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary navigation">
+    <nav class="desktop-nav" aria-label={labels.primary}>
       <ul>
         {
           navItems.map((item) => (
@@ -42,39 +90,90 @@ const navItems = [
       </ul>
     </nav>
 
-    <details class="mobile-nav">
-      <summary aria-label="Open navigation menu">
-        <span class="mobile-nav-label">Menu</span>
+    <div class="header-end">
+      <a class="header-cta" href={l("/#wiki")}>
+        {labels.wiki}
+      </a>
 
-        <span class="mobile-nav-icon" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </span>
-      </summary>
-
-      <nav class="mobile-nav-panel" aria-label="Mobile navigation">
-        <ul>
-          {
-            navItems.map((item) => (
-              <li>
-                <a href={item.href}>{item.label}</a>
-              </li>
-            ))
-          }
-        </ul>
-
-        <a class="mobile-wiki-link" href="/wiki/">
-          Engineering Wiki
-        </a>
+      <nav class="lang-switch" aria-label={labels.switcher}>
+        {
+          switcher.map((item) => (
+            <a
+              class:list={["lang-option", { active: item.current }]}
+              href={item.href}
+              hreflang={item.code}
+              lang={item.code}
+              title={item.name}
+              aria-label={item.name}
+              aria-current={item.current ? "true" : undefined}
+              data-lang-switch
+            >
+              {item.code === "en" ? (
+                <svg class="lang-flag" viewBox="0 0 60 30" aria-hidden="true">
+                  <clipPath id="flag-uk-s"><path d="M0,0 v30 h60 v-30 z" /></clipPath>
+                  <clipPath id="flag-uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z" /></clipPath>
+                  <g clip-path="url(#flag-uk-s)">
+                    <path d="M0,0 v30 h60 v-30 z" fill="#012169" />
+                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" />
+                    <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#flag-uk-t)" stroke="#C8102E" stroke-width="4" />
+                    <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
+                    <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6" />
+                  </g>
+                </svg>
+              ) : (
+                <svg class="lang-flag" viewBox="0 0 3 2" preserveAspectRatio="none" aria-hidden="true">
+                  <rect width="1" height="2" x="0" fill="#009246" />
+                  <rect width="1" height="2" x="1" fill="#ffffff" />
+                  <rect width="1" height="2" x="2" fill="#ce2b37" />
+                </svg>
+              )}
+              <span class="lang-code">{item.label}</span>
+            </a>
+          ))
+        }
       </nav>
-    </details>
 
-    <a class="header-cta" href="/#wiki">
-      Engineering Wiki
-    </a>
+      <details class="mobile-nav">
+        <summary aria-label={labels.open}>
+          <span class="mobile-nav-label">{labels.menu}</span>
+
+          <span class="mobile-nav-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </summary>
+
+        <nav class="mobile-nav-panel" aria-label={labels.mobile}>
+          <ul>
+            {
+              navItems.map((item) => (
+                <li>
+                  <a href={item.href}>{item.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+
+          <a class="mobile-wiki-link" href={l("/wiki/")}>
+            {labels.wiki}
+          </a>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>
+
+<script>
+  // Keep the visitor on the same section (#anchor) when switching language.
+  document.querySelectorAll<HTMLAnchorElement>("[data-lang-switch]").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.location.hash && !link.href.includes("#")) {
+        link.href += window.location.hash;
+      }
+    });
+  });
+</script>
 
 <style>
   .site-header {
@@ -259,6 +358,72 @@ const navItems = [
     transform: scaleX(1);
   }
 
+  .header-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-3);
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+
+    padding: 0.2rem;
+
+    border: 1px solid var(--aleph-border-strong);
+    border-radius: var(--radius-pill);
+
+    background: rgba(7, 27, 48, 0.74);
+  }
+
+  .lang-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    min-height: 2.15rem;
+    padding: 0 0.6rem;
+
+    border-radius: var(--radius-pill);
+
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.08em;
+
+    color: var(--aleph-text-secondary);
+
+    transition:
+      background var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+  }
+
+  .lang-option:hover,
+  .lang-option:focus-visible {
+    color: var(--aleph-text-primary);
+    background: rgba(22, 201, 216, 0.08);
+  }
+
+  .lang-option.active {
+    color: var(--aleph-text-primary);
+    background: rgba(22, 201, 216, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(22, 201, 216, 0.38);
+  }
+
+  .lang-flag {
+    width: 1.3rem;
+    height: 0.87rem;
+
+    flex: none;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18);
+  }
+
+  .lang-option:not(.active) .lang-flag {
+    opacity: 0.78;
+  }
+
   .header-cta {
     display: inline-flex;
     align-items: center;
@@ -418,7 +583,6 @@ const navItems = [
 
     .mobile-nav {
       display: block;
-      grid-column: 3;
     }
   }
 
@@ -465,6 +629,17 @@ const navItems = [
 
     .mobile-wiki-link {
       margin-top: 0.45rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .lang-option {
+      padding: 0 0.45rem;
+      gap: 0.3rem;
+    }
+
+    .mobile-nav-label {
+      display: none;
     }
   }
 

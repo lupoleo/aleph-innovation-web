@@ -1,3 +1,192 @@
+---
+import { getLang } from "../i18n";
+
+const lang = getLang(Astro);
+---
+
+{lang === "it" ? (
+<section
+  id="paradigm"
+  class="paradigm section"
+  aria-labelledby="paradigm-title"
+>
+  <div class="paradigm-atmosphere" aria-hidden="true"></div>
+
+  <div class="container-wide paradigm-container">
+    <header class="paradigm-header">
+      <p class="paradigm-eyebrow">IL PARADIGMA ALEPH</p>
+
+      <h2 id="paradigm-title">
+        <span class="paradigm-title-main">
+          L'intelligenza non è un componente.
+        </span>
+        <span class="paradigm-title-accent">
+          È un sistema progettato.
+        </span>
+      </h2>
+
+      <div class="paradigm-thesis" aria-label="Sintesi dell'architettura Aleph">
+        <span class="thesis-line" aria-hidden="true"></span>
+        <span>SOFTWARE DETERMINISTICO</span>
+        <span class="thesis-plus">+</span>
+        <span>IA PROBABILISTICA</span>
+        <span class="thesis-plus">+</span>
+        <span>AGENTI</span>
+        <span class="thesis-plus">+</span>
+        <span>GOVERNANCE</span>
+      </div>
+
+      <p class="paradigm-intro">
+        Per Aleph Innovation un modello linguistico non è l'applicazione.
+        Progettiamo sistemi in cui software deterministico, modelli
+        probabilistici e agenti specializzati operano all'interno di
+        contratti espliciti, perimetri di evidenza e punti di validazione.
+      </p>
+    </header>
+
+    <div
+      class="paradigm-architecture"
+      aria-label="L'architettura di Agentic AI di Aleph Innovation"
+    >
+      <article class="architecture-node deterministic">
+        <div class="node-header">
+          <span class="node-index">01</span>
+          <span class="node-type">CONTROLLO</span>
+        </div>
+
+        <h3>Nucleo deterministico</h3>
+
+        <p>
+          Calcolo numerico, vincoli, contratti, transizioni di stato e regole
+          di business restano espliciti, riproducibili e verificabili.
+        </p>
+
+        <div class="node-tags">
+          <span>Python</span>
+          <span>Contratti</span>
+          <span>Validazione</span>
+        </div>
+      </article>
+
+      <div class="architecture-connector" aria-hidden="true">
+        <span class="connector-label">CONTESTO</span>
+        <span class="connector-line"></span>
+        <span class="connector-arrow">→</span>
+      </div>
+
+      <article class="architecture-node probabilistic">
+        <div class="node-header">
+          <span class="node-index">02</span>
+          <span class="node-type">RAGIONAMENTO</span>
+        </div>
+
+        <h3>IA probabilistica</h3>
+
+        <p>
+          I modelli linguistici interpretano le evidenze, estraggono fattori
+          semantici, formulano ipotesi e ragionano su informazioni che non
+          si possono ridurre a sole regole deterministiche.
+        </p>
+
+        <div class="node-tags">
+          <span>LLM</span>
+          <span>Ricerca</span>
+          <span>Inferenza</span>
+        </div>
+      </article>
+
+      <div class="architecture-connector" aria-hidden="true">
+        <span class="connector-label">DELEGA</span>
+        <span class="connector-line"></span>
+        <span class="connector-arrow">→</span>
+      </div>
+
+      <article class="architecture-node agents">
+        <div class="node-header">
+          <span class="node-index">03</span>
+          <span class="node-type">AGENZIA</span>
+        </div>
+
+        <h3>Agenti specializzati</h3>
+
+        <p>
+          Più agenti possono analizzare dimensioni diverse di un problema,
+          mettere in discussione le ipotesi e produrre valutazioni
+          alternative, invece di ridurre il ragionamento a un'unica risposta
+          del modello.
+        </p>
+
+        <div class="agent-mini-network" aria-hidden="true">
+          <span>A</span>
+          <span>B</span>
+          <span>C</span>
+        </div>
+
+        <div class="node-tags">
+          <span>Specializzazione</span>
+          <span>Confronto</span>
+          <span>Consenso</span>
+        </div>
+      </article>
+
+      <div class="architecture-connector" aria-hidden="true">
+        <span class="connector-label">VERIFICA</span>
+        <span class="connector-line"></span>
+        <span class="connector-arrow">→</span>
+      </div>
+
+      <article class="architecture-node governance">
+        <div class="node-header">
+          <span class="node-index">04</span>
+          <span class="node-type">GOVERNANCE</span>
+        </div>
+
+        <h3>Validazione e decisione</h3>
+
+        <p>
+          Qualità delle evidenze, grado di confidenza, vincoli di portafoglio
+          e invarianti di sistema vengono valutati prima che una
+          raccomandazione dell'IA possa influire su una decisione reale.
+        </p>
+
+        <div class="node-tags">
+          <span>Evidenze</span>
+          <span>Controlli</span>
+          <span>Autorità umana</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="paradigm-loop" aria-hidden="true">
+      <span class="loop-rail"></span>
+      <span class="loop-label">
+        OSSERVA <b>·</b> TESTA <b>·</b> METTI IN DUBBIO <b>·</b> VALIDA <b>·</b> IMPARA
+      </span>
+    </div>
+
+    <div class="paradigm-principle">
+      <div class="principle-mark" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <p class="principle-label">PRINCIPIO DI PROGETTAZIONE</p>
+
+      <div class="principle-divider" aria-hidden="true"></div>
+
+      <p class="principle-statement">
+        Software deterministico dove la certezza è possibile.
+        IA probabilistica dove serve interpretare.
+        Agenti dove un ragionamento indipendente crea valore.
+        <strong>
+          Mai confondere un output probabilistico con una verità verificata.
+        </strong>
+      </p>
+    </div>
+  </div>
+</section>
+) : (
 <section
   id="paradigm"
   class="paradigm section"
@@ -178,6 +367,7 @@
     </div>
   </div>
 </section>
+)}
 
 <style>
   .paradigm {

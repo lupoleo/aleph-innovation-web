@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Mission from "../components/Mission.astro";
+import Paradigm from "../components/Paradigm.astro";
+import Projects from "../components/Projects.astro";
+import BuildingWiki from "../components/BuildingWiki.astro";
+import About from "../components/About.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+import FundProject from "../components/FundProject.astro";
+import { getLang } from "../i18n";
+
+const meta = {
+  en: {
+    title: "Aleph Innovation — Engineering Agentic AI Systems from Gozo",
+    description:
+      "Aleph Innovation is an AI R&D venture in formation based in Gozo, Malta, engineering Agentic AI systems that combine deterministic software with probabilistic AI.",
+  },
+  it: {
+    title: "Aleph Innovation — Sistemi di Agentic AI progettati a Gozo",
+    description:
+      "Aleph Innovation è una realtà di ricerca e sviluppo sull'IA in fase di costituzione a Gozo, Malta, che progetta sistemi di Agentic AI in cui il software deterministico lavora insieme all'IA probabilistica.",
+  },
+}[getLang(Astro)];
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <Hero />
+  <Mission />
+  <Paradigm />
+  <Projects />
+  <BuildingWiki />
+  <FundProject />
+  <About />
+  <Contact />
+  <Footer />
+</BaseLayout>

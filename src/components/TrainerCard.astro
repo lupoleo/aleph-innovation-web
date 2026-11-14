@@ -1,5 +1,13 @@
 ---
-import { trainer } from "../data/trainer";
+import { getTrainer } from "../data/trainer";
+import { getLang, localizePath } from "../i18n";
+
+const lang = getLang(Astro);
+const trainer = getTrainer(lang);
+const ui = {
+  en: { eyebrow: "Your trainer", more: "Full profile →" },
+  it: { eyebrow: "Chi tiene il corso", more: "Profilo completo →" },
+}[lang];
 ---
 
 <section class="section-compact" aria-labelledby="trainer-title">
@@ -15,10 +23,10 @@ import { trainer } from "../data/trainer";
         decoding="async"
       />
       <div>
-        <p class="trainer-eyebrow">Your trainer</p>
+        <p class="trainer-eyebrow">{ui.eyebrow}</p>
         <h2 id="trainer-title" class="trainer-name">{trainer.name}</h2>
         <p class="trainer-text">{trainer.short}</p>
-        <a class="trainer-more" href={`/about/${trainer.slug}/`}>Full profile →</a>
+        <a class="trainer-more" href={localizePath(`/about/${trainer.slug}/`, lang)}>{ui.more}</a>
       </div>
     </div>
   </div>

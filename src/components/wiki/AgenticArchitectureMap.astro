@@ -1,11 +1,259 @@
 ---
+import { getLang } from "../../i18n";
 /**
  * Agentic Portfolio — Stage 4.0 Architecture Map
  * Source model: STAGE_4_0_ARCHITECTURE.md
  * Native HTML/CSS, responsive, no client-side JS.
  */
+
+const lang = getLang(Astro);
 ---
 
+{lang === "it" ? (
+<section class="s4-map" aria-labelledby="s4-map-title">
+  <header class="map-head">
+    <div>
+      <p class="kicker">STAGE 4.0 · AGENTIC PORTFOLIO END-TO-END</p>
+      <h2 id="s4-map-title">Due fonti. Un unico percorso decisionale verificabile.</h2>
+    </div>
+    <p class="summary">
+      Lo stato reale del portafoglio e l'universo esterno dello Scanner
+      confluiscono in un Research Watch Universe. L'IA interpreta le evidenze
+      all'interno di contratti validati; la finanza deterministica governa
+      rischio e costruzione; l'esecuzione resta umana.
+    </p>
+  </header>
+
+  <div class="frame">
+    <section class="dual-source" aria-label="Le fonti a monte dello Stage 4">
+      <div class="source-column">
+        <p class="column-label">FONTE: PORTAFOGLIO REALE</p>
+        <article class="node">
+          <em>FINECO · AUTOREVOLE</em>
+          <strong>Portfolio Snapshot</strong>
+          <small>Posizioni reali, liquidità e stato del conto visibile al broker.</small>
+        </article>
+        <div class="down">↓</div>
+        <article class="node">
+          <em>PYTHON · DETERMINISTICO</em>
+          <strong>Analisi del portafoglio e stato di rischio</strong>
+          <small>Analisi quantitative, esposizioni e contesto di rischio canonico.</small>
+        </article>
+        <div class="down">↓</div>
+        <article class="node">
+          <em>OSSERVAZIONE</em>
+          <strong>Portfolio Watch Set</strong>
+          <small>Le posizioni attuali restano osservabili anche quando non sono ammissibili come nuovi candidati dello Scanner.</small>
+        </article>
+      </div>
+
+      <div class="source-column">
+        <p class="column-label">FONTE: SCOPERTA ESTERNA</p>
+        <article class="node">
+          <em>UNIVERSO DI PRODUZIONE</em>
+          <strong>Listini di borsa</strong>
+          <small>Ampio universo di mercati, indipendente dalle posizioni attuali del portafoglio.</small>
+        </article>
+        <div class="down">↓</div>
+        <article class="node">
+          <em>SCANNER · CONTROLLI DETERMINISTICI</em>
+          <strong>Identità · Ammissibilità · Storico · Liquidità</strong>
+          <small>Controlli espliciti e verificabili preservano l'identità del titolo e bloccano in caso di errore.</small>
+        </article>
+        <div class="down">↓</div>
+        <article class="node">
+          <em>CANDIDATI</em>
+          <strong>Scanner Candidate Set</strong>
+          <small>Titoli ammissibili alla ricerca di nuove opportunità.</small>
+        </article>
+      </div>
+    </section>
+
+    <div class="merge" aria-hidden="true">
+      <span></span><b>∪</b><span></span>
+    </div>
+
+    <section class="layer watch-layer">
+      <header>
+        <b>01</b>
+        <div><strong>Research Watch Universe</strong><small>SCANNER CANDIDATE SET ∪ PORTFOLIO WATCH SET · PROVENIENZA PRESERVATA</small></div>
+      </header>
+      <div class="wide-node">
+        <span>NEW_CANDIDATE</span>
+        <span>CURRENT_POSITION</span>
+        <span>O ENTRAMBI</span>
+      </div>
+    </section>
+
+    <div class="down">↓</div>
+
+    <section class="layer">
+      <header>
+        <b>02</b>
+        <div><strong>Evidenze e ricerca</strong><small>EVIDENZE CON FONTE · LLM LOCALE · VALIDAZIONE DETERMINISTICA</small></div>
+      </header>
+
+      <div class="evidence-row">
+        <span>TECNICHE</span><span>DI MERCATO</span><span>NOTIZIE</span><span>FONDAMENTALI</span><span>ANALISTI</span>
+      </div>
+
+      <div class="down">↓</div>
+
+      <article class="node ai research">
+        <em>RICERCA · IA + VALIDAZIONE</em>
+        <strong>Ricerca normalizzata</strong>
+        <small>Estrazione e sintesi restano distinte da evidenze, provenienza e validazione dello schema.</small>
+      </article>
+    </section>
+
+    <div class="down">↓</div>
+
+    <section class="layer">
+      <header>
+        <b>03</b>
+        <div><strong>Intelligenza direzionale sulle opportunità</strong><small>QUADRO DELLA SOCIETÀ + IPOTESI LONG / SHORT</small></div>
+      </header>
+
+      <div class="split">
+        <article class="node ai">
+          <em>CONDIVISA · SENZA DIREZIONE</em>
+          <strong>Company Assessment</strong>
+          <small>Valutazione dei fondamentali e delle aspettative, condivisa per ogni titolo.</small>
+        </article>
+
+        <div class="join-arrow" aria-hidden="true">↘</div>
+
+        <article class="node ai">
+          <em>DIREZIONALE · LONG / SHORT</em>
+          <strong>Opportunity Scoring</strong>
+          <small>Valuta il supporto a ciascuna direzione dell'ipotesi secondo una policy versionata.</small>
+        </article>
+      </div>
+
+      <div class="down">↓</div>
+
+      <div class="scored">
+        <article class="node">
+          <em>PERSISTITE</em>
+          <strong>Ipotesi direzionali con punteggio</strong>
+          <small>Gli esiti completi, parziali, esclusi o falliti restano espliciti.</small>
+        </article>
+
+        <div class="branch" aria-hidden="true">↙ &nbsp;&nbsp; ↘</div>
+
+        <div class="branch-targets">
+          <article class="node opportunity">
+            <em>CONTROLLO DI MATERIALIZZAZIONE</em>
+            <strong>TradeOpportunity · 0..N</strong>
+            <small>Si materializzano solo le ipotesi che superano i controlli su ricerca, punteggio e confidenza.</small>
+          </article>
+
+          <article class="node shadow">
+            <em>SOLO MISURAZIONE</em>
+            <strong>Shadow Ledger</strong>
+            <small>Misura gli esiti direzionali e relativi all'indice; non influisce mai sulle decisioni.</small>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="down">↓</div>
+
+    <section class="operator-gate">
+      <span>CONTROLLO UMANO</span>
+      <strong>L'OPERATORE NE SCEGLIE ESATTAMENTE UNA</strong>
+      <small>Classifica e selezione sono eventi separati. Nessuna allocazione automatica in blocco.</small>
+    </section>
+
+    <div class="down">↓</div>
+
+    <section class="layer">
+      <header>
+        <b>04</b>
+        <div><strong>Costruzione deterministica del portafoglio</strong><small>FILTRO DI PORTAFOGLIO CONGELATO → PROPOSTA ESATTA → SIMULAZIONE MARGINALE</small></div>
+      </header>
+
+      <div class="pipeline five">
+        <article class="node"><em>FILTRO</em><strong>Frozen Portfolio Filter</strong><small>Controlli su esposizione, concentrazione, correlazione, liquidità e rischio marginale.</small></article>
+        <i>→</i>
+        <article class="node"><em>SELEZIONE</em><strong>Strumento</strong><small>Individua l'esatta rappresentazione negoziabile.</small></article>
+        <i>→</i>
+        <article class="node"><em>DIMENSIONE</em><strong>Position Sizing</strong><small>Dimensione proposta deterministica, nel rispetto dei vincoli di portafoglio.</small></article>
+        <i>→</i>
+        <article class="node"><em>PROPOSTA</em><strong>TradeProposal</strong><small>Lato, quantità, prezzo di riferimento, controvalore, costi e vincoli.</small></article>
+        <i>→</i>
+        <article class="node"><em>SIMULAZIONE</em><strong>Portfolio Simulator V2</strong><small>Confronta lo stato del portafoglio prima dell'operazione con quello simulato dopo.</small></article>
+      </div>
+    </section>
+
+    <div class="down">↓</div>
+
+    <section class="layer">
+      <header>
+        <b>05</b>
+        <div><strong>Decisione del CIO e confine dell'esecuzione</strong><small>DECISIONE VERIFICABILE · PIANO DI ESECUZIONE · NESSUN ORDINE AL BROKER</small></div>
+      </header>
+
+      <div class="decision-row">
+        <article class="node ai">
+          <em>CIO · RAGIONAMENTO</em>
+          <strong>CIO Decision</strong>
+          <small>La tesi qualitativa viene valutata insieme ai vincoli deterministici, all'impatto simulato e ai rischi non risolti.</small>
+        </article>
+        <i>→</i>
+        <article class="node">
+          <em>SOLO SE APPROVATA</em>
+          <strong>ExecutionPlan</strong>
+          <small>Istruzione manuale pronta per il broker. Non è un ordine e non modifica lo stato reale.</small>
+        </article>
+      </div>
+
+      <div class="authority">
+        <span>AUTORITÀ DEL SOFTWARE</span>
+        <div><u></u><b>PASSAGGIO DI AUTORITÀ</b><u></u></div>
+        <span>AUTORITÀ UMANA</span>
+      </div>
+
+      <div class="human-flow">
+        <article class="node human">
+          <em>UMANO</em>
+          <strong>Esecuzione manuale</strong>
+          <small>L'operatore decide se e come eseguire davvero il piano.</small>
+        </article>
+        <i>→</i>
+        <article class="node authoritative">
+          <em>FINECO · AUTOREVOLE</em>
+          <strong>Nuovo Portfolio Snapshot</strong>
+          <small>Solo un successivo snapshot visibile al broker stabilisce il nuovo stato reale.</small>
+        </article>
+        <i>→</i>
+        <article class="node">
+          <em>OSSERVATO</em>
+          <strong>Esito dell'esecuzione</strong>
+          <small>Esiti eseguiti, parziali, modificati e non eseguiti restano distinguibili.</small>
+        </article>
+      </div>
+    </section>
+
+    <section class="state-invariant">
+      <span>REALE</span><b>≠</b><span>SIMULATO</span><b>≠</b><span>PROPOSTO</span>
+      <small>I domini di stato restano espliciti per tutto il ciclo di vita.</small>
+    </section>
+
+    <section class="controls">
+      <p>CONTROLLI DI INGEGNERIA TRASVERSALI</p>
+      <div><span>CONTRATTI E VERSIONI DELLE POLICY</span><span>PROVENIENZA E TRACCIABILITÀ</span><span>PERSISTENZA E REPLAY</span><span>VALIDAZIONE E BLOCCO SU ERRORE</span></div>
+    </section>
+  </div>
+
+  <footer class="legend">
+    <span><i class="d"></i>Responsabilità deterministica</span>
+    <span><i class="p"></i>IA probabilistica</span>
+    <span><i class="h"></i>Autorità umana</span>
+    <span><i class="m"></i>Solo misurazione</span>
+  </footer>
+</section>
+) : (
 <section class="s4-map" aria-labelledby="s4-map-title">
   <header class="map-head">
     <div>
@@ -248,6 +496,7 @@
     <span><i class="m"></i>Measurement only</span>
   </footer>
 </section>
+)}
 
 <style>
 .s4-map{width:min(76rem,calc(100vw - 4rem));max-width:none;margin:2.5rem 0 3.5rem}.map-head{display:grid;grid-template-columns:1fr minmax(18rem,.72fr);gap:2rem;align-items:end;margin-bottom:1.4rem}.kicker{margin:0 0 .55rem!important;color:var(--aleph-green)!important;font-family:var(--font-mono);font-size:.78rem!important;letter-spacing:.16em}.map-head h2{margin:0!important;font-size:clamp(1.65rem,2.5vw,2.5rem)!important}.summary{margin:0!important;color:var(--aleph-text-muted)!important;font-size:.84rem!important;line-height:1.65!important}.frame{padding:clamp(1rem,2vw,1.5rem);border:1px solid rgba(90,180,220,.22);border-radius:1rem;background:radial-gradient(circle at 12% 8%,rgba(85,214,158,.045),transparent 22rem),radial-gradient(circle at 88% 50%,rgba(75,104,255,.055),transparent 28rem),rgba(3,18,34,.72)}.dual-source{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.source-column{padding:1rem;border:1px solid rgba(90,180,220,.14);border-radius:.75rem;background:rgba(8,27,48,.48)}.column-label,.controls p{margin:0 0 .65rem!important;color:var(--aleph-text-muted)!important;font-family:var(--font-mono);font-size:.60rem!important;letter-spacing:.13em}.down{padding:.4rem 0;color:var(--aleph-cyan);font-family:var(--font-mono);text-align:center}.node{min-width:0;padding:.8rem;border:1px solid rgba(90,180,220,.19);border-radius:.55rem;background:rgba(4,21,38,.78)}.node strong{display:block;margin-top:.28rem;color:var(--aleph-text-primary);font-size:1rem;line-height:1.3}.node small{display:block;margin-top:.42rem;color:var(--aleph-text-muted);font-size:.74rem;line-height:1.55}.node em{color:var(--aleph-green);font-family:var(--font-mono);font-size:.60rem;font-style:normal;letter-spacing:.11em}.node.ai{border-color:rgba(75,104,255,.38);background:linear-gradient(145deg,rgba(18,44,69,.72),rgba(21,26,68,.5))}.node.ai em{color:var(--aleph-cyan)}.merge{display:grid;grid-template-columns:1fr auto 1fr;gap:.8rem;align-items:center;padding:.55rem 16%}.merge span{height:1px;background:linear-gradient(90deg,transparent,var(--aleph-cyan))}.merge span:last-child{background:linear-gradient(90deg,var(--aleph-cyan),transparent)}.merge b{color:var(--aleph-green);font-family:var(--font-mono)}.layer{padding:1rem;border:1px solid rgba(90,180,220,.14);border-radius:.75rem;background:rgba(8,27,48,.54)}.layer>header{display:flex;gap:.75rem;align-items:center;margin-bottom:.85rem}.layer>header>b{color:var(--aleph-green);font-family:var(--font-mono);font-size:.78rem}.layer>header div{display:grid;gap:.14rem}.layer>header strong{font-size:1rem}.layer>header small{color:var(--aleph-text-muted);font-family:var(--font-mono);font-size:.60rem;letter-spacing:.10em}.wide-node,.evidence-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem}.wide-node span,.evidence-row span,.controls span{display:grid;place-items:center;min-height:2.25rem;padding:.45rem;border:1px solid rgba(90,180,220,.16);border-radius:.45rem;background:rgba(5,24,42,.68);color:var(--aleph-cyan);font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-align:center}.evidence-row{grid-template-columns:repeat(5,1fr)}.research{max-width:34rem;margin:auto}.split{display:grid;grid-template-columns:1fr auto 1fr;gap:.65rem;align-items:center}.join-arrow,.branch{color:var(--aleph-blue-bright);font-family:var(--font-mono);text-align:center}.scored{max-width:56rem;margin:auto}.branch{padding:.4rem}.branch-targets{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}.opportunity{border-color:rgba(85,214,158,.32)}.shadow{border-style:dashed!important;border-color:rgba(90,180,220,.3)!important}.shadow em{color:var(--aleph-text-muted)!important}.operator-gate{display:grid;gap:.3rem;place-items:center;padding:.9rem;border:1px solid rgba(85,214,158,.42);border-radius:.65rem;background:rgba(19,61,55,.2);text-align:center}.operator-gate span{color:var(--aleph-green);font-family:var(--font-mono);font-size:.62rem;letter-spacing:.12em}.operator-gate strong{font-size:.94rem}.operator-gate small{color:var(--aleph-text-muted);font-size:.72rem}.pipeline,.decision-row,.human-flow{display:grid;gap:.55rem;align-items:stretch}.pipeline.five{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr}.pipeline>i,.decision-row>i,.human-flow>i{align-self:center;color:var(--aleph-blue-bright);font-family:var(--font-mono);font-style:normal}.decision-row{grid-template-columns:1fr auto 1fr;max-width:48rem;margin:auto}.authority{display:grid;gap:.38rem;margin:1rem auto;max-width:34rem;text-align:center}.authority>span{color:var(--aleph-cyan);font-family:var(--font-mono);font-size:.62rem;letter-spacing:.10em}.authority>span:last-child{color:var(--aleph-green)}.authority>div{display:grid;grid-template-columns:1fr auto 1fr;gap:.35rem;align-items:center}.authority u{height:1px;background:linear-gradient(90deg,transparent,var(--aleph-cyan));text-decoration:none}.authority u:last-child{background:linear-gradient(90deg,var(--aleph-green),transparent)}.authority b{color:var(--aleph-text-muted);font-family:var(--font-mono);font-size:.58rem;font-weight:500;letter-spacing:.08em}.human-flow{grid-template-columns:1fr auto 1fr auto 1fr}.human{border-color:rgba(85,214,158,.42);background:rgba(19,61,55,.24)}.authoritative{border-color:rgba(85,214,158,.3)}.state-invariant{display:flex;flex-wrap:wrap;gap:.55rem;justify-content:center;align-items:center;margin-top:1rem;padding:.7rem;border:1px solid rgba(90,180,220,.14);border-radius:.55rem}.state-invariant span{color:var(--aleph-cyan);font-family:var(--font-mono);font-size:.66rem;letter-spacing:.09em}.state-invariant b{color:var(--aleph-green)}.state-invariant small{width:100%;color:var(--aleph-text-muted);font-size:.66rem;text-align:center}.controls{margin-top:1rem;padding-top:.9rem;border-top:1px solid rgba(90,180,220,.12)}.controls div{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem}.legend{display:flex;flex-wrap:wrap;gap:1rem 1.5rem;margin-top:.85rem;color:var(--aleph-text-muted);font-family:var(--font-mono);font-size:.62rem}.legend span{display:flex;gap:.4rem;align-items:center}.legend i{width:.4rem;height:.4rem;border-radius:50%}.legend .d{background:var(--aleph-green)}.legend .p{background:var(--aleph-blue-bright)}.legend .h{border:1px solid var(--aleph-green)}.legend .m{border:1px dashed var(--aleph-cyan)}

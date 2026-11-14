@@ -1,26 +1,42 @@
 ---
+import { getLang, localizePath, stripLang } from "../../i18n";
+
+const lang = getLang(Astro);
 const { currentPath = "/wiki/" } = Astro.props;
 
 const labels = {
-  "agentic-portfolio": "Agentic Portfolio",
-  "system-overview": "System Overview",
-  "architecture": "Architecture",
-  "contracts": "Contracts & Data Types",
-  "implementation": "Implementation",
-  "testing": "Testing & Validation",
-  "development-history": "Development History",
-  "environmental-monitoring": "Environmental Monitoring",
-  "risk-overview": "Gozo Risk Overview",
-};
+  en: {
+    "agentic-portfolio": "Agentic Portfolio",
+    "system-overview": "System Overview",
+    "architecture": "Architecture",
+    "contracts": "Contracts & Data Types",
+    "implementation": "Implementation",
+    "testing": "Testing & Validation",
+    "development-history": "Development History",
+    "environmental-monitoring": "Environmental Monitoring",
+    "risk-overview": "Gozo Risk Overview",
+  },
+  it: {
+    "agentic-portfolio": "Agentic Portfolio",
+    "system-overview": "Panoramica del sistema",
+    "architecture": "Architettura",
+    "contracts": "Contratti e tipi di dati",
+    "implementation": "Implementazione",
+    "testing": "Test e validazione",
+    "development-history": "Storia dello sviluppo",
+    "environmental-monitoring": "Monitoraggio ambientale",
+    "risk-overview": "Panoramica dei rischi di Gozo",
+  },
+}[lang];
 
-const segments = currentPath
+const segments = stripLang(currentPath)
   .split("/")
   .filter(Boolean);
 
 const crumbs = [
   {
     label: "Wiki",
-    href: "/wiki/",
+    href: localizePath("/wiki/", lang),
   },
 ];
 
@@ -31,12 +47,12 @@ for (const segment of segments.slice(1)) {
 
   crumbs.push({
     label: labels[segment] ?? segment,
-    href: `${runningPath}/`,
+    href: localizePath(`${runningPath}/`, lang),
   });
 }
 ---
 
-<nav class="wiki-breadcrumbs" aria-label="Breadcrumb">
+<nav class="wiki-breadcrumbs" aria-label={lang === "it" ? "Percorso" : "Breadcrumb"}>
   <ol>
     {
       crumbs.map((crumb, index) => {
