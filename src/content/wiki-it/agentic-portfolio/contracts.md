@@ -18,7 +18,7 @@ Questa pagina descrive il modello pubblico dei contratti a livello architettural
 
 ## Perché i contratti contano
 
-Agentic Portfolio unisce finanza deterministica, fornitori di dati esterni, AI probabilistica e decisioni umane.
+Agentic Portfolio unisce finanza deterministica, fornitori di dati esterni, IA probabilistica e decisioni umane.
 
 Senza confini espliciti, un componente a valle potrebbe reinterpretare silenziosamente un risultato a monte, perdere la provenienza, confondere uno stato proposto con uno reale o trattare un'evidenza mancante come una certezza.
 
@@ -193,7 +193,7 @@ Lo Stage 4.0 può esporre tipi di evidenza come:
 
 `MARKET · TECHNICAL · NEWS · FUNDAMENTAL · ANALYST`
 
-Evidenze e interpretazione dell'AI restano oggetti separati.
+Evidenze e interpretazione dell'IA restano oggetti separati.
 
 Un'evidenza mancante è rappresentata come mancante o degradata; non viene mai sintetizzata in un fatto con fonte.
 
@@ -559,7 +559,7 @@ I contratti congelati non cambiano silenziosamente.
 
 Quando un contratto congelato deve essere riaperto, la governance dello Stage 4 richiede una motivazione esplicita, un'analisi d'impatto, una strategia di migrazione, test aggiornati, evidenze di accettazione e un cambio di versione visibile negli output salvati.
 
-Questo è particolarmente importante per i contratti rivolti all'AI, perché una modifica al prompt o all'interpretazione semantica può alterare il comportamento del sistema anche quando la firma della funzione Python resta invariata.
+Questo è particolarmente importante per i contratti rivolti all'IA, perché una modifica al prompt o all'interpretazione semantica può alterare il comportamento del sistema anche quando la firma della funzione Python resta invariata.
 
 ## 26. Principi di progettazione dei contratti
 
@@ -570,7 +570,7 @@ Il sistema di contratti dello Stage 4 segue poche regole durevoli:
 3. **Evidenze e interpretazione sono separate.**
 4. **Ciò che è sconosciuto è rappresentato come sconosciuto.**
 5. **La direzione delle ipotesi di investimento è esplicita.**
-6. **L'output dell'AI è validato rispetto allo schema.**
+6. **L'output dell'IA è validato rispetto allo schema.**
 7. **La finanza deterministica resta deterministica.**
 8. **Ogni transizione importante preserva la provenienza.**
 9. **Le versioni di policy e contratto viaggiano con gli output salvati.**

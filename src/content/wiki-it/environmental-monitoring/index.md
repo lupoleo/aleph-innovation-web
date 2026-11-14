@@ -19,7 +19,7 @@ rispetto ai limiti ambientali dell'isola, quasi in tempo reale e in un modo che
 chiunque possa verificare?
 
 Il progetto non parte dal presupposto che un LLM sia l'applicazione. Sensori,
-contratti sui dati e regole deterministiche gestiscono le misure; l'AI
+contratti sui dati e regole deterministiche gestiscono le misure; l'IA
 probabilistica raccoglie le evidenze entro confini espliciti; e ogni decisione
 pubblica è presa da una persona identificata.
 
@@ -28,7 +28,7 @@ pubblica è presa da una persona identificata.
 - sensori a basso costo a terra, nelle fognature e in mare;
 - contratti tipizzati sui dati e controlli di qualità per ogni misura;
 - riferimenti stagionali e limiti di legge UE come regole deterministiche;
-- agenti AI con perimetro definito che raccolgono e citano le evidenze;
+- agenti IA con perimetro definito che raccolgono e citano le evidenze;
 - approvazione umana per ogni avviso pubblico;
 - una mappa pubblica interattiva di Gozo, in inglese e in maltese.
 

@@ -38,7 +38,7 @@ L'obiettivo non è fabbricare un'operazione. È dimostrare che la catena di prod
 
 Per i componenti deterministici, la correttezza si verifica con output esatti, invarianti e riproducibilità.
 
-Per i componenti rivolti all'AI, un JSON valido non basta. L'output deve soddisfare il contratto semantico: fondatezza sulle evidenze, direzione, completezza, confidenza, citazioni, coerenza del quadro della società e vincoli di policy.
+Per i componenti rivolti all'IA, un JSON valido non basta. L'output deve soddisfare il contratto semantico: fondatezza sulle evidenze, direzione, completezza, confidenza, citazioni, coerenza del quadro della società e vincoli di policy.
 
 Per l'integrazione dal vivo (LIVE), anche un'esecuzione che produce zero opportunità può essere corretta.
 

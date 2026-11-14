@@ -12,7 +12,7 @@ order: 60
 
 Agentic Portfolio non è nato come agente autonomo.
 
-Si è evoluto per gradi da un motore deterministico di analisi del portafoglio a un flusso governato di supporto decisionale, in cui software quantitativo, ragionamento dell'AI basato su evidenze, controlli di portafoglio, persistenza e autorità umana sono collegati da contratti espliciti.
+Si è evoluto per gradi da un motore deterministico di analisi del portafoglio a un flusso governato di supporto decisionale, in cui software quantitativo, ragionamento dell'IA basato su evidenze, controlli di portafoglio, persistenza e autorità umana sono collegati da contratti espliciti.
 
 La storia di ingegneria conta perché molte scelte progettuali dello Stage 4.0 sono il risultato di problemi scoperti e risolti nelle fasi precedenti.
 
@@ -90,7 +90,7 @@ Questa fase ha stabilito diversi elementi architetturali che restano centrali an
 
 Lo Stage 3.0 ha quindi creato i principali servizi di dominio poi collegati dallo Stage 4.0.
 
-## AI locale e instradamento dei modelli
+## IA locale e instradamento dei modelli
 
 L'architettura dello Stage 3 trattava l'LLM come un componente di ragionamento con perimetro definito, non come l'applicazione.
 
@@ -176,7 +176,7 @@ Portfolio Watch Set                  Scanner Candidate Set
               HUMAN AUTHORITY
 ```
 
-Lo Stage 4.0 quindi non significa semplicemente "più AI". È soprattutto una fase di integrazione, governance, persistenza e validazione.
+Lo Stage 4.0 quindi non significa semplicemente "più IA". È soprattutto una fase di integrazione, governance, persistenza e validazione.
 
 ## Universo di produzione dei titoli quotati
 
@@ -582,7 +582,7 @@ STAGE 2.5
 "Il portafoglio può essere misurato in modo deterministico?"
 
 STAGE 3.0
-"Il ragionamento dell'AI basato su evidenze può essere integrato con
+"Il ragionamento dell'IA basato su evidenze può essere integrato con
 controlli di portafoglio deterministici?"
 
 STAGE 4.0

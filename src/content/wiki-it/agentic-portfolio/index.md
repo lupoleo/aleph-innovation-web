@@ -13,10 +13,10 @@ order: 0
 Agentic Portfolio è il primo progetto di R&S attivo di Aleph Innovation.
 
 Studia come analisi deterministica del portafoglio, controlli quantitativi del
-rischio, ricerca strutturata, AI probabilistica e supporto decisionale agentico
+rischio, ricerca strutturata, IA probabilistica e supporto decisionale agentico
 possano operare all'interno di un unico ciclo di vita progettato.
 
-Il progetto non parte dal presupposto che un LLM sia l'applicazione. L'AI
+Il progetto non parte dal presupposto che un LLM sia l'applicazione. L'IA
 probabilistica opera invece all'interno di contratti software espliciti,
 vincoli di portafoglio, punti di validazione e autorità umana sull'esecuzione.
 
@@ -31,7 +31,7 @@ Agentic Portfolio unisce diversi ambiti di ingegneria:
 - scoring strutturato delle opportunità;
 - filtri consapevoli del portafoglio;
 - simulazione del rischio di portafoglio;
-- supporto decisionale al CIO assistito dall'AI;
+- supporto decisionale al CIO assistito dall'IA;
 - pianificazione esplicita dell'esecuzione;
 - esecuzione manuale e monitoraggio degli esiti.
 
@@ -46,7 +46,7 @@ Ogni fase ha una responsabilità distinta.
 I servizi deterministici gestiscono calcolo numerico, stato, vincoli e
 validazione ovunque siano possibili regole riproducibili.
 
-L'AI probabilistica contribuisce con interpretazione semantica, sintesi della
+L'IA probabilistica contribuisce con interpretazione semantica, sintesi della
 ricerca, ragionamento contestuale e valutazioni dei candidati dove la sola
 logica deterministica non basta.
 

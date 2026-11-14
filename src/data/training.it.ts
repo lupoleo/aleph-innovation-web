@@ -11,22 +11,22 @@ export const trainingOffersIt: TrainingOffer[] = [
   {
     slug: "companies",
     published: true,
-    eyebrow: "Formazione AI per le aziende",
+    eyebrow: "Formazione IA per le aziende",
     cardTitle: "Aziende e studi professionali",
     cardText:
       "Da una mezza giornata introduttiva per tutto il team a un laboratorio di due giorni in cui il personale tecnico addestra un modello sui dati aziendali.",
     cardPrice: "Da 1.500 € a gruppo",
-    title: "AI concreta per il vostro team, in sicurezza e alle vostre condizioni.",
+    title: "IA concreta per il vostro team, in sicurezza e alle vostre condizioni.",
     lead:
-      "Formazione pratica sull'AI per i team che vogliono usarla in modo sicuro e produttivo, sui propri dati e sotto il proprio controllo. Ogni sessione si chiude con qualcosa che funziona, non solo con delle slide.",
+      "Formazione pratica sull'IA per i team che vogliono usarla in modo sicuro e produttivo, sui propri dati e sotto il proprio controllo. Ogni sessione si chiude con qualcosa che funziona, non solo con delle slide.",
     why:
-      "Da febbraio 2025 l'AI Act europeo impone alle organizzazioni che usano l'AI di garantire al proprio personale un livello sufficiente di alfabetizzazione in materia. Ogni pacchetto copre questo obbligo per i casi d'uso trattati e si conclude con un attestato scritto della formazione svolta.",
+      "Da febbraio 2025 l'AI Act europeo impone alle organizzazioni che usano l'IA di garantire al proprio personale un livello sufficiente di alfabetizzazione in materia. Ogni pacchetto copre questo obbligo per i casi d'uso trattati e si conclude con un attestato scritto della formazione svolta.",
     priceIntro:
       "Cinque pacchetti. I prezzi si intendono per un gruppo riservato, in sede presso il cliente, IVA esclusa.",
     priceColumns: ["Pacchetto", "Durata", "Gruppo", "A chi è rivolto", "Prezzo (IVA esclusa)"],
     packages: [
       { name: "AI Essentials", duration: "Mezza giornata (3,5 h)", group: "fino a 15", audience: "Tutto il personale", price: "1.500 €" },
-      { name: "AI applicata ai vostri documenti", duration: "1 giorno (7 h)", group: "fino a 15", audience: "Manager, analisti, professionisti", price: "2.600 €" },
+      { name: "IA applicata ai vostri documenti", duration: "1 giorno (7 h)", group: "fino a 15", audience: "Manager, analisti, professionisti", price: "2.600 €" },
       { name: "Private AI Stack", duration: "3 giorni, oppure 6 sessioni da 3 h", group: "fino a 10", audience: "Sviluppatori, personale IT e data", price: "7.500 €" },
       { name: "Custom Model Lab (avanzato)", duration: "2 giorni", group: "fino a 10", audience: "Personale tecnico che ha completato Private AI Stack o equivalente", price: "5.800 €" },
       { name: "AI Adoption Assessment", duration: "Da 1 a 2 settimane", group: "direzione + persone chiave", audience: "Chi prende le decisioni", price: "da 3.500 €" },
@@ -44,16 +44,16 @@ export const trainingOffersIt: TrainingOffer[] = [
           "Uso sicuro al lavoro: dati riservati, diritto d'autore, quali attività lasciare alle persone.",
           "L'AI Act europeo per i vostri ruoli: obbligo di alfabetizzazione, categorie di rischio, trasparenza.",
         ],
-        outcome: "Una bozza di policy di una pagina sull'uso dell'AI in azienda e un attestato firmato di alfabetizzazione AI.",
+        outcome: "Una bozza di policy di una pagina sull'uso dell'IA in azienda e un attestato firmato di alfabetizzazione IA.",
       },
       {
-        title: "AI applicata ai vostri documenti (1 giorno)",
+        title: "IA applicata ai vostri documenti (1 giorno)",
         modules: [
           "I contenuti di AI Essentials, in forma condensata.",
           "Classificare ed estrarre informazioni da email, fatture, contratti o report.",
           "Interrogare i propri documenti con risposte che citano la fonte.",
-          "Un assistente AI privato, mostrato in funzione su un singolo computer senza che alcun dato esca dall'azienda.",
-          "Scegliere da 3 a 5 attività reali e riprogettarle con l'AI.",
+          "Un assistente IA privato, mostrato in funzione su un singolo computer senza che alcun dato esca dall'azienda.",
+          "Scegliere da 3 a 5 attività reali e riprogettarle con l'IA.",
         ],
         outcome: "Le attività riprogettate, misurate rispetto ai tempi attuali, e un piano di adozione a 90 giorni.",
       },
@@ -63,11 +63,11 @@ export const trainingOffersIt: TrainingOffer[] = [
           "Giorno 1, il modello: come un modello legge il testo, dimensioni e compressione dei modelli, scelta di un modello aperto adatto al vostro hardware e alle vostre esigenze di licenza, esecuzione in locale.",
           "Giorno 1, prompt e ragionamento: i moderni modelli di ragionamento, output strutturati leggibili dal vostro software.",
           "Giorno 2, retrieval: un sistema privato di ricerca e domande e risposte sui documenti aziendali, con qualità misurata su un set di test.",
-          "Giorno 2, agenti: un assistente AI che usa strumenti, e connettori standard verso file, database e applicazioni aziendali.",
+          "Giorno 2, agenti: un assistente IA che usa strumenti, e connettori standard verso file, database e applicazioni aziendali.",
           `Giorno 3, personalizzazione: adattare un modello agli esempi aziendali in ${VIRTUAL_ENV}, per poi riportarlo in esecuzione in locale.`,
           "Giorno 3, progetto finale: ogni team collega il proprio modello personalizzato, il retrieval e due connettori in un unico assistente funzionante.",
         ],
-        outcome: "Un assistente AI privato funzionante sui propri computer, e le competenze per gestirlo senza che i dati escano dall'azienda.",
+        outcome: "Un assistente IA privato funzionante sui propri computer, e le competenze per gestirlo senza che i dati escano dall'azienda.",
       },
       {
         title: "Custom Model Lab (2 giorni, avanzato)",
@@ -85,7 +85,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         title: "AI Adoption Assessment (da 1 a 2 settimane)",
         modules: [
           "Interviste e analisi dei processi chiave.",
-          "Un report scritto: dove si inserisce l'AI, risparmi attesi, rischi e classificazione secondo l'AI Act per ogni caso d'uso.",
+          "Un report scritto: dove si inserisce l'IA, risparmi attesi, rischi e classificazione secondo l'AI Act per ogni caso d'uso.",
           "Un piano con i costi e il perimetro tecnico per le domande di cofinanziamento maltesi.",
         ],
         outcome: "Un piano pronto per decidere, con costi, rischi e priorità.",
@@ -100,31 +100,31 @@ export const trainingOffersIt: TrainingOffer[] = [
       { label: "Fatturazione", text: "Le fatture sono intestate alla partita IVA dell'azienda. Ai clienti maltesi si applica l'IVA maltese; per i clienti business di altri paesi UE il trattamento IVA segue le regole europee (di norma inversione contabile per l'erogazione online)." },
       { label: "Cofinanziamento", text: "Prepariamo il perimetro tecnico per le domande di cofinanziamento maltesi. L'ammissibilità si verifica caso per caso con l'ente finanziatore; l'approvazione non è garantita." },
     ],
-    mailSubject: "Formazione AI per aziende",
+    mailSubject: "Formazione IA per aziende",
   },
   {
     slug: "universities",
     published: true,
-    eyebrow: "Formazione AI per università e ricerca",
+    eyebrow: "Formazione IA per università e ricerca",
     cardTitle: "Università e ricerca",
     cardText:
       "Lo stesso programma pratico, adattato alla didattica e alla ricerca, a tariffe inferiori del 30% rispetto a quelle aziendali.",
     cardPrice: "Da 1.050 € a gruppo",
-    title: "Capire come funziona l'AI moderna costruendola.",
+    title: "Capire come funziona l'IA moderna costruendola.",
     lead:
-      "Lo stesso programma pratico, di livello enterprise, che offriamo alle aziende, adattato alla didattica e alla ricerca e proposto a tariffe inferiori del 30% rispetto a quelle aziendali. Studenti e ricercatori imparano come funziona l'AI moderna costruendola, su un'infrastruttura che controllano.",
+      "Lo stesso programma pratico, di livello enterprise, che offriamo alle aziende, adattato alla didattica e alla ricerca e proposto a tariffe inferiori del 30% rispetto a quelle aziendali. Studenti e ricercatori imparano come funziona l'IA moderna costruendola, su un'infrastruttura che controllano.",
     why:
-      "Gli studenti escono con un progetto funzionante, pronto per il portfolio. I gruppi di ricerca ottengono un ambiente AI privato in cui i dati sensibili o non ancora pubblicati non lasciano mai i loro computer, il che semplifica le approvazioni in materia di protezione dei dati ed etica.",
+      "Gli studenti escono con un progetto funzionante, pronto per il portfolio. I gruppi di ricerca ottengono un ambiente IA privato in cui i dati sensibili o non ancora pubblicati non lasciano mai i loro computer, il che semplifica le approvazioni in materia di protezione dei dati ed etica.",
     priceIntro:
       "I prezzi accademici sono inferiori del 30% alle tariffe aziendali e valgono per università, college, istituti di ricerca e progetti di ricerca finanziati. I prezzi si intendono per gruppo, IVA esclusa.",
     priceColumns: ["Pacchetto", "Durata", "Gruppo", "A chi è rivolto", "Prezzo accademico (IVA esclusa)"],
     extraColumns: ["Tariffa aziendale"],
     packages: [
-      { name: "Alfabetizzazione AI per lo studio e la ricerca", duration: "Mezza giornata (3,5 h)", group: "fino a 30", audience: "Studenti, ricercatori, personale accademico", price: "1.050 €", extra: { a: "1.500 €" } },
-      { name: "AI applicata ai dati di ricerca", duration: "1 giorno (7 h)", group: "fino a 20", audience: "Ricercatori e studenti post-laurea di qualsiasi disciplina", price: "1.820 €", extra: { a: "2.600 €" } },
+      { name: "Alfabetizzazione IA per lo studio e la ricerca", duration: "Mezza giornata (3,5 h)", group: "fino a 30", audience: "Studenti, ricercatori, personale accademico", price: "1.050 €", extra: { a: "1.500 €" } },
+      { name: "IA applicata ai dati di ricerca", duration: "1 giorno (7 h)", group: "fino a 20", audience: "Ricercatori e studenti post-laurea di qualsiasi disciplina", price: "1.820 €", extra: { a: "2.600 €" } },
       { name: "Private AI Stack Bootcamp", duration: "3 giorni, oppure 6 sessioni da 3 h nell'arco di un semestre", group: "fino a 16 (con un tutor)", audience: "Studenti di informatica, ingegneria e data science", price: "5.250 €", extra: { a: "7.500 €" } },
       { name: "Custom Model Lab (avanzato)", duration: "2 giorni", group: "fino a 12", audience: "Studenti di laurea magistrale e dottorato, ingegneri della ricerca", price: "4.060 €", extra: { a: "5.800 €" } },
-      { name: "Research Programme Partner", duration: "6 mesi", group: "un gruppo di ricerca", audience: "Gruppi che necessitano di un ambiente AI privato e di supporto continuativo", price: "da 2.450 €", extra: { a: "da 3.500 €" } },
+      { name: "Research Programme Partner", duration: "6 mesi", group: "un gruppo di ricerca", audience: "Gruppi che necessitano di un ambiente IA privato e di supporto continuativo", price: "da 2.450 €", extra: { a: "da 3.500 €" } },
     ],
     priceNotes: [
       "Posti singoli in un'edizione aperta a calendario: 175 € a persona al giorno per il personale di istituzioni accademiche.",
@@ -132,23 +132,23 @@ export const trainingOffersIt: TrainingOffer[] = [
     ],
     curriculum: [
       {
-        title: "Alfabetizzazione AI per lo studio e la ricerca (mezza giornata)",
+        title: "Alfabetizzazione IA per lo studio e la ricerca (mezza giornata)",
         modules: [
           "Come funzionano i modelli linguistici e perché commettono errori con grande sicurezza.",
-          "Usare l'AI nello studio e nella ricerca in modo responsabile: citazione, dichiarazione d'uso, plagio, riproducibilità.",
-          "Protezione dei dati ed etica della ricerca: cosa si può e cosa non si può incollare in un servizio di AI online.",
-          "L'AI Act europeo e le policy universitarie sull'uso dell'AI.",
+          "Usare l'IA nello studio e nella ricerca in modo responsabile: citazione, dichiarazione d'uso, plagio, riproducibilità.",
+          "Protezione dei dati ed etica della ricerca: cosa si può e cosa non si può incollare in un servizio di IA online.",
+          "L'AI Act europeo e le policy universitarie sull'uso dell'IA.",
         ],
-        outcome: "Un modello di dichiarazione sull'uso dell'AI per tesi e articoli, e una checklist per le domande ai comitati etici.",
+        outcome: "Un modello di dichiarazione sull'uso dell'IA per tesi e articoli, e una checklist per le domande ai comitati etici.",
       },
       {
-        title: "AI applicata ai dati di ricerca (1 giorno)",
+        title: "IA applicata ai dati di ricerca (1 giorno)",
         modules: [
           "Classificare e raggruppare grandi raccolte di testi: questionari, interviste, letteratura.",
           "Individuare i temi ricorrenti in centinaia di articoli di un settore.",
           "Domande e risposte su una biblioteca privata di articoli, con risposte che citano le fonti.",
           "Immagini e documenti: estrarre testo e dati da scansioni, figure e tabelle.",
-          "Misurare la qualità di un'analisi assistita dall'AI perché regga la peer review.",
+          "Misurare la qualità di un'analisi assistita dall'IA perché regga la peer review.",
         ],
         outcome: "Un'analisi funzionante di un dataset del proprio ambito e una sezione metodologica da adattare.",
       },
@@ -179,7 +179,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         title: "Research Programme Partner (6 mesi)",
         modules: [
           "Un workshop di avvio per il gruppo.",
-          "Un ambiente AI privato per i dati sensibili o non pubblicati del gruppo.",
+          "Un ambiente IA privato per i dati sensibili o non pubblicati del gruppo.",
           "Quattro sessioni di 2 ore di formazione su misura e ricevimento.",
         ],
         outcome: "Un report scritto utilizzabile come deliverable di progetto.",
@@ -194,21 +194,21 @@ export const trainingOffersIt: TrainingOffer[] = [
       { label: "Incluso", text: "Una call di preparazione con il docente responsabile, tutti i materiali, l'accesso all'ambiente virtuale, gli attestati e 30 giorni di supporto via email." },
       { label: "Come prenotare", text: "Una call gratuita di 30 minuti, poi una proposta scritta a prezzo fisso entro 3 giorni lavorativi. Le fatture sono intestate all'istituzione, con l'IVA applicata secondo il suo status e il paese." },
     ],
-    mailSubject: "Formazione AI per università e ricerca",
+    mailSubject: "Formazione IA per università e ricerca",
   },
   {
     slug: "individuals",
     published: true,
-    eyebrow: "Corsi di AI per privati",
+    eyebrow: "Corsi di IA per privati",
     cardTitle: "Studenti, ricercatori e appassionati",
     cardText:
       "Corsi brevi e pratici per chi si iscrive a titolo personale, a tariffe inferiori del 60% rispetto a quelle aziendali. Opzione privata 1-to-1 per le esigenze urgenti.",
     cardPrice: "Da 100 € a persona",
-    title: "Costruisci la tua AI privata, passo dopo passo.",
+    title: "Costruisci la tua IA privata, passo dopo passo.",
     lead:
       "Corsi brevi e pratici per studenti, ricercatori indipendenti, freelance e appassionati che si iscrivono a titolo personale. Lo stesso approccio didattico dei nostri programmi aziendali, un programma più leggero e prezzi inferiori del 60% rispetto alle tariffe aziendali.",
     why:
-      "Ogni sessione si chiude con qualcosa che funziona sul tuo computer: un modello AI in locale, un assistente privato che conosce i tuoi documenti e, infine, un modello che hai personalizzato tu.",
+      "Ogni sessione si chiude con qualcosa che funziona sul tuo computer: un modello IA in locale, un assistente privato che conosce i tuoi documenti e, infine, un modello che hai personalizzato tu.",
     priceIntro:
       "Tre corsi che si possono seguire singolarmente o come percorso. I prezzi sono a persona, inferiori del 60% alla tariffa aziendale di 250 € a persona al giorno.",
     priceColumns: ["Corso", "Durata", "Formato", "Prerequisiti", "Edizione di gruppo (IVA esclusa)"],
@@ -233,9 +233,9 @@ export const trainingOffersIt: TrainingOffer[] = [
         modules: [
           "Che cos'è un modello linguistico e come produce il testo, senza matematica.",
           "Scrivere prompt che danno risultati affidabili, e accorgersi quando la risposta è sbagliata.",
-          "Eseguire il tuo primo modello AI aperto sul tuo portatile, senza account e senza inviare dati a nessuno.",
+          "Eseguire il tuo primo modello IA aperto sul tuo portatile, senza account e senza inviare dati a nessuno.",
         ],
-        outcome: "Un modello AI in funzione in locale e un kit personale di prompt.",
+        outcome: "Un modello IA in funzione in locale e un kit personale di prompt.",
       },
       {
         title: "Costruisci il tuo assistente privato (weekend)",
@@ -272,7 +272,7 @@ export const trainingOffersIt: TrainingOffer[] = [
         ["Lavoratore autonomo in un altro paese UE", "Ragione sociale, indirizzo, partita IVA UE (verificata su VIES)", "Di norma inversione contabile per le edizioni online; IVA maltese per le edizioni che si tengono a Malta"],
       ],
     },
-    mailSubject: "Corso di AI per privati",
+    mailSubject: "Corso di IA per privati",
   },
 ];
 

@@ -10,9 +10,9 @@ order: 10
 
 # Panoramica del sistema
 
-Agentic Portfolio è un sistema sperimentale di analisi del portafoglio e di supporto alle decisioni, progettato per studiare come software finanziario deterministico e AI probabilistica possano convivere all'interno di un ciclo di vita di ingegneria esplicito e verificabile.
+Agentic Portfolio è un sistema sperimentale di analisi del portafoglio e di supporto alle decisioni, progettato per studiare come software finanziario deterministico e IA probabilistica possano convivere all'interno di un ciclo di vita di ingegneria esplicito e verificabile.
 
-Il sistema **non** tratta un LLM come l'applicazione. Analisi numerica, stato del portafoglio, vincoli, contratti e validazione restano responsabilità esplicite del software. L'AI viene introdotta solo dove interpretazione, sintesi o ragionamento contestuale possono aggiungere valore.
+Il sistema **non** tratta un LLM come l'applicazione. Analisi numerica, stato del portafoglio, vincoli, contratti e validazione restano responsabilità esplicite del software. L'IA viene introdotta solo dove interpretazione, sintesi o ragionamento contestuale possono aggiungere valore.
 
 L'obiettivo non è il trading autonomo. Il sistema produce un supporto decisionale strutturato, mentre l'autorità sull'esecuzione resta umana.
 
@@ -86,7 +86,7 @@ Questa distinzione evita di confondere l'attrattività intrinseca con l'adeguate
 
 Associa l'opportunità sottostante approvata a uno strumento negoziabile concreto, supportato dal broker e dalla strategia.
 
-Le proprietà dello strumento sono input espliciti, non ipotesi nascoste nel livello di AI.
+Le proprietà dello strumento sono input espliciti, non ipotesi nascoste nel livello di IA.
 
 ### Position Sizing
 
@@ -175,7 +175,7 @@ Alcuni esempi:
 
 Queste responsabilità restano ispezionabili e verificabili come software convenzionale.
 
-### AI probabilistica
+### IA probabilistica
 
 I modelli probabilistici si usano dove l'interpretazione semantica o la sintesi sono utili.
 
@@ -188,7 +188,7 @@ Alcuni esempi:
 - generare valutazioni strutturate a partire dalle evidenze;
 - supportare il ragionamento a livello di CIO.
 
-L'output dell'AI è trattato come **evidenza o valutazione probabilistica**, non come verità verificata.
+L'output dell'IA è trattato come **evidenza o valutazione probabilistica**, non come verità verificata.
 
 Quando un fattore non è supportato da un input canonico, l'architettura può richiedere che resti senza punteggio invece di incoraggiare il modello a dedurne un valore.
 
@@ -270,7 +270,7 @@ L'architettura distingue tra:
 - stato deterministico del portafoglio;
 - risultati di validazione e di decisione.
 
-Questa separazione è importante perché un'affermazione generata dall'AI non deve diventare silenziosamente equivalente a un'evidenza recuperata o a una verità numerica deterministica.
+Questa separazione è importante perché un'affermazione generata dall'IA non deve diventare silenziosamente equivalente a un'evidenza recuperata o a una verità numerica deterministica.
 
 ## Blocco in sicurezza (fail-closed)
 
@@ -283,7 +283,7 @@ Esempi di progettazione fail-closed:
 - rifiutare output del modello strutturalmente incompleti;
 - mantenere i valori nulli obbligatori per i fattori non supportati;
 - impedire che evidenze mancanti diventino evidenze inventate;
-- applicare i vincoli deterministici di portafoglio indipendentemente dalle preferenze dell'AI;
+- applicare i vincoli deterministici di portafoglio indipendentemente dalle preferenze dell'IA;
 - bloccare l'avanzamento a valle quando un contratto obbligatorio non è valido.
 
 ## Filosofia di validazione
@@ -315,7 +315,7 @@ La validazione semantica valuta quindi proprietà come:
 
 L'obiettivo non è rendere deterministico l'output probabilistico, ma rendere misurabili i suoi confini operativi.
 
-## Esecuzione dell'AI in locale e instradata
+## Esecuzione dell'IA in locale e instradata
 
 L'architettura supporta un'astrazione del provider invece di legare il sistema a un unico fornitore di modelli.
 
@@ -351,7 +351,7 @@ Alcuni invarianti riassumono l'architettura:
 2. L'output probabilistico non viene mai promosso silenziosamente a verità verificata.
 3. La qualità intrinseca di un'opportunità e l'adeguatezza al portafoglio sono decisioni separate.
 4. La simulazione dell'operazione esatta avviene dopo la selezione dello strumento e il dimensionamento.
-5. I vincoli di portafoglio non possono essere scavalcati solo perché una valutazione dell'AI è positiva.
+5. I vincoli di portafoglio non possono essere scavalcati solo perché una valutazione dell'IA è positiva.
 6. La provenienza delle evidenze deve restare ispezionabile.
 7. Le informazioni obbligatorie mancanti non devono essere inventate.
 8. L'autorità sull'esecuzione resta umana.

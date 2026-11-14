@@ -1,6 +1,6 @@
 ---
 title: "Implementazione"
-description: "Come l'architettura dello Stage 4.0 di Agentic Portfolio è implementata con servizi Python deterministici, fasi di AI con perimetro definito, orchestrazione, persistenza ed esecuzione manuale."
+description: "Come l'architettura dello Stage 4.0 di Agentic Portfolio è implementata con servizi Python deterministici, fasi di IA con perimetro definito, orchestrazione, persistenza ed esecuzione manuale."
 project: "agentic-portfolio"
 section: "implementation"
 status: "published"
@@ -16,7 +16,7 @@ L'implementazione separa deliberatamente:
 
 - calcolo finanziario deterministico;
 - acquisizione di dati esterni;
-- interpretazione probabilistica dell'AI;
+- interpretazione probabilistica dell'IA;
 - orchestrazione e persistenza;
 - selezione controllata dall'operatore;
 - esecuzione umana.
@@ -198,7 +198,7 @@ I record di evidenza conservano abbastanza informazioni su fonte e timestamp per
 
 ## 8. Servizio di ricerca
 
-Il servizio Research è una delle fasi di AI con perimetro definito.
+Il servizio Research è una delle fasi di IA con perimetro definito.
 
 Il suo compito è interpretare le evidenze fornite e restituire un risultato strutturato e normalizzato secondo un contratto validato.
 
@@ -224,7 +224,7 @@ Il modello non riceve alcuna autorità sullo stato del portafoglio o sulla finan
 
 ### Riparazione e blocco in sicurezza
 
-Un output dell'AI malformato o incompleto non viene accettato silenziosamente.
+Un output dell'IA malformato o incompleto non viene accettato silenziosamente.
 
 L'implementazione di Research può usare percorsi di riparazione limitati, dove il contratto lo consente. Se le informazioni richieste non possono essere fondate su evidenze o riparate, il risultato resta parziale o viene bloccato.
 
@@ -358,7 +358,7 @@ L'orchestratore dello Stage 4 integra il filtro invece di reimplementarne la pol
 
 Il filtro governa le decisioni legate al portafoglio che riguardano esposizione, concentrazione, correlazione, diversificazione, compatibilità di liquidità e storico, rischio marginale e motivazioni esplicite di rifiuto.
 
-Un esito negativo del filtro deterministico non può essere scavalcato dal ragionamento dell'AI a valle.
+Un esito negativo del filtro deterministico non può essere scavalcato dal ragionamento dell'IA a valle.
 
 ## 16. Selezione dello strumento
 
@@ -558,9 +558,9 @@ Un modello locale o instradato può cambiare mentre il contratto di Research o d
 
 Questo consente la sperimentazione senza che il fornitore del modello diventi l'architettura.
 
-## 27. Esecuzione dell'AI in locale
+## 27. Esecuzione dell'IA in locale
 
-Lo Stage 4.0 può eseguire le fasi di AI con perimetro definito attraverso il percorso del fornitore di modelli locale.
+Lo Stage 4.0 può eseguire le fasi di IA con perimetro definito attraverso il percorso del fornitore di modelli locale.
 
 L'esecuzione locale è utile per:
 
@@ -619,7 +619,7 @@ Il modello di implementazione presuppone una validazione su più livelli:
 - test di contratti e schemi;
 - test di fornitori e parser;
 - test di regressione;
-- validazione semantica per le fasi rivolte all'AI;
+- validazione semantica per le fasi rivolte all'IA;
 - validazione del percorso dal vivo;
 - test di orchestrazione end-to-end;
 - test di replay e persistenza.
