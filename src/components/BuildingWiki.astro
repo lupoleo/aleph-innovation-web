@@ -1,3 +1,199 @@
+---
+import { getLang } from "../i18n";
+
+const lang = getLang(Astro);
+---
+
+{lang === "it" ? (
+<section
+  id="wiki"
+  class="building-wiki section"
+  aria-labelledby="building-wiki-title"
+>
+  <div class="building-wiki-atmosphere" aria-hidden="true"></div>
+
+  <div class="container-wide building-wiki-container">
+    <header class="building-wiki-header">
+      <p class="building-wiki-eyebrow">BUILDING IN PUBLIC</p>
+
+      <h2 id="building-wiki-title">
+        L'ingegneria deve essere
+        <span class="building-wiki-title-accent">ispezionabile.</span>
+      </h2>
+
+      <p class="building-wiki-intro">
+        Aleph Innovation documenta architettura, implementazione, test,
+        errori e scelte progettuali man mano che i sistemi evolvono. Il Wiki
+        non è documentazione accessoria: è parte integrante del processo di
+        ingegneria.
+      </p>
+    </header>
+
+    <div class="building-wiki-grid">
+      <article class="building-panel">
+        <div class="building-panel-topline">
+          <span class="panel-label">BUILDING IN PUBLIC</span>
+          <span class="panel-index">01</span>
+        </div>
+
+        <h3>Mostrare il lavoro, non solo il risultato.</h3>
+
+        <p>
+          Un sistema ispira più fiducia quando ipotesi, vincoli, scelte
+          architetturali ed evidenze di validazione sono visibili.
+        </p>
+
+        <div class="build-stream" aria-label="Il ciclo del building in public">
+          <div class="build-stream-item">
+            <span class="build-index">A</span>
+            <div>
+              <strong>Architettura</strong>
+              <small>Perché il sistema è strutturato così.</small>
+            </div>
+          </div>
+
+          <div class="build-stream-item">
+            <span class="build-index">B</span>
+            <div>
+              <strong>Implementazione</strong>
+              <small>Come si costruiscono contratti, servizi e flussi.</small>
+            </div>
+          </div>
+
+          <div class="build-stream-item">
+            <span class="build-index">C</span>
+            <div>
+              <strong>Test</strong>
+              <small>Cosa viene verificato e come si individuano le regressioni.</small>
+            </div>
+          </div>
+
+          <div class="build-stream-item">
+            <span class="build-index">D</span>
+            <div>
+              <strong>Errori</strong>
+              <small>Cosa non ha funzionato e cosa è cambiato di conseguenza.</small>
+            </div>
+          </div>
+
+          <div class="build-stream-item">
+            <span class="build-index">E</span>
+            <div>
+              <strong>Lezioni apprese</strong>
+              <small>Conclusioni di ingegneria riutilizzabili da ogni iterazione.</small>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="wiki-panel">
+        <div class="wiki-panel-topline">
+          <span class="panel-label">AGENTIC PORTFOLIO · WIKI TECNICO</span>
+          <span class="panel-index">02</span>
+        </div>
+
+        <h3>
+          Agentic Portfolio,
+          dall'architettura di sistema al dettaglio del codice.
+        </h3>
+
+        <p>
+          Il Wiki di Agentic Portfolio documenta la struttura tecnica del
+          primo progetto di R&amp;S attivo di Aleph Innovation: architettura,
+          contratti, tipi di dati, implementazione in Python, test,
+          validazione e storia dello sviluppo.
+        </p>
+
+        <div class="wiki-map">
+          <a href="/it/wiki/agentic-portfolio/system-overview/" class="wiki-map-item">
+            <span class="wiki-map-code">00</span>
+            <span>
+              <strong>Panoramica del sistema</strong>
+              <small>Scopo, confini e ciclo di vita.</small>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
+
+          <a href="/it/wiki/agentic-portfolio/architecture/" class="wiki-map-item">
+            <span class="wiki-map-code">01</span>
+            <span>
+              <strong>Architettura</strong>
+              <small>Servizi, componenti, flussi e ADR.</small>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
+
+          <a href="/it/wiki/agentic-portfolio/contracts/" class="wiki-map-item">
+            <span class="wiki-map-code">02</span>
+            <span>
+              <strong>Contratti e tipi di dati</strong>
+              <small>Schemi, invarianti e provenienza.</small>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
+
+          <a href="/it/wiki/agentic-portfolio/implementation/" class="wiki-map-item">
+            <span class="wiki-map-code">03</span>
+            <span>
+              <strong>Implementazione in Python</strong>
+              <small>Classi, metodi e confini dei servizi.</small>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
+
+          <a href="/it/wiki/agentic-portfolio/testing/" class="wiki-map-item">
+            <span class="wiki-map-code">04</span>
+            <span>
+              <strong>Test e validazione</strong>
+              <small>Controlli di regressione, semantici e di accettazione dal vivo.</small>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
+
+          <a href="/it/wiki/agentic-portfolio/development-history/" class="wiki-map-item">
+            <span class="wiki-map-code">05</span>
+            <span>
+              <strong>Storia dello sviluppo</strong>
+              <small>Traguardi, errori e lezioni apprese.</small>
+            </span>
+            <i aria-hidden="true">→</i>
+          </a>
+        </div>
+
+        <div class="wiki-actions">
+          <a class="wiki-primary-action" href="/it/wiki/">
+            Esplora il Wiki di Agentic Portfolio
+            <span aria-hidden="true">→</span>
+          </a>
+
+          <a
+            class="wiki-secondary-action"
+            href="https://github.com/lupoleo/agentic_portfolio_stage4_0"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Vedi il repository pubblico
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <div class="wiki-foundation">
+      <div class="foundation-label">
+        <span class="foundation-dot" aria-hidden="true"></span>
+        PRINCIPIO DI DOCUMENTAZIONE
+      </div>
+
+      <p>
+        Ogni affermazione tecnica deve poter essere ricondotta
+        all'architettura, al codice, alle evidenze o ai risultati dei test. La
+        documentazione deve evolvere insieme al sistema, non descriverne una
+        versione idealizzata.
+      </p>
+    </div>
+  </div>
+</section>
+) : (
 <section
   id="wiki"
   class="building-wiki section"
@@ -184,6 +380,7 @@
     </div>
   </div>
 </section>
+)}
 
 <style>
   .building-wiki {

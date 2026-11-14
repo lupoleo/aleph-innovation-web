@@ -1,3 +1,82 @@
+---
+import { getLang } from "../i18n";
+
+const lang = getLang(Astro);
+---
+
+{lang === "it" ? (
+<footer class="site-footer">
+  <div class="container-wide footer-inner">
+    <div class="footer-brand">
+      <a class="footer-logo" href="/it/" aria-label="Aleph Innovation, home page">
+        <span class="footer-mark" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </span>
+
+        <span class="footer-name">
+          <strong>ALEPH</strong>
+          <small>INNOVATION</small>
+        </span>
+      </a>
+
+      <p>
+        Sistemi di AI agentica progettati a Gozo, Malta.
+      </p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Navigazione a piè di pagina">
+      <a href="/it/#paradigm">Paradigma</a>
+      <a href="/it/#projects">Progetti</a>
+      <a href="/it/services/">Servizi</a>
+      <a href="/it/#agentic-portfolio">Agentic Portfolio</a>
+      <a href="/it/#wiki">Wiki</a>
+      <a href="/it/#about">Chi siamo</a>
+      <a href="/it/#contact">Contatti</a>
+    </nav>
+
+    <div class="footer-meta">
+      <p>
+        R&amp;S in fase di costituzione · Gozo, Malta
+      </p>
+
+      <div class="footer-meta-links">
+        <a href="mailto:info@alephinnovation.com">
+          info@alephinnovation.com
+        </a>
+
+        <span aria-hidden="true">·</span>
+
+        <a
+          href="https://www.linkedin.com/company/alephinnovation/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LinkedIn
+        </a>
+
+        <span aria-hidden="true">·</span>
+
+        <a
+          href="https://github.com/lupoleo/agentic_portfolio_stage4_0"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-wide footer-bottom">
+    <span>© 2026 Aleph Innovation</span>
+
+    <span>
+      Building in public · Prima l'ingegneria
+    </span>
+  </div>
+</footer>
+) : (
 <footer class="site-footer">
   <div class="container-wide footer-inner">
     <div class="footer-brand">
@@ -69,6 +148,7 @@
     </span>
   </div>
 </footer>
+)}
 
 <style>
   .site-footer {

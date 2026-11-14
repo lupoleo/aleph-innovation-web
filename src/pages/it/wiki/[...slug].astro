@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+import Page from "../../../views/WikiEntryPage.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    "wikiIt",
+    ({ data }) => data.status === "published"
+  );
+
+  return entries.map((entry) => ({
+    params: {
+      slug: entry.id.endsWith("/index")
+        ? entry.id.slice(0, -"/index".length)
+        : entry.id,
+    },
+    props: { entry },
+  }));
+}
+---
+
+<Page {...Astro.props} />

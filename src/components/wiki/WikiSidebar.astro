@@ -1,39 +1,69 @@
 ---
+import { getLang, localizePath } from "../../i18n";
+
+const lang = getLang(Astro);
+const l = (path: string) => localizePath(path, lang);
+
 const {
   currentPath = "/wiki/",
   project = "agentic-portfolio",
 } = Astro.props;
+
+const text = {
+  en: {
+    ap: ["Agentic Portfolio", "System Overview", "Architecture", "Contracts & Data Types", "Implementation", "Testing & Validation", "Development History"],
+    em: ["Environmental Monitoring", "Architecture & Gates", "Gozo Risk Overview", "Gozo Risk Map ↗"],
+    emName: "Environmental Monitoring",
+    home: "Wiki Home",
+    kicker: "ENGINEERING WIKI",
+    sub: "Public technical documentation",
+    nav: "Engineering Wiki",
+    source: "SOURCE OF TRUTH",
+    repo: "Python repository ↗",
+  },
+  it: {
+    ap: ["Agentic Portfolio", "Panoramica del sistema", "Architettura", "Contratti e tipi di dati", "Implementazione", "Test e validazione", "Storia dello sviluppo"],
+    em: ["Monitoraggio ambientale", "Architettura e controlli", "Panoramica dei rischi di Gozo", "Mappa dei rischi di Gozo ↗"],
+    emName: "Monitoraggio ambientale",
+    home: "Home del Wiki",
+    kicker: "WIKI TECNICO",
+    sub: "Documentazione tecnica pubblica",
+    nav: "Wiki tecnico",
+    source: "FONTE DI VERITÀ",
+    repo: "Repository Python ↗",
+  },
+}[lang];
 
 const projects = {
   "agentic-portfolio": {
     name: "Agentic Portfolio",
     source: "https://github.com/lupoleo/agentic_portfolio_stage4_0",
     items: [
-      { label: "Agentic Portfolio", href: "/wiki/agentic-portfolio/" },
-      { label: "System Overview", href: "/wiki/agentic-portfolio/system-overview/" },
-      { label: "Architecture", href: "/wiki/agentic-portfolio/architecture/" },
-      { label: "Contracts & Data Types", href: "/wiki/agentic-portfolio/contracts/" },
-      { label: "Implementation", href: "/wiki/agentic-portfolio/implementation/" },
-      { label: "Testing & Validation", href: "/wiki/agentic-portfolio/testing/" },
-      { label: "Development History", href: "/wiki/agentic-portfolio/development-history/" },
-    ],
+      "/wiki/agentic-portfolio/",
+      "/wiki/agentic-portfolio/system-overview/",
+      "/wiki/agentic-portfolio/architecture/",
+      "/wiki/agentic-portfolio/contracts/",
+      "/wiki/agentic-portfolio/implementation/",
+      "/wiki/agentic-portfolio/testing/",
+      "/wiki/agentic-portfolio/development-history/",
+    ].map((href, index) => ({ label: text.ap[index], href: l(href) })),
   },
   "environmental-monitoring": {
-    name: "Environmental Monitoring",
+    name: text.emName,
     source: null,
     items: [
-      { label: "Environmental Monitoring", href: "/wiki/environmental-monitoring/" },
-      { label: "Architecture & Gates", href: "/wiki/environmental-monitoring/architecture/" },
-      { label: "Gozo Risk Overview", href: "/wiki/environmental-monitoring/risk-overview/" },
-      { label: "Gozo Risk Map ↗", href: "/gozo-risk-map/index.html" },
-    ],
+      "/wiki/environmental-monitoring/",
+      "/wiki/environmental-monitoring/architecture/",
+      "/wiki/environmental-monitoring/risk-overview/",
+      "/gozo-risk-map/index.html",
+    ].map((href, index) => ({ label: text.em[index], href: l(href) })),
   },
 };
 
 const current = projects[project] ?? projects["agentic-portfolio"];
 
 const items = [
-  { label: "Wiki Home", href: "/wiki/" },
+  { label: text.home, href: l("/wiki/") },
   ...current.items.map((item, index) => ({ ...item, projectStart: index === 0 })),
 ];
 
@@ -45,11 +75,11 @@ const normalize = (value) => {
 const normalizedCurrentPath = normalize(currentPath);
 ---
 
-<nav class="wiki-sidebar" aria-label="Engineering Wiki">
+<nav class="wiki-sidebar" aria-label={text.nav}>
   <div class="wiki-sidebar-heading">
-    <span class="wiki-sidebar-kicker">ENGINEERING WIKI</span>
+    <span class="wiki-sidebar-kicker">{text.kicker}</span>
     <strong>{current.name}</strong>
-    <small>Public technical documentation</small>
+    <small>{text.sub}</small>
   </div>
 
   <div class="wiki-sidebar-rule" aria-hidden="true"></div>
@@ -79,14 +109,14 @@ const normalizedCurrentPath = normalize(currentPath);
   {
     current.source && (
       <div class="wiki-sidebar-source">
-        <span>SOURCE OF TRUTH</span>
+        <span>{text.source}</span>
 
         <a
           href={current.source}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Python repository ↗
+          {text.repo}
         </a>
       </div>
     )

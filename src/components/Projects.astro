@@ -1,3 +1,330 @@
+---
+import { getLang } from "../i18n";
+
+const lang = getLang(Astro);
+---
+
+{lang === "it" ? (
+<section
+  id="projects"
+  class="projects section"
+  aria-labelledby="projects-title"
+>
+  <div class="projects-atmosphere" aria-hidden="true"></div>
+
+  <div class="container-wide projects-container">
+    <header class="projects-header">
+      <p class="projects-eyebrow">PROGETTI</p>
+
+      <h2 id="projects-title">
+        Ricerca applicata.
+        <span class="projects-title-accent">
+          Un'unica architettura, più ambiti.
+        </span>
+      </h2>
+
+      <p class="projects-intro">
+        Aleph Innovation sviluppa progetti attorno a un paradigma di
+        ingegneria comune: software deterministico, AI probabilistica,
+        agenti specializzati, validazione esplicita e processi decisionali
+        osservabili.
+      </p>
+    </header>
+
+    <div class="projects-grid">
+      <article
+        id="agentic-portfolio"
+        class="project-card project-card-featured"
+      >
+        <div class="project-topline">
+          <span class="project-status project-status-active">
+            R&amp;S ATTIVA
+          </span>
+
+          <span class="project-number">01</span>
+        </div>
+
+        <div class="project-content">
+          <p class="project-domain">
+            SISTEMI FINANZIARI · AI AGENTICA
+          </p>
+
+          <h3>Agentic Portfolio</h3>
+
+          <p class="project-lead">
+            Un framework di analisi del portafoglio e di supporto alle
+            decisioni del CIO che unisce analisi quantitativa, controlli di
+            rischio deterministici, ricerca, scoring semantico e AI agentica.
+          </p>
+
+          <p class="project-description">
+            Il progetto studia come l'AI probabilistica possa operare
+            all'interno di un processo di investimento rigorosamente
+            controllato, senza sostituire il calcolo deterministico, i
+            vincoli di portafoglio o l'autorità umana sull'esecuzione.
+          </p>
+
+          <div class="project-architecture">
+            <span>SCANSIONE</span>
+            <i>→</i>
+            <span>RICERCA</span>
+            <i>→</i>
+            <span>SCORING</span>
+            <i>→</i>
+            <span>FILTRO DI PORTAFOGLIO</span>
+            <i>→</i>
+            <span>SIMULAZIONE</span>
+            <i>→</i>
+            <span>CIO</span>
+          </div>
+
+          <div class="project-tags">
+            <span>Python</span>
+            <span>Analisi quantitativa</span>
+            <span>Rischio di portafoglio</span>
+            <span>LLM</span>
+            <span>AI agentica</span>
+            <span>Punti di validazione</span>
+          </div>
+
+          <div class="project-actions">
+            <a
+              class="project-action project-action-primary"
+              href="/it/#wiki"
+            >
+              Esplora l'architettura
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a
+              class="project-action project-action-secondary"
+              href="https://github.com/lupoleo/agentic_portfolio_stage4_0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <div class="project-visual" aria-hidden="true">
+          <div class="project-system-map">
+            <div class="system-node system-node-market">
+              <span>MERCATO</span>
+            </div>
+
+            <div class="system-rail system-rail-1"></div>
+
+            <div class="system-node system-node-research">
+              <span>RICERCA</span>
+            </div>
+
+            <div class="system-rail system-rail-2"></div>
+
+            <div class="system-node system-node-ai">
+              <span>AI</span>
+            </div>
+
+            <div class="system-rail system-rail-3"></div>
+
+            <div class="system-node system-node-risk">
+              <span>RISCHIO</span>
+            </div>
+
+            <div class="system-rail system-rail-4"></div>
+
+            <div class="system-node system-node-cio">
+              <span>CIO</span>
+            </div>
+          </div>
+
+          <div class="project-visual-caption">
+            CONTROLLO DETERMINISTICO
+            <span>+</span>
+            RAGIONAMENTO PROBABILISTICO
+          </div>
+        </div>
+      </article>
+
+      <article
+        id="environmental-monitoring"
+        class="project-card project-card-featured"
+      >
+        <div class="project-topline">
+          <span class="project-status project-status-active">
+            R&amp;S IN CORSO
+          </span>
+
+          <span class="project-number">02</span>
+        </div>
+
+        <div class="project-content">
+          <p class="project-domain">
+            AMBIENTE · GOZO · AI AGENTICA
+          </p>
+
+          <h3>Monitoraggio ambientale</h3>
+
+          <p class="project-lead">
+            Un sistema di allerta precoce per Gozo, aperto e verificabile, che
+            combina sensori a basso costo, dati pubblici e satellitari, regole
+            deterministiche e agenti AI con perimetro definito.
+          </p>
+
+          <p class="project-description">
+            Il progetto parte dal ciclo dell'acqua: tracimazioni fognarie,
+            scarichi a mare, sversamenti di liquami e alluvioni improvvise.
+            Ogni misura passa attraverso punti di validazione espliciti, ogni
+            affermazione cita evidenze indipendenti e una persona
+            identificata approva ogni avviso pubblico.
+          </p>
+
+          <div class="project-architecture">
+            <span>RILEVA</span>
+            <i>→</i>
+            <span>VALIDA</span>
+            <i>→</i>
+            <span>INDIVIDUA</span>
+            <i>→</i>
+            <span>CORROBORA</span>
+            <i>→</i>
+            <span>DECISIONE UMANA</span>
+          </div>
+
+          <div class="project-tags">
+            <span>Sensori IoT</span>
+            <span>LoRaWAN</span>
+            <span>PostGIS</span>
+            <span>Copernicus</span>
+            <span>AI agentica</span>
+            <span>Punti di validazione</span>
+          </div>
+
+          <div class="project-actions">
+            <a
+              class="project-action project-action-primary"
+              href="/it/wiki/environmental-monitoring/"
+            >
+              Esplora l'architettura
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a
+              class="project-action project-action-secondary"
+              href="/gozo-risk-map/index.html"
+            >
+              Mappa dei rischi di Gozo
+            </a>
+          </div>
+        </div>
+
+        <div class="project-visual" aria-hidden="true">
+          <div class="project-system-map">
+            <div class="system-node system-node-market">
+              <span>SENSORI</span>
+            </div>
+
+            <div class="system-rail system-rail-1"></div>
+
+            <div class="system-node system-node-research">
+              <span>DATI</span>
+            </div>
+
+            <div class="system-rail system-rail-2"></div>
+
+            <div class="system-node system-node-ai">
+              <span>AI</span>
+            </div>
+
+            <div class="system-rail system-rail-3"></div>
+
+            <div class="system-node system-node-risk">
+              <span>EVIDENZE</span>
+            </div>
+
+            <div class="system-rail system-rail-4"></div>
+
+            <div class="system-node system-node-cio">
+              <span>UMANO</span>
+            </div>
+          </div>
+
+          <div class="project-visual-caption">
+            EVIDENZE MISURATE
+            <span>+</span>
+            AUTORITÀ UMANA
+          </div>
+        </div>
+      </article>
+
+      <div class="concept-heading">
+        <span>CONCEPT ESPLORATIVI</span>
+        <p>
+          Prime direzioni di ricerca. Sono concept, non sistemi in esercizio.
+        </p>
+      </div>
+
+      <div class="concept-grid">
+        <article class="project-card project-card-concept">
+          <div class="project-topline">
+            <span class="project-status project-status-concept">
+              CONCEPT
+            </span>
+
+            <span class="project-number">03</span>
+          </div>
+
+          <p class="project-domain">
+            ACQUA · RESILIENZA
+          </p>
+
+          <h3>Risorse idriche</h3>
+
+          <p>
+            Studiare sistemi di supporto alle decisioni per disponibilità,
+            consumo, stoccaggio e dissalazione dell'acqua e per la resilienza
+            delle risorse locali.
+          </p>
+
+          <div class="concept-footer">
+            <span>RISORSE</span>
+            <span>PREVISIONI</span>
+            <span>SUPPORTO DECISIONALE</span>
+          </div>
+        </article>
+
+        <article class="project-card project-card-concept">
+          <div class="project-topline">
+            <span class="project-status project-status-concept">
+              CONCEPT
+            </span>
+
+            <span class="project-number">04</span>
+          </div>
+
+          <p class="project-domain">
+            AGRICOLTURA · SISTEMI LOCALI
+          </p>
+
+          <h3>Intelligenza agricola</h3>
+
+          <p>
+            Esplorare l'analisi assistita dall'AI di acqua, meteo, suolo,
+            colture e vincoli sulle risorse per la piccola agricoltura
+            mediterranea.
+          </p>
+
+          <div class="concept-footer">
+            <span>AGRICOLTURA</span>
+            <span>PIANIFICAZIONE DELLE RISORSE</span>
+            <span>DATI LOCALI</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+) : (
 <section
   id="projects"
   class="projects section"
@@ -313,6 +640,7 @@
     </div>
   </div>
 </section>
+)}
 
 <style>
   .projects {

@@ -52,3 +52,53 @@ export const trainer = {
     { label: "GitHub", href: "https://github.com/lupoleo" },
   ],
 };
+
+// Italian version of the profile, shown under /it/. Same rule: first person,
+// no gendered wording about the trainer.
+export const trainerIt: typeof trainer = {
+  ...trainer,
+  role: "Fondazione e guida di Aleph Innovation · Ingegneria dell'AI applicata e formazione · Gozo, Malta",
+  short:
+    "Ho una laurea in fisica e mi occupo di ingegneria dell'AI applicata, con oltre 30 anni di esperienza nello sviluppo software e nella realizzazione di progetti tecnologici per aziende come IBM, Credit Suisse e Bloomberg. Progetto e sviluppo agenti AI, sistemi di retrieval e integrazioni con strumenti aziendali, e ho formato i team dei clienti a gestire ed estendere le soluzioni AI che ho realizzato. Ho fondato Aleph Innovation a Gozo e insegno ciò che costruisco e verifico in prima persona.",
+  intro:
+    "Ho una laurea in fisica e da oltre 30 anni sviluppo software e guido programmi tecnologici in Europa e in Asia, nei settori finanza, telecomunicazioni, manifattura, automotive e logistica. Dal 2024 il mio lavoro è dedicato all'AI applicata: agenti basati su modelli linguistici, retrieval-augmented generation e i connettori che permettono all'AI di lavorare con i sistemi aziendali reali. Ho fondato Aleph Innovation a Gozo per progettare sistemi di AI in cui la decisione finale spetta sempre a una persona identificata.",
+  builds: [
+    {
+      title: "Un copilota AI per l'assistenza tecnica, in produzione",
+      text: "per un produttore industriale: un'architettura di retrieval su misura che risponde alle domande dei tecnici a partire dalla documentazione di prodotto e dalle FAQ tecniche, validata su larga scala su oltre 700 documenti e 350 modelli di prodotto insieme al team di ingegneria del fornitore della piattaforma.",
+    },
+    {
+      title: "Sistemi backend basati sull'AI",
+      text: "come consulente indipendente: ricerca semantica e retrieval, un server che collega gli agenti AI agli strumenti aziendali, streaming in tempo reale e una dashboard web costruita sopra.",
+    },
+    {
+      title: "Un sistema agentico di monitoraggio ambientale per Gozo",
+      text: "pubblicato da Aleph Innovation: un registro di 14 rischi ambientali classificati, un'architettura di validazione dalla rilevazione alla decisione umana e la Mappa interattiva dei rischi di Gozo.",
+    },
+    {
+      title: "Agentic Portfolio",
+      text: "un progetto di ricerca aperto sull'analisi degli investimenti assistita dall'AI, documentato pubblicamente nel wiki tecnico.",
+    },
+  ],
+  teaching:
+    "La mia attività di formazione è nata sul campo, non in aula. Nei miei progetti di AI ho formato i team dei clienti perché potessero gestire ed estendere i sistemi in autonomia. Ho condotto workshop di adozione per i rollout di field service, ho accompagnato gli utenti di business nell'uso di nuove piattaforme e ho introdotto i metodi Agile in team di sviluppo in Italia e nelle Filippine. I miei corsi seguono la stessa regola: ogni sessione si chiude con qualcosa che funziona sul computer di chi partecipa.",
+  career: [
+    ["2026 – oggi", "Fondazione e guida", "Aleph Innovation, Gozo"],
+    ["2026 – oggi", "Consulente freelance AI e backend", "Clienti a Malta e nell'UE"],
+    ["2019 – 2026", "Senior consultant, lead developer e solution architect", "Altea Federation, programmi da circa 1 milione di euro ciascuno"],
+    ["2018", "CRM business analyst", "Tata Consultancy Services per FCA"],
+    ["2016 – 2018", "Senior project manager, modelli di rischio", "Credit Suisse, Polonia"],
+    ["2014 – 2016", "Programme manager", "IBM, per la Commissione europea (DG TAXUD)"],
+    ["2000 – 2014", "Gestione di prodotto, programmi e tecnologia", "Bloomberg, AGE Software (telemetria per le corse Ferrari), progetto Toyota Motor Europe, Asian Logic e altri"],
+    ["1986 – 2000", "Software developer e team leader", "Marconi Italiana, Porto di Genova"],
+  ],
+  education: [
+    "Laurea in Fisica, Università di Genova (1986)",
+    "PRINCE2 Practitioner (2009)",
+    "Salesforce Certified Administrator (2019), Service Cloud Consultant (2020), Field Service Consultant (2023)",
+  ],
+  languages:
+    "Italiano (madrelingua), inglese (C2); conoscenza operativa di tedesco, spagnolo e francese. I corsi sono disponibili in inglese e in italiano.",
+};
+
+export const getTrainer = (lang: "en" | "it") => (lang === "it" ? trainerIt : trainer);

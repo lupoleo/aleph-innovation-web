@@ -1,4 +1,8 @@
 ---
+import { getLang } from "../../i18n";
+
+const lang = getLang(Astro);
+
 const {
   project = "agentic-portfolio",
   section,
@@ -6,21 +10,48 @@ const {
   updated,
 } = Astro.props;
 
-const projectLabel =
-  project === "agentic-portfolio"
-    ? "AGENTIC PORTFOLIO"
-    : project.replaceAll("-", " ").toUpperCase();
+const projectNames = {
+  en: { "agentic-portfolio": "AGENTIC PORTFOLIO", "environmental-monitoring": "ENVIRONMENTAL MONITORING" },
+  it: { "agentic-portfolio": "AGENTIC PORTFOLIO", "environmental-monitoring": "MONITORAGGIO AMBIENTALE" },
+}[lang];
 
-const statusLabel = status.toUpperCase();
+const projectLabel =
+  projectNames[project] ?? project.replaceAll("-", " ").toUpperCase();
+
+// Section codes from the front matter, shown in the page language.
+const sectionNames = {
+  "project-home": "progetto",
+  "overview": "panoramica",
+  "system-overview": "panoramica del sistema",
+  "architecture": "architettura",
+  "contracts": "contratti",
+  "implementation": "implementazione",
+  "testing": "test",
+  "development-history": "storia dello sviluppo",
+  "risk-overview": "rischi",
+  "risks": "rischi",
+};
+
+const sectionLabel =
+  lang === "it" && section ? sectionNames[section] ?? section : section;
+
+const statusNames = {
+  en: { draft: "DRAFT", published: "PUBLISHED", archived: "ARCHIVED" },
+  it: { draft: "BOZZA", published: "PUBBLICATO", archived: "ARCHIVIATO" },
+}[lang];
+
+const statusLabel = statusNames[status] ?? status.toUpperCase();
 
 const updatedLabel =
   updated instanceof Date
-    ? updated.toLocaleDateString("en-GB", {
+    ? updated.toLocaleDateString(lang === "it" ? "it-IT" : "en-GB", {
         day: "2-digit",
         month: "short",
         year: "numeric",
       })
     : String(updated ?? "");
+
+const updatedPrefix = lang === "it" ? "AGGIORNATO IL" : "UPDATED";
 ---
 
 <div class="article-meta">
@@ -29,7 +60,7 @@ const updatedLabel =
   {section && (
     <>
       <i aria-hidden="true">·</i>
-      <span>{String(section).toUpperCase()}</span>
+      <span>{String(sectionLabel).toUpperCase()}</span>
     </>
   )}
 
@@ -40,7 +71,7 @@ const updatedLabel =
   {updatedLabel && (
     <>
       <i aria-hidden="true">·</i>
-      <span>UPDATED {updatedLabel.toUpperCase()}</span>
+      <span>{updatedPrefix} {updatedLabel.toUpperCase()}</span>
     </>
   )}
 </div>

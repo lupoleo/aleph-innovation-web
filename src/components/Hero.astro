@@ -1,23 +1,49 @@
 ---
+import { getLang, localizePath } from "../i18n";
+
+const lang = getLang(Astro);
+const l = (path: string) => localizePath(path, lang);
+
+const t = {
+  en: {
+    eyebrow: "GOZO, MALTA · AI R&amp;D VENTURE",
+    title: 'Engineering<br />Agentic AI<span class="hero-title-accent">systems from Gozo.</span>',
+    description:
+      "Aleph Innovation combines <strong>deterministic software</strong>, <strong>probabilistic AI</strong> and <strong>agentic architectures</strong> to engineer auditable systems for complex real-world decisions.",
+    explore: "Explore our work",
+    wiki: "Engineering Wiki",
+    status: "PRE-INCORPORATION R&amp;D VENTURE · GOZO, MALTA",
+    caption: "GOZO → GLOBAL SYSTEMS",
+    local: "LOCAL ENGINEERING",
+    global: "GLOBAL APPLICATION",
+  },
+  it: {
+    eyebrow: "GOZO, MALTA · RICERCA E SVILUPPO IN AI",
+    title: 'Sistemi di<br />AI agentica<span class="hero-title-accent">progettati a Gozo.</span>',
+    description:
+      "Aleph Innovation unisce <strong>software deterministico</strong>, <strong>AI probabilistica</strong> e <strong>architetture agentiche</strong> per realizzare sistemi verificabili a supporto di decisioni complesse nel mondo reale.",
+    explore: "Scopri i nostri progetti",
+    wiki: "Wiki tecnico",
+    status: "R&amp;S IN FASE DI COSTITUZIONE · GOZO, MALTA",
+    caption: "GOZO → SISTEMI GLOBALI",
+    local: "INGEGNERIA LOCALE",
+    global: "APPLICAZIONE GLOBALE",
+  },
+}[lang];
 ---
 
 <section class="hero">
   <div class="hero-atmosphere" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-content">
-      <p class="hero-eyebrow">GOZO, MALTA · AI R&amp;D VENTURE</p>
-      <h1>Engineering<br />Agentic AI<span class="hero-title-accent">systems from Gozo.</span></h1>
-      <p class="hero-description">
-        Aleph Innovation combines{" "}<strong>deterministic software</strong>,{" "}
-        <strong>probabilistic AI</strong>{" "}and{" "}
-        <strong>agentic architectures</strong>{" "}
-        to engineer auditable systems for complex real-world decisions.
-      </p>
+      <p class="hero-eyebrow" set:html={t.eyebrow} />
+      <h1 set:html={t.title} />
+      <p class="hero-description" set:html={t.description} />
       <div class="hero-actions">
-        <a class="hero-button hero-button-primary" href="/#projects">Explore our work <span aria-hidden="true">→</span></a>
-        <a class="hero-button hero-button-secondary" href="/wiki/">Engineering Wiki</a>
+        <a class="hero-button hero-button-primary" href={l("/#projects")}>{t.explore} <span aria-hidden="true">→</span></a>
+        <a class="hero-button hero-button-secondary" href={l("/wiki/")}>{t.wiki}</a>
       </div>
-      <p class="hero-status"><span class="status-dot" aria-hidden="true"></span>PRE-INCORPORATION R&amp;D VENTURE · GOZO, MALTA</p>
+      <p class="hero-status"><span class="status-dot" aria-hidden="true"></span><Fragment set:html={t.status} /></p>
     </div>
 
     <div class="hero-visual" aria-hidden="true">
@@ -51,9 +77,9 @@
         <path class="coastline" d="M88 552 L135 552 L153 542 L181 541 L196 522 L210 510 L223 542 L249 542 L262 530 L276 532 L289 493 L301 467 L314 514 L328 529 L352 526 L365 509 L378 500 L390 531 L412 537 L443 539 L472 544 L500 548 L528 551 L557 551 L588 552 L622 552 L655 552"/>
         <path class="architecture-line" d="M568 551 L573 505 L587 505 L593 551 M570 505 L590 505 M574 496 L586 496 M576 496 L579 486 L583 486 L587 496"/>
         <circle class="local-node" cx="368" cy="470" r="4"/>
-        <path class="sea-line" d="M125 575 H625"/><text class="visual-caption" x="315" y="620">GOZO → GLOBAL SYSTEMS</text>
+        <path class="sea-line" d="M125 575 H625"/><text class="visual-caption" x="315" y="620">{t.caption}</text>
       </svg>
-      <div class="visual-legend"><span><i class="legend-dot"></i> LOCAL ENGINEERING</span><span><i class="legend-line"></i> GLOBAL APPLICATION</span></div>
+      <div class="visual-legend"><span><i class="legend-dot"></i> {t.local}</span><span><i class="legend-line"></i> {t.global}</span></div>
     </div>
   </div>
 </section>

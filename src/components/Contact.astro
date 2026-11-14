@@ -1,3 +1,84 @@
+---
+import { getLang } from "../i18n";
+
+const lang = getLang(Astro);
+---
+
+{lang === "it" ? (
+<section
+  id="contact"
+  class="contact section"
+  aria-labelledby="contact-title"
+>
+  <div class="contact-atmosphere" aria-hidden="true"></div>
+
+  <div class="container-wide contact-container">
+    <div class="contact-copy">
+      <p class="contact-eyebrow">CONTATTI</p>
+
+      <h2 id="contact-title">
+        Da Gozo
+        <span>al mondo.</span>
+      </h2>
+
+      <p class="contact-lead">
+        Aleph Innovation è aperta a collaborazioni tecniche, confronti sulla
+        ricerca, idee di progetto e sostegno alla R&amp;S indipendente.
+      </p>
+
+      <div class="contact-status">
+        <span class="contact-status-dot" aria-hidden="true"></span>
+        <span>R&amp;S IN FASE DI COSTITUZIONE · GOZO, MALTA</span>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-card-topline">
+        <span>INFORMAZIONI GENERALI</span>
+        <span>01</span>
+      </div>
+
+      <a
+        class="contact-email"
+        href="mailto:info@alephinnovation.com"
+      >
+        info@alephinnovation.com
+        <span aria-hidden="true">↗</span>
+      </a>
+
+      <p>
+        Per collaborazioni tecniche, proposte di progetto, partecipazione
+        alla ricerca e richieste di informazioni.
+      </p>
+
+      <div class="contact-links">
+        <a
+          href="https://www.linkedin.com/company/alephinnovation/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LinkedIn
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          href="https://github.com/lupoleo/agentic_portfolio_stage4_0"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="contact-note">
+        <span>SEDE</span>
+        <strong>Gozo, Malta</strong>
+      </div>
+    </div>
+  </div>
+</section>
+) : (
 <section
   id="contact"
   class="contact section"
@@ -71,6 +152,7 @@
     </div>
   </div>
 </section>
+)}
 
 <style>
   .contact {

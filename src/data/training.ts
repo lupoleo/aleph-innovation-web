@@ -313,3 +313,9 @@ export const trainingOffers: TrainingOffer[] = [
 ];
 
 export const publishedOffers = trainingOffers.filter((o) => o.published);
+
+import { publishedOffersIt } from "./training.it";
+
+/** Published offers in the requested language (same slugs in both). */
+export const getPublishedOffers = (lang: "en" | "it") =>
+  lang === "it" ? publishedOffersIt : publishedOffers;

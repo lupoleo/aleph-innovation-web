@@ -1,19 +1,39 @@
 ---
 import Header from "../components/Header.astro";
+import { getLang, alternatePaths, languages } from "../i18n";
+
+const lang = getLang(Astro);
+
+const defaultDescription = {
+  en: "Aleph Innovation is an AI venture in formation based in Gozo, Malta, focused on the engineering of Agentic AI systems that combine deterministic software with probabilistic AI.",
+  it: "Aleph Innovation è una realtà di ricerca e sviluppo sull'intelligenza artificiale in fase di costituzione a Gozo, Malta, specializzata nell'ingegneria di sistemi di AI agentica che uniscono software deterministico e AI probabilistica.",
+}[lang];
+
+const imageAlt = {
+  en: "Aleph Innovation — Engineering Agentic AI Systems",
+  it: "Aleph Innovation — Ingegneria di sistemi di AI agentica",
+}[lang];
 
 const {
   title = "Aleph Innovation",
-  description = "Aleph Innovation is an AI venture in formation based in Gozo, Malta, focused on the engineering of Agentic AI systems that combine deterministic software with probabilistic AI.",
+  description = defaultDescription,
   canonicalPath = Astro.url.pathname,
   socialImage = "/og-image.png",
 } = Astro.props;
 
 const canonicalURL = new URL(canonicalPath, Astro.site);
 const socialImageURL = new URL(socialImage, Astro.site);
+
+// hreflang alternates: every page exists in English and in Italian (/it/).
+const alternates = alternatePaths(canonicalPath);
+const alternateURLs = {
+  en: new URL(alternates.en, Astro.site),
+  it: new URL(alternates.it, Astro.site),
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={languages[lang].htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -22,16 +42,24 @@ const socialImageURL = new URL(socialImage, Astro.site);
 
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
+  <link rel="alternate" hreflang="en" href={alternateURLs.en} />
+  <link rel="alternate" hreflang="it" href={alternateURLs.it} />
+  <link rel="alternate" hreflang="x-default" href={alternateURLs.en} />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Aleph Innovation" />
+  <meta property="og:locale" content={languages[lang].ogLocale} />
+  <meta
+    property="og:locale:alternate"
+    content={languages[lang === "en" ? "it" : "en"].ogLocale}
+  />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:image" content={socialImageURL} />
   <meta
     property="og:image:alt"
-    content="Aleph Innovation — Engineering Agentic AI Systems"
+    content={imageAlt}
   />
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -40,7 +68,7 @@ const socialImageURL = new URL(socialImage, Astro.site);
   <meta name="twitter:image" content={socialImageURL} />
   <meta
     name="twitter:image:alt"
-    content="Aleph Innovation — Engineering Agentic AI Systems"
+    content={imageAlt}
   />
 
   <meta name="theme-color" content="#020b18" />

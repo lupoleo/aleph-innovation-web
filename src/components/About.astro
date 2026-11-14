@@ -1,3 +1,156 @@
+---
+import { getLang } from "../i18n";
+
+const lang = getLang(Astro);
+---
+
+{lang === "it" ? (
+<section
+  id="about"
+  class="about section"
+  aria-labelledby="about-title"
+>
+  <div class="about-atmosphere" aria-hidden="true"></div>
+
+  <div class="container-wide about-container">
+    <header class="about-header">
+      <p class="about-eyebrow">CHI È ALEPH INNOVATION</p>
+
+      <h2 id="about-title">
+        Piccoli per scelta.
+        <span>Globali per architettura.</span>
+      </h2>
+
+      <p class="about-lead">
+        Aleph Innovation è una realtà indipendente di ingegneria e ricerca
+        sull'AI in fase di costituzione a Gozo, Malta. Studiamo come software
+        deterministico, modelli probabilistici e agenti specializzati possano
+        essere combinati in sistemi verificabili per decisioni complesse nel
+        mondo reale.
+      </p>
+    </header>
+
+    <div class="about-grid">
+      <article class="about-story">
+        <div class="about-story-topline">
+          <span>GOZO · MALTA</span>
+          <span>INGEGNERIA AI E R&amp;S</span>
+        </div>
+
+        <div class="about-story-copy">
+          <h3>Sistemi di rilevanza globale, progettati su una piccola isola del Mediterraneo.</h3>
+
+          <p>
+            Aleph Innovation parte da una premessa semplice: l'ingegneria
+            avanzata non deve per forza nascere in un grande polo tecnologico.
+            Contano la qualità dell'architettura, la disciplina
+            dell'implementazione e la capacità di verificare cosa fa davvero
+            un sistema.
+          </p>
+
+          <p>
+            Gozo è il nostro contesto operativo e parte della nostra identità,
+            mentre i sistemi che costruiamo sono pensati per un'applicazione
+            internazionale.
+          </p>
+        </div>
+
+        <div class="about-route" aria-label="Il modello operativo di Aleph Innovation">
+          <div class="about-route-node">
+            <span class="route-dot"></span>
+            <strong>GOZO</strong>
+            <small>Ingegneria locale</small>
+          </div>
+
+          <div class="about-route-line" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <div class="about-route-node">
+            <span class="route-dot route-dot-cyan"></span>
+            <strong>SISTEMI</strong>
+            <small>Architettura e validazione</small>
+          </div>
+
+          <div class="about-route-line about-route-line-blue" aria-hidden="true">
+            <span></span>
+          </div>
+
+          <div class="about-route-node">
+            <span class="route-dot route-dot-blue"></span>
+            <strong>GLOBALE</strong>
+            <small>Applicazione internazionale</small>
+          </div>
+        </div>
+      </article>
+
+      <aside class="about-principles" aria-label="I principi di Aleph Innovation">
+        <div class="about-principles-heading">
+          <span class="principles-index">01—04</span>
+          <span>PRINCIPI OPERATIVI</span>
+        </div>
+
+        <div class="principle">
+          <span class="principle-number">01</span>
+          <div>
+            <h3>Prima l'ingegneria</h3>
+            <p>
+              Architettura, contratti, evidenze e test vengono prima delle
+              astrazioni di moda sull'AI.
+            </p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <span class="principle-number">02</span>
+          <div>
+            <h3>In locale quando conviene</h3>
+            <p>
+              Modelli e potenza di calcolo locali si usano quando migliorano
+              controllo, riservatezza, riproducibilità o costi.
+            </p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <span class="principle-number">03</span>
+          <div>
+            <h3>Nel cloud quando porta valore</h3>
+            <p>
+              Modelli e servizi esterni si scelgono consapevolmente, quando le
+              loro capacità giustificano la dipendenza.
+            </p>
+          </div>
+        </div>
+
+        <div class="principle">
+          <span class="principle-number">04</span>
+          <div>
+            <h3>Costruire in pubblico</h3>
+            <p>
+              Decisioni, esperimenti, risultati di validazione e lezioni
+              apprese entrano a far parte della documentazione tecnica.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="about-status">
+      <div class="about-status-label">
+        <span class="status-pulse" aria-hidden="true"></span>
+        STATO ATTUALE
+      </div>
+
+      <p>
+        Aleph Innovation è una realtà di R&amp;S in fase di costituzione a
+        Gozo, Malta. Il suo primo progetto pubblico di ingegneria è
+        <a href="/it/#projects">Agentic Portfolio</a>.
+      </p>
+    </div>
+  </div>
+</section>
+) : (
 <section
   id="about"
   class="about section"
@@ -140,6 +293,7 @@
     </div>
   </div>
 </section>
+)}
 
 <style>
   .about {
