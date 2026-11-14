@@ -6,25 +6,23 @@ const l = (path: string) => localizePath(path, lang);
 
 const t = {
   en: {
-    eyebrow: "GOZO, MALTA · AI R&amp;D VENTURE",
-    title: 'Engineering<br />Agentic AI<span class="hero-title-accent">systems from Gozo.</span>',
-    description:
-      "Aleph Innovation combines <strong>deterministic software</strong>, <strong>probabilistic AI</strong> and <strong>agentic architectures</strong> to engineer auditable systems for complex real-world decisions.",
+    eyebrow: "GOZO, MALTA · AI R&D VENTURE",
+    title: ["Engineering", "Agentic AI", "systems from Gozo."],
+    description: ["Aleph Innovation combines", "deterministic software", ",", "probabilistic AI", "and", "agentic architectures", "to engineer auditable systems for complex real-world decisions."],
     explore: "Explore our work",
     wiki: "Engineering Wiki",
-    status: "PRE-INCORPORATION R&amp;D VENTURE · GOZO, MALTA",
+    status: "PRE-INCORPORATION R&D VENTURE · GOZO, MALTA",
     caption: "GOZO → GLOBAL SYSTEMS",
     local: "LOCAL ENGINEERING",
     global: "GLOBAL APPLICATION",
   },
   it: {
     eyebrow: "GOZO, MALTA · RICERCA E SVILUPPO IN AI",
-    title: 'Sistemi di<br />AI agentica<span class="hero-title-accent">progettati a Gozo.</span>',
-    description:
-      "Aleph Innovation unisce <strong>software deterministico</strong>, <strong>AI probabilistica</strong> e <strong>architetture agentiche</strong> per realizzare sistemi verificabili a supporto di decisioni complesse nel mondo reale.",
+    title: ["Sistemi di", "AI agentica", "progettati a Gozo."],
+    description: ["Aleph Innovation unisce", "software deterministico", ",", "AI probabilistica", "e", "architetture agentiche", "per realizzare sistemi verificabili a supporto di decisioni complesse nel mondo reale."],
     explore: "Scopri i nostri progetti",
     wiki: "Wiki tecnico",
-    status: "R&amp;S IN FASE DI COSTITUZIONE · GOZO, MALTA",
+    status: "R&S IN FASE DI COSTITUZIONE · GOZO, MALTA",
     caption: "GOZO → SISTEMI GLOBALI",
     local: "INGEGNERIA LOCALE",
     global: "APPLICAZIONE GLOBALE",
@@ -36,14 +34,19 @@ const t = {
   <div class="hero-atmosphere" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-content">
-      <p class="hero-eyebrow" set:html={t.eyebrow} />
-      <h1 set:html={t.title} />
-      <p class="hero-description" set:html={t.description} />
+      <p class="hero-eyebrow">{t.eyebrow}</p>
+      <h1>{t.title[0]}<br />{t.title[1]}<span class="hero-title-accent">{t.title[2]}</span></h1>
+      <p class="hero-description">
+        {t.description[0]}{" "}<strong>{t.description[1]}</strong>{t.description[2]}{" "}
+        <strong>{t.description[3]}</strong>{" "}{t.description[4]}{" "}
+        <strong>{t.description[5]}</strong>{" "}
+        {t.description[6]}
+      </p>
       <div class="hero-actions">
         <a class="hero-button hero-button-primary" href={l("/#projects")}>{t.explore} <span aria-hidden="true">→</span></a>
         <a class="hero-button hero-button-secondary" href={l("/wiki/")}>{t.wiki}</a>
       </div>
-      <p class="hero-status"><span class="status-dot" aria-hidden="true"></span><Fragment set:html={t.status} /></p>
+      <p class="hero-status"><span class="status-dot" aria-hidden="true"></span>{t.status}</p>
     </div>
 
     <div class="hero-visual" aria-hidden="true">
