@@ -1,0 +1,336 @@
+---
+title: "Architettura"
+description: "Architettura end-to-end dello Stage 4.0 di Agentic Portfolio: stato reale del portafoglio, universo di produzione dello Scanner, ricerca e scoring direzionale, selezione umana, costruzione deterministica del portafoglio ed esecuzione manuale."
+project: "agentic-portfolio"
+section: "architecture"
+status: "published"
+updated: "2026-10-02"
+order: 20
+---
+
+import AgenticArchitectureMap from "../../../components/wiki/AgenticArchitectureMap.astro";
+
+# Architettura
+
+Lo Stage 4.0 di Agentic Portfolio trasforma i componenti già validati di analisi del portafoglio, Scanner, ricerca, scoring e CIO in **un unico flusso end-to-end verificabile**.
+
+L'architettura attuale ha due fonti indipendenti a monte: il **portafoglio reale su Fineco** e un **universo di produzione di titoli quotati**. Le due fonti confluiscono in un Research Watch Universe verificabile, a partire dal quale il sistema costruisce le evidenze, svolge la ricerca, assegna un punteggio alle ipotesi direzionali LONG e SHORT e può salvare zero o più oggetti `TradeOpportunity`.
+
+La costruzione del portafoglio a valle parte solo dopo che un operatore ha selezionato esplicitamente un'opportunità. L'esecuzione reale resta manuale.
+
+<AgenticArchitectureMap />
+
+## Il modello architetturale dello Stage 4.0
+
+Lo Stage 4.0 è governato da cinque confini:
+
+1. **Portafoglio reale + Scanner di produzione**: lo stato autorevole del conto e la scoperta esterna di opportunità restano distinti.
+2. **Research Watch Universe**: candidati dello Scanner e posizioni esistenti confluiscono senza perdere la provenienza.
+3. **Evidenze, ricerca e scoring direzionale**: le evidenze con fonte vengono interpretate dall'AI all'interno di una validazione deterministica e di contratti versionati.
+4. **Selezione dell'operatore + costruzione del portafoglio**: esattamente un'opportunità salvata entra nel Portfolio Filter congelato e nel percorso deterministico di costruzione dell'operazione.
+5. **CIO + confine dell'esecuzione**: il sistema può produrre un `ExecutionPlan`; l'esecuzione sul broker resta sotto autorità umana.
+
+Controlli trasversali preservano **contratti e versioni delle policy, provenienza e tracciabilità, persistenza e replay, validazione e semantica di blocco in sicurezza (fail-closed)**.
+
+## 1. Stato reale e stato proposto sono domini diversi
+
+Fineco è la fonte di verità per le posizioni reali, la liquidità e lo stato del conto visibile al broker.
+
+Un'operazione simulata o proposta non deve mai modificare quello stato. Lo Stage 4.0 mantiene gli stati `REAL`, `SIMULATED` e `PROPOSED` esplicitamente distinguibili in tutti i contratti sui dati, nella persistenza e nella reportistica.
+
+Una proposta diventa una posizione reale solo dopo l'esecuzione manuale esterna e un successivo snapshot autorevole del portafoglio.
+
+È un invariante fondamentale del sistema:
+
+`REAL ≠ SIMULATED ≠ PROPOSED`
+
+## 2. Due fonti a monte
+
+Lo Stage 4.0 parte da due popolazioni semanticamente diverse.
+
+### Percorso del portafoglio reale
+
+Lo snapshot del portafoglio Fineco alimenta l'analisi del portafoglio e lo stato di rischio canonico.
+
+Le posizioni esistenti formano poi il **Portfolio Watch Set**. Una posizione attuale resta osservabile anche quando la sua classe di strumento o il suo mercato non sarebbero ammessi come nuovo candidato dello Scanner.
+
+Questo permette al sistema di fare ricerca su esposizioni esistenti la cui azione appropriata può essere HOLD, REDUCE, EXIT o HEDGE invece di una nuova entrata.
+
+### Percorso dello Scanner di produzione
+
+Lo Scanner esplora un ampio universo di produzione di titoli quotati, indipendentemente dal portafoglio attuale.
+
+I titoli passano attraverso controlli espliciti su:
+
+- identità del fornitore dati e del titolo;
+- tassonomia canonica degli strumenti;
+- ammissibilità dello strumento;
+- associazione e verifica dei dati di mercato;
+- qualità e aggiornamento dello storico;
+- gestione delle sessioni di borsa;
+- conversione valutaria dove necessaria;
+- liquidità.
+
+Superare un controllo non implica mai che si superi il successivo. Gli stati non supportati o ambigui restano espliciti e bloccano il percorso.
+
+Il risultato è lo **Scanner Candidate Set**: i titoli ammissibili alla ricerca di nuove opportunità.
+
+## 3. Research Watch Universe
+
+I due percorsi a monte confluiscono in:
+
+`Scanner Candidate Set ∪ Portfolio Watch Set`
+
+Questa unione è il **Research Watch Universe**.
+
+Un elemento può avere provenienza `NEW_CANDIDATE`, `CURRENT_POSITION` o entrambe. La deduplicazione non riduce a un generico confronto di ticker l'identità esatta del titolo, l'equivalenza del titolo, l'identità dei dati di mercato e l'identità del fattore di rischio economico.
+
+Il Research Watch Universe non è quindi solo un elenco di simboli. È un confine verificabile che porta alla fase di ricerca le informazioni su identità, percorso, policy e provenienza.
+
+## 4. Evidenze e ricerca
+
+La fase di ricerca usa il Research Watch Universe e produce evidenze normalizzate e interpretazioni, non azioni sul portafoglio.
+
+Il percorso delle evidenze dello Stage 4 può includere:
+
+- **TECHNICAL**
+- **MARKET**
+- **NEWS**
+- **FUNDAMENTAL**
+- **ANALYST / EXPECTATIONS**
+
+Le evidenze conservano identità del soggetto e della fonte, fornitore, timestamp, tipo di evidenza, qualità, rilevanza, tag semantici e diagnostica di degrado.
+
+L'LLM può estrarre, sintetizzare e classificare le evidenze. Il software deterministico continua a imporre schemi, timestamp, identità e provenienza.
+
+Un fornitore non disponibile non elimina silenziosamente un candidato. Crea uno stato esplicito di evidenza degradata che la policy a valle può accettare, penalizzare o bloccare.
+
+### Completezza della ricerca
+
+Lo Stage 4 distingue i fatti mancanti alla data di riferimento dall'incertezza futura.
+
+Gli `unknowns` rappresentano fatti che esistono alla data dell'evidenza ma non sono stati forniti. Le `forward_uncertainties` rappresentano esiti futuri che le evidenze attuali non possono stabilire.
+
+Questa distinzione evita che esiti futuri, per loro natura non conoscibili, vengano trattati come se il sistema di ricerca non fosse riuscito a recuperare fatti esistenti.
+
+## 5. Scoring direzionale delle opportunità
+
+L'Opportunity Scoring converte input validati di mercato, tecnici, di rischio e di ricerca in zero o più oggetti `TradeOpportunity`.
+
+Ogni ipotesi è direzionale:
+
+`LONG` oppure `SHORT`
+
+Il punteggio misura il supporto a quella direzione.
+
+### Valutazione condivisa della società
+
+FUNDAMENTAL ed EXPECTATIONS descrivono la società, non la direzione dell'operazione. Lo Stage 4 produce quindi **una valutazione della società condivisa e senza direzione per ogni titolo**, basata sulle evidenze fondamentali e degli analisti.
+
+Questa valutazione è condivisa dalle ipotesi LONG e SHORT. La trasformazione direzionale avviene in modo deterministico dove necessario.
+
+THESIS e CATALYST restano direzionali.
+
+Questa separazione evita che gli stessi fondamentali della società vengano reinterpretati in modo indipendente in quadri LONG e SHORT incoerenti.
+
+### Controllo di materializzazione
+
+Un'ipotesi con punteggio non diventa automaticamente una `TradeOpportunity`.
+
+La materializzazione richiede le condizioni accettate su ricerca, direzione, confidenza e punteggio. Un'esecuzione che produce zero opportunità è valida.
+
+L'architettura attuale distingue quindi:
+
+`Ipotesi con punteggio ≠ TradeOpportunity`
+
+## 6. Shadow Ledger
+
+Ogni ipotesi direzionale con un punteggio corretto per la confidenza può anche essere registrata nello **Shadow Ledger** separato, indipendentemente dal fatto che si materializzi in una `TradeOpportunity`.
+
+Il ledger misura gli esiti direzionali e relativi all'indice dopo orizzonti di osservazione definiti.
+
+**Non ha alcuna autorità decisionale.**
+
+Il suo scopo è empirico: fornire evidenze sugli esiti prima di modificare le soglie di punteggio o la relativa policy di scoring.
+
+Si crea così un secondo percorso a partire dallo scoring:
+
+`Ipotesi direzionale → Shadow Ledger → Evidenze sugli esiti`
+
+senza che quelle misure ricadano sulla decisione corrente nella stessa esecuzione.
+
+## 7. Selezione esplicita dell'operatore
+
+L'Opportunity Scoring può salvare zero, una o molte opportunità.
+
+La costruzione del portafoglio a valle accetta **esattamente un'opportunità selezionata esplicitamente per ogni esecuzione di valutazione**.
+
+Classifica e selezione sono eventi separati. Nessuna opportunità entra nel Portfolio Filter solo perché è arrivata prima in classifica.
+
+Non esiste quindi un allocatore implicito in blocco tra l'Opportunity Scoring e il Portfolio Filter.
+
+Un futuro ottimizzatore su più opportunità richiederebbe un nuovo contratto architetturale.
+
+## 8. Portfolio Filter congelato
+
+L'opportunità selezionata entra nel Portfolio Filter congelato.
+
+Il filtro gestisce i controlli legati al portafoglio, tra cui esposizione e concentrazione, rischio marginale, effetti di correlazione e diversificazione, requisiti di liquidità e storico, compatibilità long/short e motivazioni esplicite di rifiuto.
+
+Un'opportunità può quindi essere attraente presa da sola e non risultare comunque adatta al portafoglio.
+
+`Qualità dell'opportunità ≠ Adeguatezza al portafoglio`
+
+Lo Stage 4 integra la semantica chiusa da PF-1A a PF-1H invece di modificarla silenziosamente.
+
+## 9. Costruzione dello strumento e dimensionamento
+
+Dopo che l'opportunità selezionata ha superato il Portfolio Filter:
+
+1. **Instrument Selection** individua la rappresentazione negoziabile.
+2. **Position Sizing** calcola la dimensione proposta in modo deterministico.
+3. `TradeProposal` registra lato, quantità, prezzo di riferimento, controvalore, costi, motivazioni e vincoli.
+
+Il dimensionamento finale della posizione non spetta all'LLM.
+
+Prezzi, quantità, liquidità, pesi di portafoglio e valori di rischio restano responsabilità della finanza deterministica.
+
+## 10. Portfolio Simulator V2
+
+Portfolio Simulator V2 applica l'esatta proposta a una copia dello snapshot reale e confronta le metriche prima dell'operazione con quelle simulate dopo.
+
+Il portafoglio reale resta invariato.
+
+La domanda decisionale passa così da:
+
+> Questa opportunità è attraente?
+
+a:
+
+> Qual è l'effetto marginale sul portafoglio di questa esatta posizione proposta?
+
+La simulazione resta riproducibile a partire dagli input salvati.
+
+## 11. CIO Decision
+
+Il CIO Decision Engine usa la proposta, la simulazione, le evidenze validate, i vincoli deterministici e i rischi non risolti.
+
+Può restituire esiti come `APPROVE`, `REJECT`, `REVIEW_REQUIRED` o `BLOCKED`, secondo il contratto canonico.
+
+Il CIO può ragionare su evidenze qualitative, ma non può scavalcare i controlli deterministici falliti dello Scanner o del Portfolio Filter, inventare dati finanziari mancanti o modificare lo stato del portafoglio.
+
+Una decisione del CIO approvata produce un `ExecutionPlan`, non un ordine al broker.
+
+## 12. ExecutionPlan e autorità umana
+
+L'`ExecutionPlan` segna la fine dell'autorità del software.
+
+Può tradurre una proposta approvata in un'istruzione manuale pronta per il broker, ma il sistema non invia l'ordine.
+
+Il confine di autorità è esplicito:
+
+`SOFTWARE AUTHORITY → ExecutionPlan → HUMAN AUTHORITY → Manual Execution`
+
+La responsabilità della transazione reale resta all'operatore.
+
+## 13. Esito autorevole
+
+Dopo l'esecuzione manuale, Fineco resta la fonte autorevole.
+
+Un nuovo snapshot del portafoglio registra lo stato effettivo del conto e delle posizioni. Quando possibile, il sistema può ricollegare questo stato osservato alla proposta.
+
+I piani non eseguiti, eseguiti parzialmente o eseguiti in modo diverso restano distinguibili.
+
+Apprendimento e reportistica lavorano sugli esiti osservati, non su esecuzioni presunte.
+
+## 14. Confine di responsabilità tra Python e LLM
+
+### Python governa la finanza deterministica
+
+I componenti Python gestiscono parsing e normalizzazione, tassonomia degli strumenti, validazione di identità e associazioni, calendari di borsa, conversione valutaria, controlli su storico e liquidità, indicatori tecnici, metriche quantitative, vincoli di portafoglio, rischio marginale, selezione dello strumento, dimensionamento, simulazione, validazione della persistenza e integrità dell'audit.
+
+### Responsabilità dell'LLM
+
+Gli LLM possono riassumere e confrontare evidenze, estrarre affermazioni strutturate, classificare temi, catalizzatori e rischi, generare tesi e controtesi, spiegare i punteggi o le raccomandazioni del CIO, individuare evidenze mancanti e produrre spiegazioni leggibili per l'operatore a partire dai dati canonici.
+
+### Cosa l'LLM non può fare
+
+L'LLM non deve:
+
+- inventare dati di mercato o fonti;
+- risolvere l'identità di un titolo senza validazione deterministica;
+- scavalcare controlli falliti dello Scanner o del Portfolio Filter;
+- calcolare la dimensione finale della posizione fuori dal motore deterministico;
+- modificare lo stato reale del portafoglio;
+- dedurre che un'esecuzione sia avvenuta;
+- nascondere input mancanti dietro una narrazione sicura;
+- inviare ordini al broker.
+
+## 15. Persistenza, tracciabilità e replay
+
+La persistenza dello Stage 4 collega record immutabili o verificabili lungo tutto il ciclo di vita:
+
+`listing → evidence → research → score → opportunity → selection → filter → instrument → size → simulation → decision → execution plan → observed outcome`
+
+I record conservano identificativi stabili, versioni di schema e policy, timestamp, collegamenti di integrità e un input canonico sufficiente a consentire il replay senza dipendenze nascoste dalla memoria del processo.
+
+Il livello di orchestrazione dello Stage 4 gestisce flusso di controllo, tracciabilità e validazione di sicurezza. Le decisioni di dominio restano di competenza dei rispettivi servizi.
+
+## 16. Semantica di errore e degrado
+
+Lo Stage 4.0 preferisce una verità parziale ed esplicita a una completezza inventata.
+
+Alcuni esempi:
+
+- errore di acquisizione dal fornitore → stato di acquisizione parziale o fallita;
+- tipo di strumento sconosciuto → blocco;
+- associazione non supportata → stato esplicito di mancata associazione;
+- identità non corrispondente → lo storico non può essere usato per quel titolo;
+- storico non aggiornato o insufficiente → blocco del percorso dipendente;
+- fornitore di ricerca degradato → il candidato viene preservato e il degrado registrato;
+- vincolo del Portfolio Filter non rispettato → rifiuto;
+- simulazione fallita → nessuna approvazione del CIO né piano di esecuzione;
+- esito di esecuzione ambiguo → attesa della riconciliazione autorevole.
+
+Retry e cache possono migliorare l'operatività, ma non cambiano il significato di una decisione di policy.
+
+## 17. Stato attuale dello Stage 4.0
+
+Alla baseline architetturale attuale dello Stage 4.0, la catena end-to-end dal vivo attraversa il percorso di ricerca e scoring sia per le ipotesi LONG sia per quelle SHORT.
+
+I contratti di Research e Opportunity Scoring hanno avuto revisioni esplicite e versionate durante la validazione dal vivo, tra cui lo scoring direzionale, la semantica di completezza della ricerca, l'aggiornamento dei fondamentali e la valutazione condivisa della società.
+
+La prima opportunità dello Stage 4 completa dal vivo è ancora governata dal controllo di materializzazione. Lo Shadow Ledger sta raccogliendo evidenze sugli esiti, così che le future modifiche alle soglie possano basarsi sulle evidenze invece che su singole esecuzioni aneddotiche.
+
+L'architettura resta quindi un'**architettura di integrazione attiva**, anche se molti singoli checkpoint sono chiusi e congelati.
+
+## 18. Invarianti architetturali
+
+Lo Stage 4.0 è governato da questi invarianti:
+
+1. Fineco resta la fonte autorevole per lo stato reale del portafoglio.
+2. Gli stati `REAL`, `SIMULATED` e `PROPOSED` non si confondono mai tra loro.
+3. Python governa la finanza deterministica.
+4. Le evidenze mancanti sono esplicite; non vengono mai trasformate in un esito positivo inventato.
+5. L'identità del titolo di origine viene preservata attraverso associazioni e analisi.
+6. Le posizioni esistenti restano osservabili indipendentemente dall'ammissibilità come nuovi candidati.
+7. Evidenze e interpretazione dell'AI mantengono una provenienza distinta.
+8. LONG e SHORT sono ipotesi direzionali esplicite.
+9. La valutazione del quadro della società è condivisa e senza direzione dove richiesto dal contratto di scoring.
+10. Un'ipotesi con punteggio non diventa automaticamente una `TradeOpportunity`.
+11. Le misure dello Shadow Ledger non influiscono sulle decisioni correnti.
+12. Per ogni valutazione a valle viene selezionata esplicitamente esattamente un'opportunità.
+13. Il Portfolio Filter congelato resta consapevole del portafoglio e deterministico.
+14. Selezione dello strumento e dimensionamento precedono la simulazione esatta del portafoglio.
+15. I controlli deterministici non possono essere scavalcati silenziosamente dall'output dell'AI.
+16. Una decisione del CIO approvata produce un piano di esecuzione, non un ordine.
+17. L'esecuzione sul broker resta manuale.
+18. Solo un successivo snapshot autorevole stabilisce il nuovo stato reale del portafoglio.
+
+## Perché questa architettura
+
+Lo Stage 4.0 non è un bot di trading autonomo né un insieme di agenti LLM lasciati liberi.
+
+È un flusso di supporto decisionale verificabile, in cui software deterministico, ragionamento probabilistico e autorità umana hanno responsabilità diverse.
+
+L'architettura è volutamente esplicita su questi confini perché la capacità agentica diventa più utile quando il sistema sa anche spiegare **cosa sapeva, da dove proveniva l'informazione, quale policy si applicava, quale componente ha preso ciascuna decisione e dove finiva l'autorità della macchina**.
