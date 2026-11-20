@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import WikiEnglishNotice from "../components/wiki/WikiEnglishNotice.astro";
 import { getLang } from "../i18n";
 
 const lang = getLang(Astro);
@@ -14,6 +15,11 @@ const meta = {
     title: "Wiki tecnica — Aleph Innovation",
     description:
       "Documentazione tecnica pubblica dei progetti di Aleph Innovation, tra cui Agentic Portfolio e Monitoraggio ambientale.",
+  },
+  mt: {
+    title: "Wiki teknika — Aleph Innovation",
+    description:
+      "Dokumentazzjoni teknika pubblika tal-proġetti ta' Aleph Innovation, fosthom Agentic Portfolio u l-Monitoraġġ Ambjentali (bl-Ingliż).",
   },
 }[lang];
 ---
@@ -116,7 +122,12 @@ const meta = {
     </div>
   </section>
 ) : (
-  <section class="wiki-home section">
+  <section class="wiki-home section" lang={lang === "mt" ? "en" : undefined}>
+    {lang === "mt" && (
+      <div class="container-wide wiki-home-container" lang="mt">
+        <WikiEnglishNotice />
+      </div>
+    )}
     <div class="container-wide wiki-home-container">
       <header class="wiki-home-header">
         <p class="wiki-home-eyebrow">ENGINEERING WIKI</p>

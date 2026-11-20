@@ -27,6 +27,17 @@ const labels = {
     "environmental-monitoring": "Monitoraggio ambientale",
     "risk-overview": "Panoramica dei rischi di Gozo",
   },
+  mt: {
+    "agentic-portfolio": "Agentic Portfolio",
+    "system-overview": "Ħarsa ġenerali lejn is-sistema",
+    "architecture": "Arkitettura",
+    "contracts": "Kuntratti u tipi ta' data",
+    "implementation": "Implimentazzjoni",
+    "testing": "Ittestjar u validazzjoni",
+    "development-history": "Storja tal-iżvilupp",
+    "environmental-monitoring": "Monitoraġġ Ambjentali",
+    "risk-overview": "Ħarsa ġenerali lejn ir-riskji ta' Għawdex",
+  },
 }[lang];
 
 const segments = stripLang(currentPath)
@@ -52,7 +63,7 @@ for (const segment of segments.slice(1)) {
 }
 ---
 
-<nav class="wiki-breadcrumbs" aria-label={lang === "it" ? "Percorso" : "Breadcrumb"}>
+<nav class="wiki-breadcrumbs" aria-label={{ en: "Breadcrumb", it: "Percorso", mt: "Fejn tinsab" }[lang]}>
   <ol>
     {
       crumbs.map((crumb, index) => {

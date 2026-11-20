@@ -51,6 +51,52 @@ const lang = getLang(Astro);
     </div>
   </div>
 </section>
+) : lang === "mt" ? (
+<section class="fund-project" id="fund-project" aria-labelledby="fund-project-title">
+  <div class="fund-project__inner">
+    <div class="fund-project__eyebrow">APPOĠĠA L-PROĠETT</div>
+    <div class="fund-project__grid">
+      <div class="fund-project__content">
+        <h2 id="fund-project-title">Appoġġa l-R&amp;D indipendenti.</h2>
+        <p class="fund-project__lead">Agentic Portfolio qed jiġi żviluppat bħala proġett indipendenti ta' riċerka u inġinerija fi ħdan Aleph Innovation.</p>
+        <p>Jekk issib dan ix-xogħol utli u tixtieq tappoġġja l-iżvilupp tiegħu, tista' tagħmel kontribuzzjoni volontarja permezz ta' Revolut.</p>
+
+        <div class="fund-project__actions">
+          <a class="fund-project__button fund-project__button--primary" href={revolutUrl} target="_blank" rel="noopener noreferrer" aria-label="Appoġġa lil Aleph Innovation permezz ta' Revolut — tiftaħ f'tab ġdida">
+            <span>Appoġġa permezz ta' Revolut</span><span aria-hidden="true">↗</span>
+          </a>
+          <a class="fund-project__button fund-project__button--secondary" href="/mt/#contact">
+            <span>Ikkuntattjana</span><span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <p class="fund-project__disclaimer">Il-kontribuzzjonijiet huma appoġġ volontarju għall-proġett. Ma jirrappreżentawx investiment, xiri ta' ishma, prodott finanzjarju jew dritt għal xi qligħ fil-futur.</p>
+      </div>
+
+      <aside class="fund-project__options" aria-label="Modi kif tappoġġja l-proġett">
+        <article class="fund-project__option">
+          <div class="fund-project__option-index" aria-hidden="true">01</div>
+          <div>
+            <h3>Appoġġ mingħajr dettalji ta' kuntatt</h3>
+            <p>M'hemmx bżonn li tagħti l-ebda informazzjoni ta' kuntatt lil Aleph Innovation. Agħżel l-ammont tal-kontribuzzjoni direttament fuq Revolut.</p>
+          </div>
+        </article>
+
+        <article class="fund-project__option">
+          <div class="fund-project__option-index" aria-hidden="true">02</div>
+          <div>
+            <h3>Appoġġa u ibqa' f'kuntatt</h3>
+            <p>Jekk tixtieq ukoll tiddiskuti l-proġett, kollaborazzjoni jew finanzjament futur, uża l-kanal ta' kuntatt separat wara li tkun tajt l-appoġġ tiegħek.</p>
+          </div>
+        </article>
+
+        <div class="fund-project__principles" aria-label="Prinċipji tal-finanzjament">
+          <span>Appoġġ volontarju</span><span>L-ebda ishma</span><span>L-ebda qligħ finanzjarju</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
 ) : (
 <section class="fund-project" id="fund-project" aria-labelledby="fund-project-title">
   <div class="fund-project__inner">

@@ -1,5 +1,5 @@
 ---
-import { getLang, localizePath, alternatePaths, languages, type Lang } from "../i18n";
+import { getLang, localizePath, alternatePaths, languages, langCodes } from "../i18n";
 
 const lang = getLang(Astro);
 const l = (path: string) => localizePath(path, lang);
@@ -45,13 +45,33 @@ const labels = {
     wiki: "Wiki tecnica",
     switcher: "Scegli la lingua",
   },
+  mt: {
+    nav: [
+      { label: "Paradigma", href: "/#paradigm" },
+      { label: "Proġetti", href: "/#projects" },
+      { label: "Servizzi", href: "/services/" },
+      { label: "Agentic Portfolio", href: "/#agentic-portfolio" },
+      { label: "Ambjent", href: "/#environmental-monitoring" },
+      { label: "Wiki", href: "/#wiki" },
+      { label: "Appoġġ", href: "/#fund-project" },
+      { label: "Dwarna", href: "/#about" },
+      { label: "Kuntatt", href: "/#contact" },
+    ],
+    home: "Aleph Innovation, paġna ewlenija",
+    primary: "Navigazzjoni ewlenija",
+    open: "Iftaħ il-menu tan-navigazzjoni",
+    menu: "Menu",
+    mobile: "Navigazzjoni fuq il-mowbajl",
+    wiki: "Wiki teknika",
+    switcher: "Agħżel il-lingwa",
+  },
 }[lang];
 
 const navItems = labels.nav.map((item) => ({ ...item, href: l(item.href) }));
 
 // Same page in the other language, keeping the #section if there is one.
 const alternates = alternatePaths(Astro.url.pathname);
-const switcher = (["en", "it"] as Lang[]).map((code) => ({
+const switcher = langCodes.map((code) => ({
   code,
   href: alternates[code],
   label: languages[code].label,
@@ -119,6 +139,12 @@ const switcher = (["en", "it"] as Lang[]).map((code) => ({
                     <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10" />
                     <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6" />
                   </g>
+                </svg>
+              ) : item.code === "mt" ? (
+                <svg class="lang-flag" viewBox="0 0 30 20" preserveAspectRatio="none" aria-hidden="true">
+                  <rect width="15" height="20" x="0" fill="#ffffff" />
+                  <rect width="15" height="20" x="15" fill="#cf142b" />
+                  <path d="M3.5,1.5 h2 v2 h2 v2 h-2 v2 h-2 v-2 h-2 v-2 h2 z" fill="#a0a0a0" />
                 </svg>
               ) : (
                 <svg class="lang-flag" viewBox="0 0 3 2" preserveAspectRatio="none" aria-hidden="true">
@@ -639,6 +665,13 @@ const switcher = (["en", "it"] as Lang[]).map((code) => ({
     }
 
     .mobile-nav-label {
+      display: none;
+    }
+  }
+
+  /* Three languages: on the narrowest phones show only the codes. */
+  @media (max-width: 400px) {
+    .lang-flag {
       display: none;
     }
   }
