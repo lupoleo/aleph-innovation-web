@@ -101,4 +101,53 @@ export const trainerIt: typeof trainer = {
     "Italiano (madrelingua), inglese (C2); conoscenza operativa di tedesco, spagnolo e francese. I corsi sono disponibili in inglese e in italiano.",
 };
 
-export const getTrainer = (lang: "en" | "it") => (lang === "it" ? trainerIt : trainer);
+// Maltese version of the profile, shown under /mt/. Same rule: first person,
+// no gendered wording about the trainer.
+export const trainerMt: typeof trainer = {
+  ...trainer,
+  role: "Fundazzjoni u tmexxija ta' Aleph Innovation · Inġinerija tal-AI applikata u taħriġ · Għawdex, Malta",
+  short:
+    "Għandi lawrja fil-fiżika u naħdem fl-inġinerija tal-AI applikata, b'aktar minn 30 sena esperjenza fis-softwer u fit-twassil ta' proġetti teknoloġiċi għal kumpaniji bħal IBM, Credit Suisse u Bloomberg. Infassal u nibni aġenti tal-AI, sistemi ta' retrieval u integrazzjonijiet ma' għodod tan-negozju, u ħarriġt timijiet tal-klijenti biex iħaddmu u jestendu s-soluzzjonijiet tal-AI li wassalt. Waqqaft Aleph Innovation f'Għawdex, u ngħallem dak li nibni u nittestja jien stess.",
+  intro:
+    "Għandi lawrja fil-fiżika, u għal aktar minn 30 sena bnejt softwer u mexxejt programmi teknoloġiċi madwar l-Ewropa u l-Asja, fil-finanzi, fit-telekomunikazzjoni, fil-manifattura, fl-industrija tal-karozzi u fil-loġistika. Mill-2024 ix-xogħol tiegħi huwa ffukat fuq l-AI applikata: aġenti bbażati fuq mudelli tal-lingwa, retrieval-augmented generation u l-connectors li jħallu l-AI taħdem mas-sistemi reali tan-negozju. Waqqaft Aleph Innovation f'Għawdex biex nfassal sistemi tal-AI fejn id-deċiżjoni finali dejjem tittieħed minn persuna identifikata.",
+  builds: [
+    {
+      title: "Copilot tal-AI għas-servizz tekniku, fil-produzzjoni",
+      text: "għal manifattur industrijali: arkitettura ta' retrieval imfassla apposta li twieġeb il-mistoqsijiet tat-tekniċi mid-dokumentazzjoni tal-prodotti u mill-FAQs tekniċi, ivvalidata fuq skala kbira fuq aktar minn 700 dokument u 350 mudell ta' prodott flimkien mat-tim tal-inġinerija tal-fornitur tal-pjattaforma.",
+    },
+    {
+      title: "Sistemi backend imħaddma bl-AI",
+      text: "f'konsulenza indipendenti: tfittxija semantika u retrieval, server li jgħaqqad l-aġenti tal-AI mal-għodod tan-negozju, streaming f'ħin reali u dashboard tal-web mibnija fuqhom.",
+    },
+    {
+      title: "Sistema aġentika ta' monitoraġġ ambjentali għal Għawdex",
+      text: "ippubblikata minn Aleph Innovation: reġistru ta' 14-il riskju ambjentali kklassifikat, arkitettura ta' validazzjoni mill-kejl sad-deċiżjoni umana, u l-Mappa interattiva tar-Riskji ta' Għawdex.",
+    },
+    {
+      title: "Agentic Portfolio",
+      text: "proġett ta' riċerka miftuħ dwar l-analiżi tal-investimenti assistita mill-AI, iddokumentat pubblikament fil-Wiki teknika.",
+    },
+  ],
+  teaching:
+    "It-taħriġ tiegħi twieled mix-xogħol fuq il-proġetti, mhux fi klassi. Fil-proġetti tiegħi tal-AI ħarriġt it-timijiet tal-klijenti biex ikunu jistgħu jżommu u jestendu s-sistemi waħedhom. Mexxejt workshops ta' adozzjoni għall-introduzzjoni ta' sistemi tal-field service, akkumpanjajt utenti tan-negozju fl-użu ta' pjattaformi ġodda, u introduċejt il-metodi Agile f'timijiet ta' żvilupp fl-Italja u fil-Filippini. Il-korsijiet tiegħi jsegwu l-istess regola: kull sessjoni tispiċċa b'xi ħaġa li taħdem fuq il-magna ta' min qed jipparteċipa.",
+  career: [
+    ["2026 – illum", "Fundazzjoni u tmexxija", "Aleph Innovation, Għawdex"],
+    ["2026 – illum", "Konsulenza freelance fl-AI u fil-backend", "Klijenti f'Malta u fl-UE"],
+    ["2019 – 2026", "Senior consultant, lead developer u solution architect", "Altea Federation, programmi ta' madwar €1M kull wieħed"],
+    ["2018", "CRM business analyst", "Tata Consultancy Services għal FCA"],
+    ["2016 – 2018", "Senior project manager, mudelli tar-riskju", "Credit Suisse, il-Polonja"],
+    ["2014 – 2016", "Programme manager", "IBM, għall-Kummissjoni Ewropea (DG TAXUD)"],
+    ["2000 – 2014", "Ġestjoni tal-prodott, tal-programmi u tat-teknoloġija", "Bloomberg, AGE Software (telemetrija għat-tlielaq tal-Ferrari), proġett ta' Toyota Motor Europe, Asian Logic u oħrajn"],
+    ["1986 – 2000", "Software developer u team leader", "Marconi Italiana, il-Port ta' Ġenova"],
+  ],
+  education: [
+    "MSc fil-Fiżika, Università ta' Ġenova (1986)",
+    "PRINCE2 Practitioner (2009)",
+    "Salesforce Certified Administrator (2019), Service Cloud Consultant (2020), Field Service Consultant (2023)",
+  ],
+  languages:
+    "Taljan (lingwa materna), Ingliż (C2); għarfien tax-xogħol tal-Ġermaniż, tal-Ispanjol u tal-Franċiż. Il-korsijiet huma disponibbli bl-Ingliż u bit-Taljan.",
+};
+
+export const getTrainer = (lang: "en" | "it" | "mt") =>
+  ({ en: trainer, it: trainerIt, mt: trainerMt })[lang];

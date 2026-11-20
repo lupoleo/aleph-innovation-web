@@ -1,0 +1,37 @@
+---
+import { getLang, localizePath, stripLang } from "../../i18n";
+
+// Shown on Maltese pages whose content is only available in English.
+const lang = getLang(Astro);
+const path = stripLang(Astro.url.pathname);
+---
+
+{lang === "mt" && (
+  <p class="wiki-english-notice">
+    Il-Wiki teknika għadha mhix tradotta għall-Malti, għalhekk it-test hawn
+    taħt huwa bl-Ingliż. Hija disponibbli wkoll{" "}
+    <a href={localizePath(path, "it")} hreflang="it" lang="it">bit-Taljan</a>.
+  </p>
+)}
+
+<style>
+  .wiki-english-notice {
+    margin: 0 0 1.4rem;
+    padding: 0.8rem 1rem;
+
+    border: 1px solid rgba(22, 201, 216, 0.28);
+    border-radius: var(--radius-md, 10px);
+
+    background: rgba(22, 201, 216, 0.06);
+
+    font-size: var(--font-size-sm, 0.9rem);
+    line-height: 1.55;
+    color: var(--aleph-text-secondary);
+  }
+
+  .wiki-english-notice a {
+    color: var(--aleph-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+</style>

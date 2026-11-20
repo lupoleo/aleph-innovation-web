@@ -1,0 +1,13 @@
+---
+import Page from "../../../../views/TrainingOfferPage.astro";
+import { publishedOffersMt } from "../../../../data/training.mt";
+
+export function getStaticPaths() {
+  return publishedOffersMt.map((offer) => ({
+    params: { offer: offer.slug },
+    props: { offer },
+  }));
+}
+---
+
+<Page {...Astro.props} />

@@ -2,6 +2,12 @@
 import BaseLayout from "./BaseLayout.astro";
 import WikiSidebar from "../components/wiki/WikiSidebar.astro";
 import WikiBreadcrumbs from "../components/wiki/WikiBreadcrumbs.astro";
+import WikiEnglishNotice from "../components/wiki/WikiEnglishNotice.astro";
+import { getLang } from "../i18n";
+
+// The wiki is not translated into Maltese: /mt/wiki/ pages show the English
+// text, marked as English, below a short notice.
+const englishText = getLang(Astro) === "mt";
 
 const {
   title,
@@ -25,7 +31,9 @@ const {
       <div class="wiki-content-column">
         <WikiBreadcrumbs currentPath={currentPath} />
 
-        <article class="wiki-article">
+        {englishText && <WikiEnglishNotice />}
+
+        <article class="wiki-article" lang={englishText ? "en" : undefined}>
           <slot />
         </article>
       </div>

@@ -1,17 +1,19 @@
 ---
 import Header from "../components/Header.astro";
-import { getLang, alternatePaths, languages } from "../i18n";
+import { getLang, alternatePaths, languages, langCodes, isEnglishOnlyInMaltese } from "../i18n";
 
 const lang = getLang(Astro);
 
 const defaultDescription = {
   en: "Aleph Innovation is an AI venture in formation based in Gozo, Malta, focused on the engineering of Agentic AI systems that combine deterministic software with probabilistic AI.",
   it: "Aleph Innovation è una realtà di ricerca e sviluppo sull'intelligenza artificiale in fase di costituzione a Gozo, Malta, specializzata nell'ingegneria di sistemi di AI agentica che uniscono software deterministico e AI probabilistica.",
+  mt: "Aleph Innovation hija proġett ta' riċerka u żvilupp fl-AI li qed jitwaqqaf f'Għawdex, Malta, u li jfassal sistemi ta' Agentic AI li jgħaqqdu softwer deterministiku ma' AI probabilistika.",
 }[lang];
 
 const imageAlt = {
   en: "Aleph Innovation — Engineering Agentic AI Systems",
   it: "Aleph Innovation — Ingegneria di sistemi di AI agentica",
+  mt: "Aleph Innovation — Inġinerija ta' sistemi ta' Agentic AI",
 }[lang];
 
 const {
@@ -21,15 +23,27 @@ const {
   socialImage = "/og-image.png",
 } = Astro.props;
 
-const canonicalURL = new URL(canonicalPath, Astro.site);
+// Pages that are not translated into Maltese show the English text under
+// /mt/: they name the English page as canonical and are not offered as a
+// Maltese alternate.
+const englishOnly = isEnglishOnlyInMaltese(canonicalPath);
+const alternates = alternatePaths(canonicalPath);
+const canonicalURL = new URL(
+  lang === "mt" && englishOnly ? alternates.en : canonicalPath,
+  Astro.site
+);
 const socialImageURL = new URL(socialImage, Astro.site);
 
-// hreflang alternates: every page exists in English and in Italian (/it/).
-const alternates = alternatePaths(canonicalPath);
-const alternateURLs = {
-  en: new URL(alternates.en, Astro.site),
-  it: new URL(alternates.it, Astro.site),
-};
+// hreflang alternates: every page exists in English, Italian (/it/) and
+// Maltese (/mt/), except the English-only pages above.
+const hreflangCodes = langCodes.filter((code) => !(code === "mt" && englishOnly));
+const alternateURLs = hreflangCodes.map((code) => ({
+  code,
+  href: new URL(alternates[code], Astro.site),
+}));
+const otherLocales = langCodes
+  .filter((code) => code !== lang)
+  .map((code) => languages[code].ogLocale);
 ---
 
 <!doctype html>
@@ -42,17 +56,17 @@ const alternateURLs = {
 
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
-  <link rel="alternate" hreflang="en" href={alternateURLs.en} />
-  <link rel="alternate" hreflang="it" href={alternateURLs.it} />
-  <link rel="alternate" hreflang="x-default" href={alternateURLs.en} />
+  {alternateURLs.map((alt) => (
+    <link rel="alternate" hreflang={alt.code} href={alt.href} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={new URL(alternates.en, Astro.site)} />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Aleph Innovation" />
   <meta property="og:locale" content={languages[lang].ogLocale} />
-  <meta
-    property="og:locale:alternate"
-    content={languages[lang === "en" ? "it" : "en"].ogLocale}
-  />
+  {otherLocales.map((locale) => (
+    <meta property="og:locale:alternate" content={locale} />
+  ))}
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonicalURL} />

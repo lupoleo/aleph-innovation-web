@@ -13,13 +13,15 @@ const {
 const projectNames = {
   en: { "agentic-portfolio": "AGENTIC PORTFOLIO", "environmental-monitoring": "ENVIRONMENTAL MONITORING" },
   it: { "agentic-portfolio": "AGENTIC PORTFOLIO", "environmental-monitoring": "MONITORAGGIO AMBIENTALE" },
+  mt: { "agentic-portfolio": "AGENTIC PORTFOLIO", "environmental-monitoring": "MONITORAĠĠ AMBJENTALI" },
 }[lang];
 
 const projectLabel =
   projectNames[project] ?? project.replaceAll("-", " ").toUpperCase();
 
 // Section codes from the front matter, shown in the page language.
-const sectionNames = {
+const sectionNamesByLang: Record<string, Record<string, string>> = {
+  it: {
   "project-home": "progetto",
   "overview": "panoramica",
   "system-overview": "panoramica del sistema",
@@ -30,28 +32,42 @@ const sectionNames = {
   "development-history": "storia dello sviluppo",
   "risk-overview": "rischi",
   "risks": "rischi",
+  },
+  mt: {
+    "project-home": "proġett",
+    "overview": "ħarsa ġenerali",
+    "system-overview": "ħarsa ġenerali lejn is-sistema",
+    "architecture": "arkitettura",
+    "contracts": "kuntratti",
+    "implementation": "implimentazzjoni",
+    "testing": "ittestjar",
+    "development-history": "storja tal-iżvilupp",
+    "risk-overview": "riskji",
+    "risks": "riskji",
+  },
 };
+const sectionNames = sectionNamesByLang[lang] ?? {};
 
-const sectionLabel =
-  lang === "it" && section ? sectionNames[section] ?? section : section;
+const sectionLabel = section ? sectionNames[section] ?? section : section;
 
 const statusNames = {
   en: { draft: "DRAFT", published: "PUBLISHED", archived: "ARCHIVED" },
   it: { draft: "BOZZA", published: "PUBBLICATO", archived: "ARCHIVIATO" },
+  mt: { draft: "ABBOZZ", published: "IPPUBBLIKAT", archived: "ARKIVJAT" },
 }[lang];
 
 const statusLabel = statusNames[status] ?? status.toUpperCase();
 
 const updatedLabel =
   updated instanceof Date
-    ? updated.toLocaleDateString(lang === "it" ? "it-IT" : "en-GB", {
+    ? updated.toLocaleDateString({ en: "en-GB", it: "it-IT", mt: "mt-MT" }[lang], {
         day: "2-digit",
         month: "short",
         year: "numeric",
       })
     : String(updated ?? "");
 
-const updatedPrefix = lang === "it" ? "AGGIORNATO IL" : "UPDATED";
+const updatedPrefix = { en: "UPDATED", it: "AGGIORNATO IL", mt: "AĠĠORNAT" }[lang];
 ---
 
 <div class="article-meta">
